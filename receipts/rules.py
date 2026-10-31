@@ -48,7 +48,9 @@ def units(page):
 # Organizations only: never use a sentence that is about a person or carries contact details.
 PERSONISH = re.compile(r"\b(ceo|cto|coo|cfo|co-?founder|founder|founding partner|managing partner|"
                        r"general partner|professor|prof\.|dr\.|ph\.?d|director|president|chair|"
-                       r"led by|headed by|meet (the|our)|bio|ex [A-Z])\b|@|\+?\d[\d\s().-]{8,}\d|·", re.I)
+                       r"led by|headed by|meet (the|our)|bio|ex [A-Z]|"
+                       r"husband|wife|spouse|children|son|daughter|family live|"
+                       r"she and her|he and his|they live)\b|@|\+?\d[\d\s().-]{8,}\d|·", re.I)
 
 
 def full_sentence(s):
@@ -183,8 +185,25 @@ def place_pattern(part):
     # Bare "main" / "park" without a street number is too sticky for FAQ copy.
     if toks == ["main"] or (len(toks) == 1 and toks[0] in {"park", "plaza", "row", "way"}):
         return None
+    # "Mass Ave" ↔ "Massachusetts Avenue"
+    if toks[:1] == ["mass"] and len(toks) >= 2 and toks[1] in {"ave", "avenue"}:
+        toks = ["massachusetts"] + toks[1:]
     body = r"[\s.,-]+".join(f"(?:{ABBREV[t]})" if t in ABBREV else re.escape(t) for t in toks)
     return re.compile(r"(?<![a-z0-9])" + body + r"\.?(?![a-z0-9])")
+
+
+def place_patterns(part):
+    """Primary pattern plus a number+street-name form without the suffix (100 Binney)."""
+    out = []
+    pat = place_pattern(part)
+    if pat:
+        out.append(pat)
+    toks = re.findall(r"[a-z0-9]+", part.lower())
+    if len(toks) >= 3 and toks[0].isdigit() and toks[-1] in ABBREV:
+        short = place_pattern(" ".join(toks[:-1]))
+        if short:
+            out.append(short)
+    return out
 
 
 def place_parts(value):
@@ -212,10 +231,10 @@ def rule_place(claim, pages):
     if not parts or all(normalize(p) in {"venues vary", "citywide", "online"} for p in parts):
         return silent(claim, pages, f"Atlas location {claim['value']!r} is not a specific place to match")
     for part in parts:
-        pat = place_pattern(part)
-        if not pat:
+        pats = place_patterns(part)
+        if not pats:
             continue
-        p, s = find(pages, lambda s, pat=pat: pat.search(s.lower()))
+        p, s = find(pages, lambda s, pats=pats: any(pat.search(s.lower()) for pat in pats))
         if p:
             return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
     # a Massachusetts street address in a different town, and the Atlas town nowhere on the site
@@ -256,10 +275,13 @@ def _date_patterns(d):
 CLOSED = re.compile(r"applications? (are |is )?(now )?closed|no longer accepting|not currently accepting|"
                     r"applications? (have |has )?closed|cohort (is |has )?closed|"
                     r"deadline has passed|submission(s)? (are |is )?closed", re.I)
-ROLLING = re.compile(r"rolling|apply (at )?any ?time|applications? (are |is )?(now )?open\b|"
+ROLLING = re.compile(r"rolling|apply (at )?any ?time|"
+                     r"applications? (are|is) (now )?open\b|applications? now open\b|"
                      r"accepting applications|year-round|year round|ongoing basis|"
                      r"continuous(ly)? (accept|open)|no (fixed )?deadline|always open|"
-                     r"open enrollment|applications? accepted year", re.I)
+                     r"open enrollment|applications? accepted year|"
+                     r"apply for residency|now accepting|applications? welcome|"
+                     r"reviewed on a rolling|rolling admissions", re.I)
 
 
 def rule_deadline(claim, pages):
@@ -304,22 +326,28 @@ FACT_CTX = {"Program length": re.compile(r"program|accelerator|cohort|course|bat
 # Atlas "0% / equity-free / none" — match wording, not a stray percent from another deal.
 EQUITY_FREE = re.compile(
     r"equity[-\s]?free|zero[-\s]?equity|non[-\s]?dilutive|no equity|takes? no equity|"
-    r"does not take (any )?equity|without (taking )?equity|0\s*%|zero percent", re.I)
+    r"does not take (any )?equity|without (taking )?equity|(?<!\d)0\s*%|zero percent", re.I)
 EQUITY_FREE_CLAIM = re.compile(
-    r"0\s*%|equity[-\s]?free|zero|none|no fee|non[-\s]?dilutive|no equity|not investment", re.I)
+    r"(?<!\d)0\s*%|equity[-\s]?free|zero|none|no fee|non[-\s]?dilutive|no equity|not investment", re.I)
 TAKES_EQUITY = re.compile(r"\b([1-9]\d?(?:\.\d+)?)\s*%\b.{0,40}\bequity|\bequity\b.{0,40}\b([1-9]\d?(?:\.\d+)?)\s*%", re.I)
+# "non-dilutive funding opportunities" alone is too weak for a 0% equity claim about the program itself.
+EQUITY_PROGRAM = re.compile(
+    r"equity[-\s]?free|zero[-\s]?equity|(?<!\d)0\s*%(?:\s*equity|\s*—|\s*-)|takes? no equity|"
+    r"no equity (taken|stake)|non[-\s]?dilutive (grants?|prizes?|awards?)|"
+    r"grants? are non[-\s]?dilutive|non[-\s]?dilutive grants?\b", re.I)
 
 
 # a sentence that says what the money is, rather than a button or menu label
-PROSE_MONEY = re.compile(r"\b(invest(s|ed)?|receives?|gets?|provides?|offers?|awards?|writes?|grants?|"
-                         r"through|up to|ranging|range|stipend|funding|prize)\b", re.I)
+PROSE_MONEY = re.compile(r"\b(invest(s|ed|ment)?|receives?|gets?|provides?|offers?|awards?|writes?|grants?|"
+                         r"through|up to|ranging|range|stipend|funding|prize|fee)\b", re.I)
 
 
 def rule_fact(claim, pages):
     label, val = claim["value"]["label"], claim["value"]["value"]
     if label == "Equity" and EQUITY_FREE_CLAIM.search(val):
-        p, s = find(pages, lambda s: EQUITY_FREE.search(s) and not TAKES_EQUITY.search(s),
-                    prefer=lambda s: full_sentence(s) and FACT_CTX["Equity"].search(s))
+        p, s = find(pages, lambda s: EQUITY_PROGRAM.search(s) and not TAKES_EQUITY.search(s)
+                    and not re.search(r"\bdonat|proceeds|energy consumption|versus\b", s, re.I),
+                    prefer=full_sentence)
         if p:
             return supported(claim, p, s, "the page says the program is equity-free / non-dilutive / 0%")
         return silent(claim, pages, f"no equity-free / 0% wording on {len(usable(pages))} pages "
@@ -335,6 +363,18 @@ def rule_fact(claim, pages):
                         and not NOT_A_CHECK.search(s), prefer=lambda s: full_sentence(s) and PROSE_MONEY.search(s))
             if p:
                 return supported(claim, p, s, f"the page gives ${want[0]:,}")
+        # primary check / fee on the page (first Atlas amount), in funding/fee prose
+        primary = want[0]
+
+        def primary_hit(s, primary=primary):
+            if primary not in amounts(s) or NOT_A_CHECK.search(s) or PERSONISH.search(s):
+                return False
+            return bool(PROSE_MONEY.search(s) and (
+                CHECK_CTX.search(s) or re.search(r"\b(entrance )?fee|tuition|investment of\b", s, re.I)))
+
+        p, s = find(pages, primary_hit, prefer=full_sentence)
+        if p and label in ("Check size", "Terms"):
+            return supported(claim, p, s, f"the page gives ${primary:,}")
         p1, s1 = find(pages, lambda s: set(want) & set(amounts(s)))
         p2, s2 = find(pages, lambda s: amounts(s) and max(amounts(s)) < 50_000_000 and CHECK_CTX.search(s)
                       and not NOT_A_CHECK.search(s) and not set(want) & set(amounts(s)))
@@ -375,17 +415,25 @@ def name_patterns(entry):
         alias = m.strip()
         if 2 < len(alias) < 48:
             names.add(alias)
-            # "NERD" from "Microsoft New England R&D (NERD)" already; also "R&D" alone is too short
+    # "Robotics and AI Institute (RAI)" / "RAI Institute" style short titles after a dash
+    for chunk in re.split(r"\s+[–—-]\s+", full):
+        chunk = chunk.strip()
+        if 3 < len(chunk) < len(full):
+            names.add(chunk)
     toks = re.findall(r"[A-Za-z][A-Za-z0-9&/-]*", full)
     if len(toks) >= 2:
         last = toks[-1]
         if last.isupper() and len(last) >= 3:
             names.add(last)
         # "MIT CSAIL" / "UMass Amherst Manning CICS" → drop leading university token when long enough
-        if toks[0].upper() in {"MIT", "UMASS", "BU", "NEU", "NORTHEASTERN", "HARVARD", "TUFTS", "IBM"} and len(toks) >= 2:
+        if toks[0].upper() in {"MIT", "UMASS", "BU", "NEU", "NORTHEASTERN", "HARVARD", "TUFTS", "IBM",
+                               "NSF", "AI"} and len(toks) >= 2:
             rest = " ".join(toks[1:])
             if len(rest) > 3:
                 names.add(rest)
+        # multi-word tail: "Manning CICS", "Schwarzman College of Computing"
+        if len(toks) >= 3:
+            names.add(" ".join(toks[-2:]))
     return [word(n) for n in names if len(n) > 3]
 
 

@@ -123,5 +123,5 @@ def report(out_path=None):
     out_path.parent.mkdir(exist_ok=True)
     payload = {"count": len(pairs), "pairs": pairs}
     out_path.write_text(json.dumps(payload, indent=1), encoding="utf-8")
-    print(f"duplicates: {len(pairs)} pair(s) → {out_path}")
+    print(f"duplicates: {len(pairs)} pair(s) -> {out_path}")
     return payload
