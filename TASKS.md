@@ -147,3 +147,32 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
   will build it, so the 14:00 stranger test has the whole product.
 - UI copy rule for anything you add: plain, short sentences. No em dashes, no emoji, no "AI magic"
   words. Name things by what they are ("Claude's reading", "checked by code").
+
+## Status 13:00: 14 / 14 goals met. Thanks pjsk02, B2 is merged (`4d78858`)
+- `python -m receipts test` → planted 6 · caught 5 · missed 1 · false alarm 1 · precision 0.83 · recall 0.83.
+  - The miss: wrong town (Boston → Worcester) on founder-institute stays `silent`, because their
+    global site names no town. Honest, and a good thing to show.
+  - The "false alarm" is **deltav** in the real data ($75K on their page vs "Up to $20K" in the
+    Atlas). It is probably a real discrepancy, but it counts as an alarm until a person confirms it.
+- Your `review.py` was superseded by Lane A's version (sidebar, step trace). It's in your branch history.
+- **Pull main before you start anything new:** `git checkout Je-Branch && git merge origin/main`
+  (or branch fresh from main).
+
+## Next round (13:00–13:45): improvements
+
+### Lane B (pjsk02)
+- [ ] **B4 De-duplication against the 197** (a Track A rubric item). Run `receipts.dedupe.find_duplicate`
+      over all 197 real entries, pairwise, and write `out/duplicates.json` plus a short printed list.
+      Report only: never merge or delete. Wire it as `python -m receipts dedupe`. Expect a few
+      near-duplicates like `deltav` / `deltav-demo`. Say which ones are the same org and which are
+      related but distinct.
+- [ ] **B5 More plants**: add 2 more of each failure type (12–18 plants total) so the score isn't
+      based on 6. Prefer cached entries so the test stays fast. Keep every id `planted-`.
+- [ ] **B6 Stranger test at 14:00**: open `out/review.html` and give it to someone who hasn't seen it:
+      "Review these three claims." Write down what confused them in `notes/stranger.md`.
+
+### Lane A (VJ-yadav + Claude)
+- [ ] Wrong-town rule: a page with a Massachusetts street address in a different town → `contradicted`.
+- [ ] Click test: 5 random receipt links open on the highlighted sentence (SELFCHECK Truth).
+- [ ] Founder view: a filter in review.html for VJ's 12-funder shortlist (0 → N of 83).
+- [ ] One accepted decision end to end: review.html → decisions.json → `apply` → branch + validator.
