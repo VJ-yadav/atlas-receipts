@@ -123,6 +123,7 @@ open out/review.html
 |---|---|
 | `check [--all\|<id>…] [--model] [--refresh]` | one receipt per claim → `out/receipts.json` |
 | `review` | the maintainer console → `out/review.html` (Home, Entities grid, Review queue, Refused, Add an entity; Before/After switch) |
+| `public` | the founder-facing public view → `out/atlas.html` (I need…, proof marks per claim, compare two, Before/After) and the enriched dataset `after/atlas-with-receipts.json` |
 | `apply out/decisions.json` | accepted rows only → Atlas branch `receipts/2026-10-31` + `validate.js`; refuses `planted-` ids |
 | `changes` | a re-check: only claims whose sentence changed come back |
 | `propose new-entry.json` | a new organization: duplicate, scope and https checks, then receipts → `out/proposed/` |

@@ -42,6 +42,11 @@ def main(argv):
     elif cmd == "propose":
         from receipts import propose
         propose.run(args[0])
+    elif cmd == "public":
+        import json
+        from receipts import public
+        from receipts.probes import ROOT
+        print("wrote", public.build(json.loads((ROOT / "out" / "receipts.json").read_text())))
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)
