@@ -5,6 +5,8 @@ The Atlas data is shown as it is; receipts say what the organization's own site 
 Nothing is corrected here: a contradiction is shown as "their site says otherwise", with both values.
 """
 import json
+import subprocess
+import sys
 
 from receipts.claims import no_contact
 from receipts.probes import ROOT, load_entries
@@ -12,6 +14,9 @@ from receipts.review import SHORTLIST
 from receipts.text import highlight_url
 
 FIELDS = ("key", "field", "value", "status", "quote", "url", "fetched_at", "sha256", "reason", "page_value", "by")
+
+# Worst claim status for the map pin (lower = worse trust).
+TRUST_RANK = {"contradicted": 0, "inferred": 1, "silent": 2, "refused": 2, "none": 2, "supported": 3}
 
 
 def dataset(receipts, entries):
@@ -28,30 +33,98 @@ def dataset(receipts, entries):
     return out
 
 
+def _label(c):
+    v = c["value"]
+    if c["field"] == "live":
+        return "Website"
+    if c["field"] == "place":
+        return "Location"
+    if c["field"] == "offer":
+        return "Offers"
+    if c["field"] == "link":
+        return "Works with"
+    if c["field"] == "deadline":
+        return "Apply by"
+    if isinstance(v, dict) and v.get("label"):
+        return v["label"]
+    return c["field"]
+
+
+def _val(c):
+    v = c["value"]
+    if isinstance(v, dict):
+        if "label" in v:
+            return v.get("value")
+        if "applyBy" in v:
+            return v["applyBy"] + (f" ({v['applyNote']})" if v.get("applyNote") else "")
+    return v
+
+
+def _trust(statuses):
+    if not statuses:
+        return "silent"
+    worst = min(statuses, key=lambda s: TRUST_RANK.get(s, 2))
+    return "silent" if worst in ("refused", "none") else worst
+
+
+def _metrics(n_entries):
+    path = ROOT / "after" / "metrics.json"
+    if not path.exists():
+        subprocess.run([sys.executable, "-m", "receipts", "metrics"], check=False, cwd=ROOT)
+    if not path.exists():
+        return {"verified": 0, "with_sentence": 0, "needs_person": 0, "entities": n_entries}
+    m = json.loads(path.read_text(encoding="utf-8"))
+    all_ = m.get("all") or {}
+    return {
+        "verified": all_.get("supported", 0),
+        "with_sentence": all_.get("with_sentence", 0),
+        "needs_person": all_.get("needs_person", 0),
+        "entities": m.get("entities", n_entries),
+    }
+
+
 def build(receipts, entries=None):
     entries = entries if entries is not None else load_entries()
     data = dataset(receipts, entries)
     (ROOT / "after").mkdir(exist_ok=True)
     (ROOT / "after" / "atlas-with-receipts.json").write_text(json.dumps(
         {"source": "Mass AI Atlas, The Open Accelerator, CC BY 4.0", "entries": data}, indent=1))
-    cats = json.loads((ROOT / "data" / "atlas.json").read_text()).get("cats", {})
+    cats = json.loads((ROOT / "data" / "atlas.json").read_text(encoding="utf-8")).get("cats", {})
     slim = []
     for e in data:
         cl = []
         for c in e["receipts"]:
-            v = c["value"]
-            if isinstance(v, dict):
-                v = {"label": v.get("label"), "value": v.get("value")} if "label" in v else \
-                    {"label": "Apply by", "value": v["applyBy"] + (f" ({v['applyNote']})" if v.get("applyNote") else "")}
-            cl.append({"f": c["field"], "v": v, "s": c["status"], "q": c["quote"] if c["status"] != "refused" else None,
-                       "u": highlight_url(c["url"], c["quote"]) if c["quote"] else c["url"],
-                       "t": c["fetched_at"][:10], "p": c["page_value"]})
-        row = {k: e.get(k) for k in ("id", "name", "cat", "loc", "url", "desc", "why", "offers",
-                                      "links", "lastVerified", "approx")}
-        row["desc"], row["why"] = no_contact(row["desc"] or ""), no_contact(row["why"] or "")
-        slim.append(row | {"c": cl, "proven": e["proven"]})
-    blob = json.dumps({"entries": slim, "cats": {k: v["label"] for k, v in cats.items()},
-                       "shortlist": SHORTLIST}).replace("</", "<\\/")
+            s = c["status"]
+            pin_s = "silent" if s in ("refused", "none") else s
+            cl.append({
+                "k": _label(c),
+                "v": _val(c),
+                "s": pin_s,
+                "q": c["quote"] if s != "refused" else None,
+                "u": highlight_url(c["url"], c["quote"]) if c.get("quote") else c["url"],
+                "t": (c.get("fetched_at") or "")[:10],
+                "p": c.get("page_value"),
+                "raw": s,
+            })
+        trust = _trust([c["s"] for c in cl] or ["silent"])
+        row = {
+            "id": e["id"], "name": e["name"], "cat": e.get("cat"), "loc": e.get("loc"),
+            "lat": e.get("lat"), "lng": e.get("lng"), "url": e.get("url"),
+            "desc": no_contact(e.get("desc") or ""), "offers": e.get("offers") or [],
+            "tags": e.get("tags") or [], "approx": bool(e.get("approx")),
+            "trust": trust, "proven": e["proven"], "total": len(cl), "claims": cl,
+        }
+        if row["lat"] is None or row["lng"] is None:
+            continue
+        slim.append(row)
+    offers = sorted({o for e in slim for o in e["offers"]})
+    blob = json.dumps({
+        "entries": slim,
+        "cats": {k: v["label"] for k, v in cats.items()},
+        "shortlist": SHORTLIST,
+        "offers": offers,
+        "metrics": _metrics(len(slim)),
+    }).replace("</", "<\\/")
     out = ROOT / "out" / "atlas.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(PAGE.replace("/*DATA*/", blob), encoding="utf-8")
@@ -59,191 +132,840 @@ def build(receipts, entries=None):
 
 
 PAGE = r"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mass AI Atlas, with receipts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-:root{--bg:#fff;--soft:#f9f9fa;--muted:#f4f5f7;--ink:#1c1d21;--mute:#5d6270;--faint:#6e7380;--line:#e3e5e9;--hair:#eceef1;
---acc:#16a34a;--acc-strong:#15803d;--acc-soft:#e8f7ee;--warn:#a35200;--warn-soft:#fff4e0;--bad:#c62828;--bad-soft:#fdecec;--info:#1f5fbf;
---sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono","SF Mono",Menlo,monospace;
---shadow:0 1px 2px 0 rgb(16 17 20/.05),0 1px 1px 0 rgb(16 17 20/.03);--shadow-lg:0 12px 32px -8px rgb(16 17 20/.18),0 2px 6px rgb(16 17 20/.06)}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
-a{color:var(--info);text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;color:inherit}
-.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar-in{max-width:1240px;margin:0 auto;padding:10px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.brand{font-weight:650;font-size:15px}.brand small{font-weight:400;color:var(--mute);margin-left:6px}
-.pub{font-size:11.5px;font-weight:600;color:var(--acc-strong);background:var(--acc-soft);border-radius:999px;padding:2px 9px}
-.grow{flex:1}.admin-link{font-size:12.5px;color:var(--mute)}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;padding:2px;background:var(--muted)}
-.seg button{border:0;background:none;padding:5px 12px;border-radius:7px;cursor:pointer;color:var(--mute);font-size:13px;font-weight:500}
-.seg button.on{background:var(--bg);color:var(--ink);box-shadow:var(--shadow);font-weight:600}
-.wrap{max-width:1240px;margin:0 auto;padding:22px 24px 120px}
-h1{font-size:30px;line-height:1.2;margin:6px 0 8px;letter-spacing:-.01em}
-.lead{font-size:16px;color:var(--mute);max-width:720px;margin:0 0 14px}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin:0 0 18px}
-.mode-note{border:1px solid var(--line);border-radius:10px;padding:9px 14px;background:var(--soft);font-size:13px;color:var(--mute);margin-bottom:14px}
-.mode-note b{color:var(--ink)}
-.need{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-.need .lbl{font-weight:600;margin-right:4px}
-.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--mute)}
-.chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:600}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
-input[type=search],select{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
-input[type=search]{flex:1;min-width:220px}input:focus,select:focus{outline:2px solid var(--acc);outline-offset:-1px}
-.count{font-size:12.5px;color:var(--faint);margin-bottom:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:14px;background:var(--bg);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
-.card:hover{box-shadow:var(--shadow-lg)}
-.c-main{padding:14px 16px 10px;cursor:pointer;flex:1}
-.c-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-.c-top h3{margin:0;font-size:15px;line-height:1.3}
-.cat{font-size:11px;color:var(--mute);background:var(--muted);border-radius:6px;padding:1px 7px;white-space:nowrap}
-.loc{font-size:12.5px;color:var(--mute);margin:2px 0 6px}
-.desc{font-size:13px;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0 0 8px}
-.facts{display:flex;flex-direction:column;gap:4px;font-size:13px}
-.fact{display:flex;gap:6px;align-items:baseline}.fact .k{color:var(--faint);min-width:78px}
-.m{font-weight:700;font-size:12px;width:14px;display:inline-block;text-align:center}
-.m-supported{color:var(--acc)}.m-contradicted{color:var(--bad)}.m-inferred{color:var(--warn)}.m-silent,.m-refused,.m-none{color:var(--faint)}
-.offers{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
-.of{font-size:11.5px;border-radius:6px;padding:1px 7px;background:var(--muted);color:var(--mute)}
-.of.ok{background:var(--acc-soft);color:var(--acc-strong)}.of.mid{background:var(--warn-soft);color:var(--warn)}
-.c-foot{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-top:1px solid var(--hair);font-size:12.5px;color:var(--mute);background:var(--soft)}
-.meter{display:flex;gap:8px;align-items:center}.meter .bar2{width:70px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
-.meter .bar2 span{display:block;height:100%;background:var(--acc)}
-.flag{color:var(--bad);font-weight:600}
-.cmp{display:flex;gap:6px;align-items:center;cursor:pointer;user-select:none}
-/* drawer */
-.scrim{position:fixed;inset:0;background:rgb(15 23 42/.35);z-index:9;display:none}.scrim.on{display:block}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--bg);z-index:10;box-shadow:var(--shadow-lg);transform:translateX(100%);transition:transform .18s;display:flex;flex-direction:column}
-.drawer.on{transform:none}.dh{padding:18px 22px;border-bottom:1px solid var(--line)}.dh h2{margin:0 0 4px;font-size:20px}
-.db{overflow:auto;padding:6px 22px 40px}
-.claim{padding:12px 0;border-top:1px solid var(--hair)}.claim:first-child{border-top:0}
-.claim .h{display:flex;gap:8px;align-items:baseline}.claim .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
-.tag{font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;white-space:nowrap}
-.t-supported{color:var(--acc-strong);background:var(--acc-soft)}.t-contradicted{color:var(--bad);background:var(--bad-soft)}
-.t-inferred{color:var(--warn);background:var(--warn-soft)}.t-silent,.t-refused,.t-none{color:var(--mute);background:var(--muted)}
-.q{margin:6px 0 2px;padding:8px 12px;background:var(--muted);border-radius:8px;font-size:13.5px}
-.q a{display:block;font:12px var(--mono);margin-top:4px}
-.btn{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
-.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-/* compare */
-.tray{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -8px 24px -12px rgb(16 17 20/.2);display:none}
-.tray.on{display:block}.tray-in{max-width:1240px;margin:0 auto;padding:10px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.cmpview{position:fixed;inset:5vh 4vw;z-index:11;background:var(--bg);border-radius:16px;box-shadow:var(--shadow-lg);display:none;flex-direction:column}
-.cmpview.on{display:flex}.cmpview .db{padding:10px 24px 30px}
-table.c{width:100%;border-collapse:collapse;font-size:13.5px}table.c th,table.c td{border-bottom:1px solid var(--hair);padding:9px 10px;text-align:left;vertical-align:top}
-table.c th{font-size:12px;color:var(--faint);font-weight:600;width:150px}table.c thead td{font-weight:650;font-size:15px}
-.verdict{border-radius:10px;background:var(--soft);border:1px solid var(--line);padding:10px 14px;margin:10px 0 4px;font-size:14px}
-.empty{color:var(--mute);padding:40px;text-align:center}
-@media (max-width:560px){.bar-in,.wrap{padding-left:16px;padding-right:16px}h1{font-size:24px}}
-</style></head><body>
-<div class="bar"><div class="bar-in">
-  <div class="brand">Mass AI Atlas <small>with receipts</small></div><span class="pub">Public view</span>
-  <div class="grow"></div>
-  <a class="admin-link" href="review.html" title="For the Atlas maintainer">Maintainer console (admin) →</a>
-  <div class="seg" id="mode"><button data-m="before">Before</button><button data-m="after">After</button></div>
-</div></div>
-<div class="wrap">
-  <h1>Find who can help, and see what's proven.</h1>
-  <p class="lead">197 Massachusetts AI organizations. For each check size, deadline, address and offer, we show whether the
-  organization's own website says it today, with the sentence one click away.</p>
-  <div class="legend"><span><span class="m m-supported">✓</span> Proven by their own site</span><span><span class="m m-contradicted">▲</span> Their site says otherwise</span>
-  <span><span class="m m-inferred">◐</span> Mentioned on their site, not word for word</span><span><span class="m m-silent">–</span> No source found</span></div>
-  <div class="mode-note" id="note"></div>
-  <div class="need" id="need"><span class="lbl">I need</span></div>
-  <div class="toolbar"><input type="search" id="q" placeholder="Search by name or town">
-    <select id="cat"><option value="">All kinds</option></select>
-    <select id="sort"><option value="proven">Most proven first</option><option value="name">Name A–Z</option></select>
-    <select id="list"><option value="">Everyone</option><option value="shortlist">A founder's shortlist (12 funders)</option><option value="flag">Where their site disagrees</option></select></div>
-  <div class="count" id="count"></div>
-  <div class="grid" id="grid"></div>
-  <p class="count" style="margin-top:30px">Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. Receipts by Atlas Receipts: each sentence was found on the organization's
-  own site and checked by code; a person reviews disagreements. Organizations only. <a href="../after/atlas-with-receipts.json">Download the data with receipts</a></p>
+:root {
+  --ink: #1a2330;
+  --ink-soft: #3d4a5c;
+  --mute: #5c6b7e;
+  --faint: #8a96a6;
+  --line: #d5dde6;
+  --panel: rgba(248, 250, 252, 0.92);
+  --panel-solid: #f7f9fb;
+  --water: #c9d9e6;
+  --acc: #1f7a4c;
+  --acc-soft: #e4f3ea;
+  --warn: #9a6700;
+  --bad: #b42318;
+  --silent: #7a8696;
+  --brand: #0f3d5c;
+  --shadow: 0 10px 40px rgba(26, 35, 48, 0.12);
+  --sans: "Instrument Sans", ui-sans-serif, sans-serif;
+  --display: "Syne", ui-sans-serif, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 260ms;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  color: var(--ink);
+  font: 15px/1.5 var(--sans);
+  background:
+    radial-gradient(1200px 700px at 18% 12%, #dfeaf2 0%, transparent 55%),
+    radial-gradient(900px 600px at 88% 78%, #e4ebe3 0%, transparent 50%),
+    linear-gradient(165deg, #edf2f6 0%, #e6ece8 48%, #e9eef3 100%);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+a { color: var(--brand); }
+button { font: inherit; color: inherit; }
+
+.app {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+#map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--water);
+}
+
+.vignette {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(237,242,246,0.88) 0%, rgba(237,242,246,0.55) 220px, rgba(237,242,246,0) 420px),
+    linear-gradient(180deg, rgba(237,242,246,0.55) 0%, transparent 90px);
+}
+
+.chrome {
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  left: 20px;
+  width: min(360px, calc(100vw - 40px));
+  padding: 22px 22px 18px;
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(213, 221, 230, 0.9);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  animation: chrome-in 480ms var(--ease) both;
+}
+@keyframes chrome-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.brand {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--brand);
+  margin: 0 0 6px;
+}
+.brand span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 8px;
+  font-family: var(--sans);
+}
+.lede {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  max-width: 32ch;
+}
+.filter {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.filter label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+.filter select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+.legend {
+  margin-top: 14px;
+  display: grid;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--mute);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: legend-in 420ms var(--ease) 180ms forwards;
+}
+@keyframes legend-in {
+  to { opacity: 1; transform: none; }
+}
+.legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  border: 1.5px solid transparent;
+}
+.legend .proven i { background: var(--acc); }
+.legend .inferred i { background: #e8b84a; border-color: #c9921a; }
+.legend .disagree i { background: var(--bad); }
+.legend .silent i { background: #c5ced8; border-color: var(--silent); }
+.hint {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--faint);
+}
+.map-stack {
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--faint);
+  line-height: 1.4;
+}
+
+.trust-note {
+  position: absolute;
+  z-index: 2;
+  bottom: 24px;
+  left: 20px;
+  max-width: 340px;
+  font-size: 12px;
+  color: var(--mute);
+  background: rgba(247,249,251,0.85);
+  backdrop-filter: blur(8px);
+  padding: 10px 12px;
+  border-left: 3px solid var(--brand);
+  animation: chrome-in 480ms var(--ease) 120ms both;
+}
+.trust-note b { color: var(--ink); font-weight: 600; }
+
+.pin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(26,35,48,0.35);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), opacity var(--dur) ease;
+}
+.pin:hover, .pin.on {
+  transform: scale(1.4);
+  box-shadow: 0 0 0 4px rgba(15, 61, 92, 0.18), 0 1px 4px rgba(26,35,48,0.35);
+}
+.pin.supported { background: var(--acc); }
+.pin.inferred { background: #e8b84a; }
+.pin.contradicted { background: var(--bad); }
+.pin.silent { background: #b7c0cb; }
+.pin.approx { outline: 1px dashed rgba(26,35,48,0.35); outline-offset: 2px; }
+.pin.dim { opacity: 0.28; transform: scale(0.92); }
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  background: rgba(26, 35, 48, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur) ease, visibility var(--dur) ease;
+}
+.scrim.on {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(420px, 100%);
+  z-index: 9;
+  background: var(--panel-solid);
+  border-left: 1px solid var(--line);
+  box-shadow: -12px 0 40px rgba(26,35,48,0.1);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) ease;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+.drawer.on {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+.dh {
+  padding: 22px 22px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.dh h2 {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+.meta { font-size: 13px; color: var(--mute); }
+.db { overflow: auto; padding: 8px 22px 32px; flex: 1; }
+.claim {
+  padding: 14px 0;
+  border-top: 1px solid #e8edf2;
+}
+.claim:first-child { border-top: 0; }
+.claim .k {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--faint);
+  margin-bottom: 2px;
+}
+.claim .v { font-weight: 600; font-size: 15px; }
+.status {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 0;
+}
+.status.supported { color: var(--acc); }
+.status.inferred { color: var(--warn); }
+.status.contradicted { color: var(--bad); }
+.status.silent { color: var(--silent); }
+.quote {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  background: #eef3f7;
+  border-left: 3px solid var(--brand);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.quote a {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 500;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.tag {
+  font-size: 11.5px;
+  color: var(--mute);
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.suggest {
+  margin-top: 14px;
+  padding: 12px 12px 10px;
+  background: #eef3f7;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.suggest .lbl {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+.suggest .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.suggest button.linkish {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.suggest .why {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--faint);
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 160ms ease, transform 160ms ease;
+}
+.btn:hover { background: #f0f4f8; }
+.btn.primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+.btn.primary:hover { background: #0c324b; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.tray {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 20px;
+  width: min(560px, calc(100vw - 40px));
+  padding: 12px 14px;
+  background: var(--panel);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translate(-50%, 120%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) ease, visibility var(--dur) ease;
+}
+.tray.on {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.tray b { font-size: 13px; }
+.tray .names { flex: 1; font-size: 13px; color: var(--mute); }
+
+.cmpview {
+  position: fixed;
+  inset: 8vh 8vw;
+  z-index: 10;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity var(--dur) ease, transform var(--dur) var(--ease), visibility var(--dur) ease;
+}
+.cmpview.on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+.cmpview .dh { display: flex; justify-content: space-between; align-items: center; }
+.cmpview .db { padding: 16px 22px 28px; }
+table.c { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.c th, table.c td {
+  border-bottom: 1px solid #e8edf2;
+  padding: 10px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+table.c th { color: var(--faint); font-weight: 600; width: 28%; font-size: 12px; }
+.header-links {
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  z-index: 4;
+  text-align: right;
+}
+.header-links a {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mute);
+  text-decoration: none;
+  background: rgba(247,249,251,0.9);
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  transition: color var(--dur) ease, border-color var(--dur) ease;
+}
+.header-links a:hover {
+  color: var(--brand);
+  border-color: #b8c5d2;
+}
+.metrics-strip {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #eef3f7;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.metrics-strip .from {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+.metrics-strip .nums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+}
+.metrics-strip .n {
+  min-width: 4.5ch;
+}
+.metrics-strip .n strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--brand);
+}
+.metrics-strip .n span {
+  font-size: 11.5px;
+  color: var(--mute);
+}
+@media (max-width: 720px) {
+  .chrome { top: 12px; left: 12px; width: calc(100vw - 24px); padding: 16px; }
+  .brand { font-size: 24px; }
+  .trust-note { display: none; }
+  .tray { bottom: 12px; }
+  .header-links { top: auto; bottom: 12px; right: 12px; left: 12px; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="map" aria-label="Massachusetts AI organizations map"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="header-links">
+    <a href="review.html">Maintainer console (admin) →</a>
+  </div>
+
+  <aside class="chrome">
+    <h1 class="brand">Mass AI Atlas<span>with receipts</span></h1>
+    <p class="lede">Find who can help across Massachusetts — and see what each organization’s own site backs today.</p>
+    <div class="metrics-strip" aria-label="Summary from metrics">
+      <div class="from">from metrics</div>
+      <div class="nums" id="metrics-nums"></div>
+    </div>
+    <div class="filter">
+      <label for="need">I need</label>
+      <select id="need">
+        <option value="">Everything on the map</option>
+      </select>
+    </div>
+    <div class="legend" aria-label="Trust legend">
+      <div class="proven"><i></i>Proven by their site</div>
+      <div class="inferred"><i></i>Mentioned on their site, not verified</div>
+      <div class="disagree"><i></i>Their site says otherwise</div>
+      <div class="silent"><i></i>No source found</div>
+    </div>
+    <p class="hint">Click a pin for the receipt. Similar organizations suggest a compare. Shift-click a second pin anytime.</p>
+    <p class="map-stack">Organizations only. OpenStreetMap tiles · Leaflet.</p>
+  </aside>
+
+  <p class="trust-note"><b>Verified</b> means their own site backs the claim today — checked by code. Mentioned-but-not-exact stays labelled; it is never called verified.</p>
+
+  <div class="tray" id="tray">
+    <b>Compare</b>
+    <span class="names" id="tray-names"></span>
+    <button class="btn" id="tray-clear" type="button">Clear</button>
+    <button class="btn primary" id="tray-go" type="button" disabled>Side by side</button>
+  </div>
 </div>
-<div class="tray" id="tray"><div class="tray-in"><b>Compare</b><span id="tray-names" class="count" style="margin:0"></span><div class="grow"></div>
-  <button class="btn" id="tray-clear">Clear</button><button class="btn primary" id="tray-go">Compare side by side</button></div></div>
+
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer"><div class="dh" id="d-h"></div><div class="db" id="d-b"></div></aside>
-<div class="cmpview" id="cmpv"><div class="dh" style="display:flex;justify-content:space-between"><h2 style="margin:0">Side by side</h2><button class="btn" id="cmp-x">Close</button></div><div class="db" id="cmp-b"></div></div>
+<aside class="drawer" id="drawer" aria-live="polite">
+  <div class="dh" id="d-h"></div>
+  <div class="db" id="d-b"></div>
+</aside>
+<div class="cmpview" id="cmpv">
+  <div class="dh">
+    <h2 style="margin:0;font-family:var(--display);font-size:20px">Side by side</h2>
+    <button class="btn" id="cmp-x" type="button">Close</button>
+  </div>
+  <div class="db" id="cmp-b"></div>
+</div>
+
 <script id="data" type="application/json">/*DATA*/</script>
 <script>
-const D=JSON.parse(document.getElementById('data').textContent),$=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let mode=store.get('atlas-mode','after'),need=null,picked=[];
-const MARK={supported:'✓',contradicted:'▲',inferred:'◐',silent:'–',refused:'–',none:'–'};
-const TAG={supported:'Proven by their site',contradicted:'Their site says otherwise',inferred:'Mentioned on their site',silent:'No source found',refused:'Not checked (site does not allow it)',none:'No source'};
-const OFFERS=['funding','mentorship','grants','community','space','talent','customers','compute'];
-const st=c=>mode==='before'?'none':c.s;
-const val=c=>typeof c.v==='object'&&c.v?c.v.value:c.v;
-const lab=c=>({live:'Website',place:'Location',offer:'Offers',link:'Works with',deadline:'Apply by'}[c.f]||(c.v&&c.v.label)||c.f);
-const name=id=>(D.entries.find(e=>e.id===id)||{}).name||id;
-$('need').innerHTML+=OFFERS.map(o=>`<button class="chip" data-o="${o}">${o}</button>`).join('');
-$('cat').innerHTML+=Object.entries(D.cats).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join('');
-$('need').onclick=e=>{const b=e.target.closest('[data-o]');if(!b)return;need=need===b.dataset.o?null:b.dataset.o;$('need').querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.o===need));render()};
-['q','cat','sort','list'].forEach(id=>$(id).oninput=render);
-function setMode(m){mode=m;store.set('atlas-mode',m);$('mode').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
-  $('note').innerHTML=m==='before'?'<b>Before:</b> the Atlas today. Each organization has one "last verified" month, and no claim says where it came from.'
-  :'<b>After:</b> each claim is marked by what the organization\'s own website says today. Click a card to see the sentence.';render();renderDrawer()}
-$('mode').onclick=e=>{const b=e.target.closest('button');if(b)setMode(b.dataset.m)};
-function keyFacts(e){
-  const pick=[];const cs=e.c.find(c=>c.f==='fact'&&c.v&&c.v.label==='Check size');if(cs)pick.push(cs);
-  const dl=e.c.find(c=>c.f==='deadline');if(dl)pick.push(dl);
-  const pl=e.c.find(c=>c.f==='place');if(pl)pick.push(pl);
-  for(const c of e.c.filter(c=>c.f==='fact'&&c.v&&!['Check size'].includes(c.v.label)))if(pick.length<3)pick.push(c);
-  return pick.slice(0,3)}
-function card(e){
-  const flags=e.c.filter(c=>c.s==='contradicted').length,on=picked.includes(e.id);
-  const offers=e.c.filter(c=>c.f==='offer').map(c=>`<span class="of ${mode==='after'?(c.s==='supported'?'ok':c.s==='inferred'?'mid':''):''}">${esc(c.v)}</span>`).join('');
-  return `<div class="card"><div class="c-main" data-open="${esc(e.id)}"><div class="c-top"><h3>${esc(e.name)}</h3><span class="cat">${esc(D.cats[e.cat]||e.cat)}</span></div>
-    <div class="loc">${esc(e.loc)}</div><p class="desc">${esc(e.desc)}</p>
-    <div class="facts">${keyFacts(e).map(c=>`<div class="fact"><span class="m m-${st(c)}" title="${esc(TAG[st(c)])}">${MARK[st(c)]}</span><span class="k">${esc(lab(c))}</span><span>${esc(val(c))}</span></div>`).join('')}</div>
-    <div class="offers">${offers}</div></div>
-    <div class="c-foot">${mode==='before'?`<span>Last verified ${esc(e.lastVerified)}</span><span>0 of ${e.c.length} sourced</span>`
-      :`<span class="meter"><span class="bar2"><span style="width:${100*e.proven/Math.max(1,e.c.length)}%"></span></span>${e.proven} of ${e.c.length} proven${flags?` · <span class="flag">▲ ${flags}</span>`:''}</span>`}
-      <label class="cmp"><input type="checkbox" data-pick="${esc(e.id)}" ${on?'checked':''}> Compare</label></div></div>`}
-function render(){
-  const q=$('q').value.trim().toLowerCase(),cat=$('cat').value,list=$('list').value,SL=new Set(D.shortlist);
-  let es=D.entries.filter(e=>(!q||(e.name+' '+e.loc).toLowerCase().includes(q))&&(!cat||e.cat===cat)&&(!need||(e.offers||[]).includes(need))
-    &&(list!=='shortlist'||SL.has(e.id))&&(list!=='flag'||e.c.some(c=>c.s==='contradicted')));
-  es.sort($('sort').value==='name'||mode==='before'?(a,b)=>a.name.localeCompare(b.name):(a,b)=>b.proven-a.proven||b.proven/Math.max(1,b.c.length)-a.proven/Math.max(1,a.c.length)||a.name.localeCompare(b.name));
-  const cl=es.flatMap(e=>e.c),pr=cl.filter(c=>c.s==='supported').length;
-  $('count').textContent=`${es.length} organizations · `+(mode==='before'?`0 of ${cl.length} claims have a source`:`${pr} of ${cl.length} claims proven by the organization's own site`);
-  $('grid').innerHTML=es.map(card).join('')||'<div class="empty">No organizations match.</div>'}
-$('grid').onclick=e=>{const p=e.target.closest('[data-pick]');if(p){togglePick(p.dataset.pick,p.checked);return}const o=e.target.closest('[data-open]');if(o)openE(o.dataset.open)};
-/* drawer */
-let openId=null;
-function openE(id){openId=id;renderDrawer();$('drawer').classList.add('on');$('scrim').classList.add('on')}
-function closeAll(){openId=null;['drawer','scrim','cmpv'].forEach(i=>$(i).classList.remove('on'))}
-$('scrim').onclick=closeAll;$('cmp-x').onclick=closeAll;document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
-const ORD={contradicted:0,supported:1,inferred:2,silent:3,refused:4};
-function claimHtml(c){const s=st(c);
-  let h=`<div class="claim"><div class="h"><span class="k">${esc(lab(c))}</span><b>${esc(c.f==='link'?name(val(c)):val(c))}</b></div>
-    <div style="margin-top:4px"><span class="tag t-${s}">${MARK[s]} ${TAG[s]}</span></div>`;
-  if(mode==='after'&&c.q)h+=`<div class="q">“${esc(c.q)}”<a href="${esc(c.u)}" target="_blank" rel="noopener">See it on their site ↗ · checked ${esc(c.t)}</a></div>`;
-  if(mode==='after'&&c.s==='contradicted'&&c.p)h+=`<div class="count" style="margin:4px 0 0">The Atlas says <b>${esc(val(c))}</b>; their site says <b style="color:var(--bad)">${esc(c.p)}</b>. Under review.</div>`;
-  return h+'</div>'}
-function renderDrawer(){if(!openId)return;const e=D.entries.find(x=>x.id===openId);
-  $('d-h').innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px"><div><h2>${esc(e.name)}</h2><div class="count" style="margin:0">${esc(D.cats[e.cat]||e.cat)} · ${esc(e.loc)} · <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.url.replace(/^https?:\/\//,''))}</a></div></div><button class="btn" onclick="closeAll()">Close</button></div>
-    <p class="desc" style="-webkit-line-clamp:unset;margin:10px 0 0">${esc(e.desc)}</p>
-    <div class="count" style="margin:8px 0 0">${mode==='before'?`Last verified ${esc(e.lastVerified)} for the whole entry. No claim has a source.`:`${e.proven} of ${e.c.length} claims proven by their own site.`}</div>`;
-  $('d-b').innerHTML=e.c.slice().sort((a,b)=>mode==='before'?0:ORD[a.s]-ORD[b.s]).map(claimHtml).join('')}
-/* compare */
-function togglePick(id,on){picked=picked.filter(x=>x!==id);if(on)picked.push(id);if(picked.length>2)picked=picked.slice(-2);renderTray();render()}
-function renderTray(){$('tray').classList.toggle('on',picked.length>0);$('tray-names').textContent=picked.map(name).join(' and ')+(picked.length<2?'  (pick one more)':'');$('tray-go').disabled=picked.length<2}
-$('tray-clear').onclick=()=>{picked=[];renderTray();render()};
-$('tray-go').onclick=()=>{if(picked.length<2)return;renderCompare();$('cmpv').classList.add('on');$('scrim').classList.add('on')};
-function renderCompare(){
-  const [a,b]=picked.map(id=>D.entries.find(e=>e.id===id));
-  const rows=[['Website',e=>e.c.find(c=>c.f==='live')],['Location',e=>e.c.find(c=>c.f==='place')],
-    ...['Check size','Equity','Terms','Stage','Program length','Focus'].map(l=>[l,e=>e.c.find(c=>c.f==='fact'&&c.v&&c.v.label===l)]),
-    ['Apply by',e=>e.c.find(c=>c.f==='deadline')]].filter(([l,f])=>f(a)||f(b));
-  const cell=c=>c?`<span class="m m-${st(c)}">${MARK[st(c)]}</span> ${esc(val(c))}${mode==='after'&&c.q?`<div class="count" style="margin:3px 0 0">“${esc(c.q.slice(0,120))}${c.q.length>120?'…':''}” <a href="${esc(c.u)}" target="_blank" rel="noopener">↗</a></div>`:''}${mode==='after'&&c.s==='contradicted'?`<div class="count flag" style="margin:3px 0 0">Their site says ${esc(c.p)}</div>`:''}`:'<span class="count">not listed</span>';
-  const sc=e=>({p:e.proven,n:e.c.length,x:e.c.filter(c=>c.s==='contradicted').length});const A=sc(a),B=sc(b);
-  const less=mode==='before'?null:(A.x!==B.x?(A.x>B.x?a:b):(A.p/A.n<B.p/B.n?a:b));
-  $('cmp-b').innerHTML=`${mode==='before'?`<div class="verdict">Before: both show only a "last verified" month (${esc(a.lastVerified)} and ${esc(b.lastVerified)}). There is no way to tell which claims still hold.</div>`
-    :`<div class="verdict"><b>${esc(a.name)}</b>: ${A.p} of ${A.n} claims proven${A.x?`, ${A.x} where their site says otherwise`:''}. <b>${esc(b.name)}</b>: ${B.p} of ${B.n} proven${B.x?`, ${B.x} where their site says otherwise`:''}.
-      ${less?` Trust <b>${esc(less.name)}</b>'s listing less: ${less===a?(A.x>B.x?'its own site disagrees with it':'fewer of its claims are backed by its own site'):(B.x>A.x?'its own site disagrees with it':'fewer of its claims are backed by its own site')}.`:''}</div>`}
-    <table class="c"><thead><tr><th></th><td>${esc(a.name)}</td><td>${esc(b.name)}</td></tr></thead><tbody>${rows.map(([l,f])=>`<tr><th>${l}</th><td>${cell(f(a))}</td><td>${cell(f(b))}</td></tr>`).join('')}</tbody></table>`}
-setMode(mode);renderTray();
-</script></body></html>
+const D = JSON.parse(document.getElementById("data").textContent);
+const ORGS = D.entries;
+const CATS = D.cats || {};
+const TAG = {
+  supported: "Proven by their site",
+  contradicted: "Their site says otherwise",
+  inferred: "Mentioned on their site, not verified",
+  silent: "No source found"
+};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const catLabel = o => CATS[o.cat] || o.cat;
+const offerLabel = o => o.charAt(0).toUpperCase() + o.slice(1);
+
+const M = D.metrics || {};
+$("metrics-nums").innerHTML = `
+  <div class="n"><strong>${esc(M.verified ?? 0)}</strong><span>verified</span></div>
+  <div class="n"><strong>${esc(M.with_sentence ?? 0)}</strong><span>with sentence</span></div>
+  <div class="n"><strong>${esc(M.needs_person ?? 0)}</strong><span>needs person</span></div>`;
+
+$("need").innerHTML += (D.offers || []).map(o =>
+  `<option value="${esc(o)}">${esc(offerLabel(o))}</option>`).join("");
+
+const MA_BOUNDS = L.latLngBounds([41.2, -73.5], [42.9, -69.9]);
+const map = L.map("map", {
+  zoomControl: false,
+  attributionControl: true,
+  minZoom: 8,
+  maxZoom: 16,
+  maxBounds: MA_BOUNDS.pad(0.08),
+  maxBoundsViscosity: 1.0
+});
+L.control.zoom({ position: "bottomright" }).addTo(map);
+map.fitBounds(MA_BOUNDS, { padding: [24, 24], animate: false });
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Mass AI Atlas with receipts',
+  maxZoom: 19,
+  bounds: MA_BOUNDS.pad(0.2)
+}).addTo(map);
+
+let need = "";
+let picked = [];
+let openId = null;
+const markers = {};
+
+function pinIcon(o, on, dim) {
+  const cls = `pin ${o.trust}${o.approx ? " approx" : ""}${on ? " on" : ""}${dim ? " dim" : ""}`;
+  return L.divIcon({
+    className: "",
+    html: `<div class="${cls}" title="${esc(o.name)}"></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7]
+  });
+}
+
+function visible() {
+  return ORGS.filter(o => !need || (o.offers || []).includes(need));
+}
+
+function overlapBits(a, b) {
+  const sharedTags = (a.tags || []).filter(t => (b.tags || []).includes(t));
+  const sharedOffers = (a.offers || []).filter(t => (b.offers || []).includes(t));
+  const sameCat = a.cat === b.cat;
+  let score = 0;
+  if (sameCat) score += 2;
+  score += sharedTags.length;
+  score += sharedOffers.length * 0.5;
+  return { score, sharedTags, sharedOffers, sameCat };
+}
+
+function similarTo(o, limit = 3) {
+  return ORGS
+    .filter(x => x.id !== o.id)
+    .map(x => ({ org: x, ...overlapBits(o, x) }))
+    .filter(r => r.sameCat && (r.sharedTags.length > 0 || r.sharedOffers.length > 0) && r.score >= 2.5)
+    .sort((a, b) => b.score - a.score || a.org.name.localeCompare(b.org.name))
+    .slice(0, limit);
+}
+
+function renderPins() {
+  const show = new Set(visible().map(o => o.id));
+  const focus = new Set([openId, ...picked].filter(Boolean));
+  ORGS.forEach(o => {
+    const m = markers[o.id];
+    if (!m) return;
+    if (show.has(o.id)) {
+      if (!map.hasLayer(m)) m.addTo(map);
+      const on = focus.has(o.id);
+      const dim = focus.size > 0 && !on;
+      m.setIcon(pinIcon(o, on, dim));
+      m.setOpacity(1);
+    } else if (map.hasLayer(m)) {
+      map.removeLayer(m);
+    }
+  });
+}
+
+ORGS.forEach(o => {
+  const m = L.marker([o.lat, o.lng], { icon: pinIcon(o, false, false), riseOnHover: true });
+  m.on("click", e => {
+    if (e.originalEvent.shiftKey) togglePick(o.id);
+    else openOrg(o.id);
+  });
+  m.addTo(map);
+  markers[o.id] = m;
+});
+
+$("need").onchange = e => {
+  need = e.target.value;
+  document.querySelectorAll(".pin").forEach(p => { p.style.opacity = "0.2"; });
+  requestAnimationFrame(() => {
+    renderPins();
+    setTimeout(() => document.querySelectorAll(".pin").forEach(p => { p.style.opacity = ""; }), 40);
+  });
+};
+
+function enterCompare(aId, bId) {
+  picked = [aId, bId];
+  renderTray();
+  renderPins();
+  openCompare();
+}
+
+function openOrg(id) {
+  openId = id;
+  const o = ORGS.find(x => x.id === id);
+  const sims = similarTo(o);
+  const site = (o.url || "").replace(/^https?:\/\//, "");
+  $("d-h").innerHTML = `
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
+      <div>
+        <h2>${esc(o.name)}</h2>
+        <div class="meta">${esc(catLabel(o))} · ${esc(o.loc)}${o.approx ? " · approximate pin" : ""}</div>
+        ${o.url ? `<div class="meta" style="margin-top:4px"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(site)}</a></div>` : ""}
+      </div>
+      <button class="btn" type="button" id="d-close">Close</button>
+    </div>
+    <p class="meta" style="margin:10px 0 0">${o.proven} of ${o.total} claims proven by their own site</p>
+    <div class="tags">${(o.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+    <div class="actions">
+      <button class="btn" type="button" id="d-cmp">${picked.includes(id) ? "Remove from compare" : "Add to compare"}</button>
+    </div>`;
+
+  let body = (o.claims || []).map(c => {
+    let extra = "";
+    if (c.q) extra += `<blockquote class="quote">“${esc(c.q)}”<a href="${esc(c.u)}" target="_blank" rel="noopener">See it on their site ↗${c.t ? ` · checked ${esc(c.t)}` : ""}</a></blockquote>`;
+    if (c.s === "contradicted" && c.p != null) extra += `<p class="meta" style="margin:8px 0 0">The Atlas says <b>${esc(c.v)}</b>; their site says <b style="color:var(--bad)">${esc(c.p)}</b>. Under review.</p>`;
+    if (c.s === "inferred") extra += `<p class="meta" style="margin:6px 0 0">Mentioned on their site, not word for word — not verified.</p>`;
+    if (c.s === "silent") extra += `<p class="meta" style="margin:6px 0 0">No matching sentence found on fetched pages.</p>`;
+    return `<div class="claim"><div class="k">${esc(c.k)}</div><div class="v">${esc(c.v)}</div>
+      <div class="status ${c.s}">${TAG[c.s] || TAG.silent}</div>${extra}</div>`;
+  }).join("");
+
+  if (sims.length) {
+    const bits = sims.map(s => {
+      const why = [
+        s.sameCat ? "same category" : null,
+        s.sharedTags.length ? `tags: ${s.sharedTags.join(", ")}` : null,
+        s.sharedOffers.length ? `offers: ${s.sharedOffers.join(", ")}` : null
+      ].filter(Boolean).join(" · ");
+      return { id: s.org.id, name: s.org.name, why };
+    });
+    body = `<div class="suggest">
+      <div class="lbl">Similar</div>
+      <div class="row">Compare with ${bits.map((b, i) =>
+        `<button type="button" class="linkish" data-cmp="${esc(b.id)}">${esc(b.name)}</button>${i < bits.length - 1 ? "," : ""}`
+      ).join(" ")}</div>
+      <div class="why">${esc(bits[0].why)}</div>
+    </div>` + body;
+  }
+
+  $("d-b").innerHTML = body;
+  $("drawer").classList.add("on");
+  $("scrim").classList.add("on");
+  $("d-close").onclick = closeDrawer;
+  $("d-cmp").onclick = () => { togglePick(id); openOrg(id); };
+  $("d-b").querySelectorAll("[data-cmp]").forEach(btn => {
+    btn.onclick = () => enterCompare(id, btn.getAttribute("data-cmp"));
+  });
+
+  const m = markers[id];
+  if (m) map.panTo(m.getLatLng(), { animate: true, duration: 0.35 });
+  renderPins();
+}
+
+function closeDrawer() {
+  openId = null;
+  $("drawer").classList.remove("on");
+  if (!$("cmpv").classList.contains("on")) $("scrim").classList.remove("on");
+  renderPins();
+}
+
+function closeAll() {
+  openId = null;
+  picked = [];
+  ["drawer", "scrim", "cmpv", "tray"].forEach(i => $(i).classList.remove("on"));
+  renderTray();
+  renderPins();
+}
+$("scrim").onclick = () => {
+  if ($("cmpv").classList.contains("on")) {
+    $("cmpv").classList.remove("on");
+    $("scrim").classList.toggle("on", !!openId);
+  } else closeDrawer();
+};
+$("cmp-x").onclick = () => {
+  $("cmpv").classList.remove("on");
+  $("scrim").classList.toggle("on", !!openId);
+};
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if ($("cmpv").classList.contains("on")) {
+    $("cmpv").classList.remove("on");
+    $("scrim").classList.toggle("on", !!openId);
+  } else if (openId) closeDrawer();
+  else closeAll();
+});
+
+function togglePick(id) {
+  if (picked.includes(id)) picked = picked.filter(x => x !== id);
+  else { picked.push(id); if (picked.length > 2) picked = picked.slice(-2); }
+  renderTray();
+  renderPins();
+}
+function renderTray() {
+  $("tray").classList.toggle("on", picked.length > 0);
+  const names = picked.map(id => (ORGS.find(o => o.id === id) || {}).name || id);
+  $("tray-names").textContent = names.join(" · ") + (picked.length < 2 ? "  (pick one more, or use a Similar link)" : "");
+  $("tray-go").disabled = picked.length < 2;
+}
+function openCompare() {
+  if (picked.length < 2) return;
+  const [a, b] = picked.map(id => ORGS.find(o => o.id === id));
+  const ov = overlapBits(a, b);
+  const claimKeys = [...new Set([...(a.claims || []), ...(b.claims || [])].map(c => c.k))];
+  const rows = [
+    ["Category", o => catLabel(o)],
+    ["Tags", o => (o.tags || []).join(", ") || "—"],
+    ["Offers", o => (o.offers || []).join(", ") || "—"],
+    ["Proven", o => `${o.proven} of ${o.total}`],
+    ["Trust pin", o => TAG[o.trust] || o.trust],
+    ...claimKeys.map(k => [
+      k, o => {
+        const c = (o.claims || []).find(x => x.k === k);
+        return c ? `${c.v} · ${TAG[c.s] || c.s}` : "—";
+      }
+    ])
+  ];
+  const shared = [
+    ov.sharedTags.length ? `shared tags: ${ov.sharedTags.join(", ")}` : null,
+    ov.sharedOffers.length ? `shared offers: ${ov.sharedOffers.join(", ")}` : null
+  ].filter(Boolean).join("; ");
+  const less = (a.claims || []).some(c => c.s === "contradicted") !== (b.claims || []).some(c => c.s === "contradicted")
+    ? ((a.claims || []).some(c => c.s === "contradicted") ? a : b)
+    : (a.proven / Math.max(1, a.total) <= b.proven / Math.max(1, b.total) ? a : b);
+  $("cmp-b").innerHTML = `
+    <p class="meta" style="margin:0 0 12px">Trust <b>${esc(less.name)}</b>’s listing less when fewer claims are proven — or when their site says otherwise — until a maintainer reviews.${shared ? ` Overlap — ${esc(shared)}.` : ""}</p>
+    <table class="c"><thead><tr><th></th><td><b>${esc(a.name)}</b></td><td><b>${esc(b.name)}</b></td></tr></thead>
+    <tbody>${rows.map(([l, f]) => `<tr><th>${esc(l)}</th><td>${esc(f(a))}</td><td>${esc(f(b))}</td></tr>`).join("")}</tbody></table>`;
+  $("drawer").classList.remove("on");
+  openId = null;
+  $("cmpv").classList.add("on");
+  $("scrim").classList.add("on");
+  renderPins();
+}
+$("tray-clear").onclick = () => { picked = []; renderTray(); renderPins(); };
+$("tray-go").onclick = openCompare;
+
+renderPins();
+</script>
+</body>
+</html>
 """
