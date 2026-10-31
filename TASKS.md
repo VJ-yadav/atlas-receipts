@@ -42,20 +42,20 @@ Two lanes that touch different files, so merges don't conflict.
 
 ## Lane A: VJ-yadav + Claude
 
-- [ ] **A1 Fetcher** (`receipts/fetch.py`): httpx with a disk cache in `cache/`, robots.txt, about 1 req/s
+- [x] **A1 Fetcher** (`receipts/fetch.py`): httpx with a disk cache in `cache/`, robots.txt, about 1 req/s
       per host, and a User-Agent naming the project. Returns url, final_url, status, html, text,
       fetched_at and sha256. Refuses sources whose terms are unverified (meetup.com).
-- [ ] **A2 Page finder + text** (`receipts/pages.py`, `receipts/text.py`): the home page plus the
+- [x] **A2 Page finder + text** (`receipts/pages.py`, `receipts/text.py`): the home page plus the
       same-site about/contact/apply/portfolio/team/program links (up to 5 pages). Turns HTML into
       sentences. `quote_on_page(quote, text)` is an exact match after normalizing whitespace and case.
-- [ ] **A3 Rules** (`receipts/rules.py`): live, place, deadline, check size / fact, link, offer.
+- [x] **A3 Rules** (`receipts/rules.py`): live, place, deadline, check size / fact, link, offer.
       Each one takes a claim and its pages and returns a receipt via `make_receipt`.
-- [ ] **A4 `receipts check [--all|<id>]`** → `out/receipts.json`; `receipts probe` → Probe 8 after,
+- [x] **A4 `receipts check [--all|<id>]`** → `out/receipts.json`; `receipts probe` → Probe 8 after,
       the Probe 5 split and status counts.
-- [ ] **A5 Model suggestions** (`receipts/model.py`): Claude suggests a sentence for fuzzy claims
+- [ ] **A5 (code ready, waiting for the API key) Model suggestions** (`receipts/model.py`): Claude suggests a sentence for fuzzy claims
       (offers, program length). Cached by page hash, and the quote is checked by code: not found →
       `refused`; found but not an exact match → `inferred`.
-- [ ] **A6 `receipts apply out/decisions.json`**: git worktree on the branch `receipts/2026-10-31`
+- [x] **A6 `receipts apply out/decisions.json`**: git worktree on the branch `receipts/2026-10-31`
       in `../mass-ai-atlas`, line-level edits to `entities.yml` (no YAML re-dump), `lastVerified` bumped
       on accepted entries, then `node scripts/validate.js` saved to `after/validate.txt`. Refuses `planted-`.
 
@@ -112,3 +112,12 @@ Paste each prompt into your coding assistant inside the repo. One branch and PR 
 ## Merge order
 `A1/A2/A3` → `B1` (review on real output) → `A4/A5` → `B2` (test on the real check) → `A6`.
 Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && … review`, and merges.
+
+## Status 12:35
+- Real output exists: `python -m receipts check --all` (75 s cold, about 1 s from cache) writes
+  `out/receipts.json` with 1,080 receipts. Probe 8: **0 → 318 / 1,080**. **B1, build against the real
+  file now** (run `check --all` once; `out/` is gitignored).
+- Statuses today: supported 318 · contradicted 1 (deltav, real) · silent 746 · refused 15.
+  Offers are always silent until the model reads them; that's deliberate.
+- **B2:** use the real `check` to score: `receipts.check.run(entries=<planted list>, out=<tests/planted/out.json>)`
+  takes any entry list. Planted `.invalid` URLs fail DNS → `contradicted` on live.
