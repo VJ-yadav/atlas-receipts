@@ -9,7 +9,7 @@ import json
 import os
 from collections import Counter
 
-from receipts.claims import FIELD_RISK
+from receipts.claims import FIELD_RISK, no_contact
 from receipts.probes import ROOT, load_entries
 from receipts.text import highlight_url
 
@@ -124,7 +124,8 @@ def build(receipts, out_path, entries=None, title="Atlas Receipts"):
             "sl_sentence": sum(r["status"] in ("supported", "inferred") for r in sl),
             "generated": max((r["fetched_at"] for r in receipts), default="")[:16].replace("T", " ") + "Z"}
     ents = [{k: e.get(k) for k in ("id", "name", "cat", "loc", "url", "lastVerified", "added", "approx",
-                                    "offers", "links", "applyBy", "desc")} for e in entries]
+                                    "offers", "links", "applyBy")} | {"desc": no_contact(e.get("desc", ""))}
+            for e in entries]
     blob = json.dumps({"head": head, "meta": meta(receipts, entries), "entities": ents, "rows": data})
     out_path.parent.mkdir(exist_ok=True)
     out_path.write_text(PAGE.replace("/*DATA*/", blob.replace("</", "<\\/")))

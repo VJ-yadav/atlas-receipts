@@ -6,6 +6,7 @@ Nothing is corrected here: a contradiction is shown as "their site says otherwis
 """
 import json
 
+from receipts.claims import no_contact
 from receipts.probes import ROOT, load_entries
 from receipts.review import SHORTLIST
 from receipts.text import highlight_url
@@ -20,6 +21,8 @@ def dataset(receipts, entries):
     out = []
     for e in entries:
         claims = by.get(e["id"], [])
+        e = {**e, "desc": no_contact(e.get("desc", "")), "why": no_contact(e.get("why", "")),
+             "applyNote": no_contact(e.get("applyNote", ""))}
         out.append({**e, "receipts": claims,
                     "proven": sum(c["status"] == "supported" for c in claims), "claims": len(claims)})
     return out
@@ -43,8 +46,10 @@ def build(receipts, entries=None):
             cl.append({"f": c["field"], "v": v, "s": c["status"], "q": c["quote"] if c["status"] != "refused" else None,
                        "u": highlight_url(c["url"], c["quote"]) if c["quote"] else c["url"],
                        "t": c["fetched_at"][:10], "p": c["page_value"]})
-        slim.append({k: e.get(k) for k in ("id", "name", "cat", "loc", "url", "desc", "why", "offers",
-                                            "links", "lastVerified", "approx")} | {"c": cl, "proven": e["proven"]})
+        row = {k: e.get(k) for k in ("id", "name", "cat", "loc", "url", "desc", "why", "offers",
+                                      "links", "lastVerified", "approx")}
+        row["desc"], row["why"] = no_contact(row["desc"] or ""), no_contact(row["why"] or "")
+        slim.append(row | {"c": cl, "proven": e["proven"]})
     blob = json.dumps({"entries": slim, "cats": {k: v["label"] for k, v in cats.items()},
                        "shortlist": SHORTLIST}).replace("</", "<\\/")
     out = ROOT / "out" / "atlas.html"

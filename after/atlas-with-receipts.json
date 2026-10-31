@@ -32,6 +32,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "csail:live:0",
@@ -168,6 +169,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "medialab:live:0",
@@ -273,6 +275,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "socc:live:0",
@@ -341,6 +344,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "jameel:live:0",
@@ -406,6 +410,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "kempner:live:0",
@@ -473,6 +478,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hdsi:live:0",
@@ -552,6 +558,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "berkman:live:0",
@@ -635,6 +642,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "eai:live:0",
@@ -746,6 +754,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "bucds:live:0",
@@ -822,6 +831,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "cics:live:0",
@@ -918,6 +928,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "wpi:live:0",
@@ -985,6 +996,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "tufts:live:0",
@@ -1072,6 +1084,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "cdsai:live:0",
@@ -1227,6 +1240,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "ciir:live:0",
@@ -1348,6 +1362,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "umass-boston-ai-institute:live:0",
@@ -1460,6 +1475,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "ndif:live:0",
@@ -1584,6 +1600,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "tufts-ai-institute:live:0",
@@ -1716,6 +1733,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "iaifi:live:0",
@@ -1882,6 +1900,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "brandeis-cs:live:0",
@@ -1984,6 +2003,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mit-ibm:live:0",
@@ -2068,6 +2088,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "nerd:live:0",
@@ -2173,6 +2194,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "google:live:0",
@@ -2252,6 +2274,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "meta-cam:live:0",
@@ -2319,6 +2342,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "amazon-sea:live:0",
@@ -2402,6 +2426,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "rai:live:0",
@@ -2484,6 +2509,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "anthropic-bos:live:0",
@@ -2550,6 +2576,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "nvidia-bos:live:0",
@@ -2618,6 +2645,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "oracle-bos:live:0",
@@ -2698,6 +2726,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "salesforce-bos:live:0",
@@ -2779,6 +2808,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "apple-bos:live:0",
@@ -2850,6 +2880,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "redhat-bos:live:0",
@@ -2953,6 +2984,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "msr-ne:live:0",
@@ -3060,6 +3092,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "amazon-robotics:live:0",
@@ -3176,6 +3209,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "rtx-bbn:live:0",
@@ -3270,6 +3304,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mitre-bedford:live:0",
@@ -3405,6 +3440,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "draper-laboratory:live:0",
@@ -3605,6 +3641,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "analog-devices:live:0",
@@ -3740,6 +3777,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "nuance-microsoft:live:0",
@@ -3838,6 +3876,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "liquid:live:0",
@@ -3923,6 +3962,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "suno:live:0",
@@ -4047,6 +4087,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "blitzy:live:0",
@@ -4165,6 +4206,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "datarobot:live:0",
@@ -4245,6 +4287,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "recfut:live:0",
@@ -4328,6 +4371,7 @@
    "badge": "$100M Waltham expansion",
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "bdyn:live:0",
@@ -4426,6 +4470,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "kensho:live:0",
@@ -4560,6 +4605,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "tamr:live:0",
@@ -4653,6 +4699,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "pathai:live:0",
@@ -4735,6 +4782,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "generate:live:0",
@@ -4829,6 +4877,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "lila:live:0",
@@ -4923,6 +4972,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "realtime:live:0",
@@ -5006,6 +5056,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "righthand:live:0",
@@ -5113,6 +5164,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "pickle:live:0",
@@ -5190,6 +5242,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "concertai:live:0",
@@ -5260,6 +5313,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "code-metal:live:0",
@@ -5341,6 +5395,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "maven:live:0",
@@ -5420,6 +5475,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "7ai:live:0",
@@ -5488,6 +5544,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "enfi:live:0",
@@ -5566,6 +5623,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "pando:live:0",
@@ -5634,6 +5692,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "foray:live:0",
@@ -5714,6 +5773,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "whelix:live:0",
@@ -5794,6 +5854,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "nervoid:live:0",
@@ -5875,6 +5936,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "intertwined:live:0",
@@ -5968,6 +6030,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "fleet:live:0",
@@ -6047,6 +6110,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "crabi:live:0",
@@ -6116,6 +6180,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "luminous:live:0",
@@ -6210,6 +6275,7 @@
    ],
    "added": "2026-09",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "endox:live:0",
@@ -6289,6 +6355,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "longreach:live:0",
@@ -6358,6 +6425,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "evolv:live:0",
@@ -6444,6 +6512,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "valis-insights:live:0",
@@ -6581,6 +6650,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "commonwealth-fusion:live:0",
@@ -6708,6 +6778,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "irobot:live:0",
@@ -6804,6 +6875,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "locus-robotics:live:0",
@@ -6877,6 +6949,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "berkshire-grey:live:0",
@@ -6959,6 +7032,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "venx:live:0",
@@ -7028,6 +7102,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "epipelagic:live:0",
@@ -7123,6 +7198,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "nextview:live:0",
@@ -7257,6 +7333,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "rough-draft:live:0",
@@ -7386,6 +7463,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "matrix:live:0",
@@ -7459,6 +7537,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "ibm-ventures:live:0",
@@ -7564,6 +7643,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "gc:live:0",
@@ -7692,6 +7772,7 @@
    "badge": "$200M+ Fund III",
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "glasswing:live:0",
@@ -7823,6 +7904,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "pillar:live:0",
@@ -7951,6 +8033,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hyperplane:live:0",
@@ -8019,6 +8102,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "flybridge:live:0",
@@ -8102,6 +8186,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "underscore:live:0",
@@ -8195,6 +8280,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "fc:live:0",
@@ -8261,6 +8347,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "battery:live:0",
@@ -8328,6 +8415,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "bessemer:live:0",
@@ -8414,6 +8502,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "flagship:live:0",
@@ -8567,6 +8656,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "atlas:live:0",
@@ -8634,6 +8724,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "polaris:live:0",
@@ -8713,6 +8804,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "engine-v:live:0",
@@ -8828,6 +8920,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "e14:live:0",
@@ -8908,6 +9001,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "converge:live:0",
@@ -8978,6 +9072,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "accomplice:live:0",
@@ -9080,6 +9175,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "406:live:0",
@@ -9178,6 +9274,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "material:live:0",
@@ -9278,6 +9375,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "massventures:live:0",
@@ -9506,6 +9604,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "foundersedge:live:0",
@@ -9689,6 +9788,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "milemark:live:0",
@@ -9796,6 +9896,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "cybernetix:live:0",
@@ -9905,6 +10006,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "two-lanterns:live:0",
@@ -10018,6 +10120,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "innospark:live:0",
@@ -10149,6 +10252,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "first-star:live:0",
@@ -10296,6 +10400,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "link-ventures:live:0",
@@ -10469,6 +10574,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hubspot-v:live:0",
@@ -10615,6 +10721,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "spark-capital:live:0",
@@ -10710,6 +10817,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "bcv:live:0",
@@ -10841,6 +10949,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "gv:live:0",
@@ -10935,6 +11044,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "unusual:live:0",
@@ -11072,6 +11182,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "venture-guides:live:0",
@@ -11181,6 +11292,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "j2:live:0",
@@ -11308,6 +11420,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "suffolk-tech:live:0",
@@ -11463,6 +11576,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "january:live:0",
@@ -11592,6 +11706,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "companyon:live:0",
@@ -11719,6 +11834,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "xfund:live:0",
@@ -11786,6 +11902,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "boston-seed:live:0",
@@ -11853,6 +11970,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "fprime:live:0",
@@ -11931,6 +12049,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "lama:live:0",
@@ -12058,6 +12177,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "sbxi:live:0",
@@ -12208,6 +12328,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "bosch-v:live:0",
@@ -12349,6 +12470,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "bha:live:0",
@@ -12415,6 +12537,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hub-angels:live:0",
@@ -12482,6 +12605,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mit-angels:live:0",
@@ -12565,6 +12689,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "tie:live:0",
@@ -12657,6 +12782,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "walnut:live:0",
@@ -12723,6 +12849,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "launchpad:live:0",
@@ -12790,6 +12917,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hbsaa:live:0",
@@ -12893,6 +13021,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "deltav:live:0",
@@ -13066,6 +13195,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "trust:live:0",
@@ -13159,6 +13289,7 @@
    "applyBy": "rolling",
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "vms:live:0",
@@ -13792,6 +13923,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "masschallenge:live:0",
@@ -13938,6 +14070,7 @@
    "applyBy": "rolling",
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "massrobotics:live:0",
@@ -14152,6 +14285,7 @@
    "applyBy": "rolling",
    "added": "2026-06",
    "lastVerified": "2026-09",
+   "applyNote": "",
    "receipts": [
     {
      "key": "greentown:live:0",
@@ -14331,6 +14465,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "toa:live:0",
@@ -14511,6 +14646,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "ssc:live:0",
@@ -14636,6 +14772,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "idea-neu:live:0",
@@ -14799,6 +14936,7 @@
    "applyBy": "rolling",
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "c10:live:0",
@@ -14989,6 +15127,7 @@
    "applyBy": "rolling",
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "founder-institute:live:0",
@@ -15150,6 +15289,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "learnlaunch:live:0",
@@ -15232,6 +15372,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "pharmstars:live:0",
@@ -15345,6 +15486,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "ai-biohub:live:0",
@@ -15601,6 +15743,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "startup-worcester:live:0",
@@ -15823,6 +15966,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "auxilium:live:0",
@@ -16267,6 +16411,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "cic:live:0",
@@ -16378,6 +16523,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "vcafe:live:0",
@@ -16484,6 +16630,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "venturelane:live:0",
@@ -16563,6 +16710,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "foundry:live:0",
@@ -16647,6 +16795,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "labcentral:live:0",
@@ -16754,6 +16903,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "harvardst:live:0",
@@ -16836,6 +16986,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "cic-boston:live:0",
@@ -16929,6 +17080,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "artisans:live:0",
@@ -17011,6 +17163,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "umassd-cie:live:0",
@@ -17171,6 +17324,7 @@
    ],
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "worclab:live:0",
@@ -17357,6 +17511,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "tinkerers:live:0",
@@ -17457,6 +17612,7 @@
    "approx": true,
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "genai-meetup:live:0",
@@ -17577,6 +17733,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "genai-collective:live:0",
@@ -17645,6 +17802,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "furnace:live:0",
@@ -17716,6 +17874,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "pydata:live:0",
@@ -17816,6 +17975,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "sundai:live:0",
@@ -17938,6 +18098,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "startupboston:live:0",
@@ -18024,6 +18185,7 @@
    "applyBy": "rolling",
    "added": "2026-10",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "build617:live:0",
@@ -18134,6 +18296,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "aimit:live:0",
@@ -18218,6 +18381,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "sloanai:live:0",
@@ -18312,6 +18476,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "maia:live:0",
@@ -18396,6 +18561,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hcsai:live:0",
@@ -18489,6 +18655,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "neuai:live:0",
@@ -18571,6 +18738,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "humic:live:0",
@@ -18667,6 +18835,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "husai:live:0",
@@ -18752,6 +18921,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "tufts-ai:live:0",
@@ -18868,6 +19038,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mit-sandbox:live:0",
@@ -18991,6 +19162,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "harvard-ventures:live:0",
@@ -19073,6 +19245,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "nu-eclub:live:0",
@@ -19169,6 +19342,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "etower:live:0",
@@ -19266,6 +19440,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "buai:live:0",
@@ -19620,6 +19795,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "odsc:live:0",
@@ -19700,6 +19876,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hackmit:live:0",
@@ -19780,6 +19957,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "hackharvard:live:0",
@@ -19864,6 +20042,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "sloan-conf:live:0",
@@ -19946,6 +20125,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "imagination:live:0",
@@ -20027,6 +20207,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "deltav-demo:live:0",
@@ -20107,6 +20288,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-06",
+   "applyNote": "",
    "receipts": [
     {
      "key": "techweek:live:0",
@@ -20405,6 +20587,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "masstech:live:0",
@@ -20540,7 +20723,7 @@
    "url": "https://aihub.masstech.org",
    "badge": "$100M initiative",
    "desc": "State AI office inside the MassTech Collaborative, announced Dec 2024 with $100M under the Mass Leads Act. Runs the Applied AI Models Innovation Challenge, the Data Commons Collaborative, the $31M AI Compute Resources cluster at MGHPCC and no-cost Google AI training for state residents; co-sponsors The Open Accelerator with IBM and Red Hat.",
-   "why": "Compute access is a rolling request to aihub@masstech.org, and the Hub's Google AI training is free to any Massachusetts resident. Innovation Challenge grants need a college, university or nonprofit lead, so a startup gets in as a named partner or subcontractor on someone else's bid.",
+   "why": "Compute access is a rolling request to [contact removed], and the Hub's Google AI training is free to any Massachusetts resident. Innovation Challenge grants need a college, university or nonprofit lead, so a startup gets in as a named partner or subcontractor on someone else's bid.",
    "tags": [
     "policy",
     "equity-free"
@@ -20576,7 +20759,7 @@
     ]
    ],
    "applyBy": "rolling",
-   "applyNote": "Compute: email aihub@masstech.org",
+   "applyNote": "Compute: email [contact removed]",
    "added": "2026-06",
    "lastVerified": "2026-10",
    "receipts": [
@@ -20792,6 +20975,7 @@
    ],
    "added": "2026-06",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mghpcc:live:0",
@@ -20886,6 +21070,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "masscec:live:0",
@@ -20978,6 +21163,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-10",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mlsc:live:0",
@@ -21043,6 +21229,7 @@
    ],
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "boston-oet:live:0",
@@ -21114,6 +21301,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "mehi-sandbox:live:0",
@@ -21224,6 +21412,7 @@
    "applyBy": "rolling",
    "added": "2026-08",
    "lastVerified": "2026-08",
+   "applyNote": "",
    "receipts": [
     {
      "key": "diu:live:0",
