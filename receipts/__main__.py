@@ -28,6 +28,13 @@ def main(argv):
             print("usage: receipts apply out/decisions.json")
             return
         apply.run(args[0])
+    elif cmd == "review":
+        import json
+        from receipts import review
+        from receipts.probes import ROOT
+        src = ROOT / "tests" / "fixtures" / "receipts.sample.json" if "--fixture" in args else ROOT / "out" / "receipts.json"
+        out = review.build(json.loads(src.read_text()), ROOT / "out" / "review.html")
+        print(f"wrote {out} ({src.name})")
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)
