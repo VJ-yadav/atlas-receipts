@@ -254,7 +254,7 @@ function render(){
     const rs=by[id],sup=rs.filter(r=>r.status==='supported');
     if(filter==='shortlist'&&!SL.has(id))continue;
     const loud=rs.filter(r=>['all','shortlist'].includes(filter)?r.status!=='supported':filter==='problems'?r.status!=='supported':r.status===filter);
-    const quiet=['all','shortlist'].includes(filter)?sup:[];
+    const quiet=['all','shortlist','problems'].includes(filter)?sup:[];
     if(!loud.length&&!quiet.length)continue;if(++shown>400)break;
     const r0=rs[0],pct=Math.round(100*sup.length/rs.length);
     html+=`<article class="card">${r0.planted?'<div class="test">TEST: planted copy with deliberate errors. Never the real data.</div>':''}

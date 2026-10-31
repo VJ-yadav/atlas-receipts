@@ -46,15 +46,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 131 sentences mention words like 'funding' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 145 sentences mention words like 'funding' on 8 pages",
   "page_value": null,
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -69,15 +71,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 51 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 61 sentences mention words like 'mentorship' on 8 pages",
   "page_value": null,
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -92,7 +96,7 @@
   },
   "status": "supported",
   "url": "https://www.techstars.com",
-  "quote": "Apply Today Review $220K Investment Terms 29 UNICORNS & COUNTING",
+  "quote": "Since 2006, we've backed the world's most promising early-stage startups, and today every company gets $220K in capital, three months of relentless hands-on mentorship, and a network of investors, operators, and corporate partners that keeps opening doors for years.",
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": "228d27e4f5baf779fe7087b277f29bcc591ea1ab8c75f67097d0b29556bbc57e",
   "reason": "the page gives $220,000",
@@ -111,20 +115,15 @@
    "label": "Equity",
    "value": "5% plus uncapped MFN SAFE"
   },
-  "status": "silent",
-  "url": "https://www.techstars.com",
-  "quote": null,
-  "fetched_at": "2026-10-31T16:54:04Z",
-  "sha256": null,
-  "reason": "5% not found on 6 pages (different wording? needs review)",
+  "status": "supported",
+  "url": "https://www.techstars.com/newsroom/investment-terms",
+  "quote": "The total equity Techstars receives will be 5% of the company in common stock plus the future value of the $200,000 uncapped MFN Safe.",
+  "fetched_at": "2026-10-31T17:06:21Z",
+  "sha256": "c252112e9596a7f68cd2ed916e82c6f1aa63ed3c9f86381e5e34eea2b52c62a1",
+  "reason": "the page gives 5%",
   "page_value": null,
   "searched": [
-   "https://www.techstars.com",
-   "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/newsroom/investment-terms"
   ],
   "by": "code"
  },
@@ -142,15 +141,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": null,
-  "reason": "13 weeks not found on 6 pages (different wording? needs review)",
+  "reason": "13 weeks not found on 8 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -173,10 +174,12 @@
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -343,14 +346,14 @@
   "field": "place",
   "value": "Cambridge",
   "status": "supported",
-  "url": "https://www.generalcatalyst.com/contact",
-  "quote": "20 University Road Fourth Floor Cambridge, MA 02138",
-  "fetched_at": "2026-10-31T16:25:43Z",
-  "sha256": "f13a3ef723d82dd85e5dbad6ac332b62eb98903c68d3fcbf1b5c8744bc3a8f13",
+  "url": "https://www.generalcatalyst.com/terms-and-conditions",
+  "quote": "A Notice to the General Catalyst should be sent to: 20 University Road, Suite 450,Cambridge, Massachusetts 02138.",
+  "fetched_at": "2026-10-31T16:25:44Z",
+  "sha256": "2862eadd7a5a542f67db03dd0f2f97a5e36ac4fba27d38e72787244f396167b9",
   "reason": "the page names 'Cambridge' from the Atlas location",
   "page_value": null,
   "searched": [
-   "https://www.generalcatalyst.com/contact"
+   "https://www.generalcatalyst.com/terms-and-conditions"
   ],
   "by": "code"
  },
@@ -370,10 +373,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -396,10 +399,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -422,10 +425,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -448,10 +451,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -471,10 +474,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -525,15 +528,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:03Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 194 sentences mention words like 'grants' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 240 sentences mention words like 'grants' on 7 pages",
   "page_value": null,
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -548,15 +552,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:03Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 324 sentences mention words like 'funding' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 344 sentences mention words like 'funding' on 7 pages",
   "page_value": null,
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -571,15 +576,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:03Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 18 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 18 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -618,15 +624,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:03Z",
   "sha256": null,
-  "reason": "0% 1 2 grants not found on 6 pages (different wording? needs review)",
+  "reason": "0% 1 2 grants not found on 7 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -649,10 +656,11 @@
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -675,10 +683,11 @@
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -701,10 +710,11 @@
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -722,15 +732,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:03Z",
   "sha256": null,
-  "reason": "26 16 1 7 2 3 3 not found on 6 pages (different wording? needs review)",
+  "reason": "26 16 1 7 2 3 3 not found on 7 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -750,10 +761,11 @@
   "searched": [
    "https://www.mass-ventures.com",
    "https://www.mass-ventures.com/programs",
-   "https://www.mass-ventures.com/portfolio",
-   "https://www.mass-ventures.com/contact",
    "https://www.mass-ventures.com/mv-capital",
-   "https://www.mass-ventures.com/venture-program"
+   "https://www.mass-ventures.com/venture-program",
+   "https://www.mass-ventures.com/start-program-info",
+   "https://www.mass-ventures.com/fundable-founder-podcast",
+   "https://www.mass-ventures.com/contact"
   ],
   "by": "code"
  },
@@ -808,11 +820,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -831,11 +843,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -854,11 +866,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -901,11 +913,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -927,11 +939,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -953,11 +965,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -979,11 +991,11 @@
   "page_value": null,
   "searched": [
    "https://www.foundersedge.com",
+   "https://apply.foundersedge.com",
+   "https://www.foundersedge.com/investor.md",
    "https://www.foundersedge.com/about/",
    "https://www.foundersedge.com/portfolio/",
-   "https://www.foundersedge.com/contact/",
-   "https://apply.foundersedge.com",
-   "https://www.foundersedge.com/investor.md"
+   "https://www.foundersedge.com/contact/"
   ],
   "by": "code"
  },
@@ -1175,8 +1187,8 @@
   "page_value": null,
   "searched": [
    "https://firststar.vc",
-   "https://firststar.vc/companies",
-   "https://firststar.vc/about"
+   "https://firststar.vc/about",
+   "https://firststar.vc/companies"
   ],
   "by": "code"
  },
@@ -1198,8 +1210,8 @@
   "page_value": null,
   "searched": [
    "https://firststar.vc",
-   "https://firststar.vc/companies",
-   "https://firststar.vc/about"
+   "https://firststar.vc/about",
+   "https://firststar.vc/companies"
   ],
   "by": "code"
  },
@@ -1221,8 +1233,8 @@
   "page_value": null,
   "searched": [
    "https://firststar.vc",
-   "https://firststar.vc/companies",
-   "https://firststar.vc/about"
+   "https://firststar.vc/about",
+   "https://firststar.vc/companies"
   ],
   "by": "code"
  },
@@ -1244,8 +1256,8 @@
   "page_value": null,
   "searched": [
    "https://firststar.vc",
-   "https://firststar.vc/companies",
-   "https://firststar.vc/about"
+   "https://firststar.vc/about",
+   "https://firststar.vc/companies"
   ],
   "by": "code"
  },
@@ -1264,8 +1276,8 @@
   "page_value": null,
   "searched": [
    "https://firststar.vc",
-   "https://firststar.vc/companies",
-   "https://firststar.vc/about"
+   "https://firststar.vc/about",
+   "https://firststar.vc/companies"
   ],
   "by": "code"
  },
@@ -1487,15 +1499,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:44Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 241 sentences mention words like 'funding' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 263 sentences mention words like 'funding' on 7 pages",
   "page_value": null,
   "searched": [
    "https://baincapitalventures.com/",
    "https://baincapitalventures.com/portfolio/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
    "https://baincapitalventures.com/about/",
    "https://baincapitalventures.com/labs/",
-   "https://baincapitalventures.com/contact/",
-   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/"
+   "https://baincapitalventures.com/contact/"
   ],
   "by": "code"
  },
@@ -1510,15 +1523,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:44Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 2 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 2 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://baincapitalventures.com/",
    "https://baincapitalventures.com/portfolio/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
    "https://baincapitalventures.com/about/",
    "https://baincapitalventures.com/labs/",
-   "https://baincapitalventures.com/contact/",
-   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/"
+   "https://baincapitalventures.com/contact/"
   ],
   "by": "code"
  },
@@ -1536,15 +1550,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:44Z",
   "sha256": null,
-  "reason": "no amount matching $1M\u00e2\u20ac\u201c$5M seed; up to $100M growth on 6 pages",
+  "reason": "no amount matching $1M\u00e2\u20ac\u201c$5M seed; up to $100M growth on 7 pages",
   "page_value": null,
   "searched": [
    "https://baincapitalventures.com/",
    "https://baincapitalventures.com/portfolio/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
    "https://baincapitalventures.com/about/",
    "https://baincapitalventures.com/labs/",
-   "https://baincapitalventures.com/contact/",
-   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/"
+   "https://baincapitalventures.com/contact/"
   ],
   "by": "code"
  },
@@ -1567,10 +1582,11 @@
   "searched": [
    "https://baincapitalventures.com/",
    "https://baincapitalventures.com/portfolio/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
    "https://baincapitalventures.com/about/",
    "https://baincapitalventures.com/labs/",
-   "https://baincapitalventures.com/contact/",
-   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/"
+   "https://baincapitalventures.com/contact/"
   ],
   "by": "code"
  },
@@ -1593,10 +1609,11 @@
   "searched": [
    "https://baincapitalventures.com/",
    "https://baincapitalventures.com/portfolio/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
+   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/",
    "https://baincapitalventures.com/about/",
    "https://baincapitalventures.com/labs/",
-   "https://baincapitalventures.com/contact/",
-   "https://baincapitalventures.com/insight/investing-in-legora-ai-and-second-mover-advantage/"
+   "https://baincapitalventures.com/contact/"
   ],
   "by": "code"
  },
@@ -2066,11 +2083,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2089,11 +2106,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2108,15 +2125,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:16Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 59 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 56 sentences mention words like 'mentorship' on 6 pages",
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2159,11 +2176,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2185,11 +2202,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2211,11 +2228,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2234,11 +2251,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2257,11 +2274,11 @@
   "page_value": null,
   "searched": [
    "https://entrepreneurship.mit.edu/accelerator/program/",
-   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
    "https://entrepreneurship.mit.edu/accelerator/partner-network/",
    "https://entrepreneurship.mit.edu/accelerator/2026-delta-v/",
-   "https://entrepreneurship.mit.edu/mission/",
-   "https://entrepreneurship.mit.edu/accelerator/program/"
+   "https://entrepreneurship.mit.edu/delta-v-10-year-study/",
+   "https://entrepreneurship.mit.edu/accelerator/program/",
+   "https://entrepreneurship.mit.edu/accelerator/demo-day/"
   ],
   "by": "code"
  },
@@ -2294,15 +2311,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "none of ['Cambridge (MIT campus)'] appears on 6 pages",
+  "reason": "none of ['Cambridge (MIT campus)'] appears on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  },
@@ -2317,15 +2335,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 191 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 213 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  },
@@ -2343,15 +2362,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "no sentence says rolling, open or closed on 6 pages",
+  "reason": "no sentence says rolling, open or closed on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  },
@@ -2380,14 +2400,14 @@
   "field": "place",
   "value": "125 Western Ave, Allston",
   "status": "supported",
-  "url": "https://innovationlabs.harvard.edu/about/visit",
-  "quote": "first floor of Batten Hall at 125 Western Avenue is home to our",
-  "fetched_at": "2026-10-31T16:25:56Z",
-  "sha256": "47703f58cc42b70220fe970f90eb5df563a4ca6ebb169c50191a1ebc24c7aeca",
+  "url": "https://innovationlabs.harvard.edu/labs/student-i-lab",
+  "quote": "Batten Hall 125 Western Ave Allston, MA 02163",
+  "fetched_at": "2026-10-31T17:07:00Z",
+  "sha256": "f0a922835f06979b3fcbd0ad65f82e3f2b708d9c8618f32713414c9608a12820",
   "reason": "the page names '125 Western Ave' from the Atlas location",
   "page_value": null,
   "searched": [
-   "https://innovationlabs.harvard.edu/about/visit"
+   "https://innovationlabs.harvard.edu/labs/student-i-lab"
   ],
   "by": "code"
  },
@@ -2402,15 +2422,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 89 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 114 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://innovationlabs.harvard.edu",
    "https://innovationlabs.harvard.edu/presidents-innovation-challenge",
    "https://innovationlabs.harvard.edu/terms-of-use",
-   "https://innovationlabs.harvard.edu/about/about-us",
-   "https://innovationlabs.harvard.edu/about/ecosystem",
-   "https://innovationlabs.harvard.edu/about/visit"
+   "https://innovationlabs.harvard.edu/labs/student-i-lab",
+   "https://innovationlabs.harvard.edu/funding-opportunities/social-impact",
+   "https://innovationlabs.harvard.edu/articles/announcing-the-2026-27-harvard-climate-circle-accelerator",
+   "https://innovationlabs.harvard.edu/about/about-us"
   ],
   "by": "code"
  },
@@ -2425,15 +2446,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 17 sentences mention words like 'space' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 15 sentences mention words like 'space' on 7 pages",
   "page_value": null,
   "searched": [
    "https://innovationlabs.harvard.edu",
    "https://innovationlabs.harvard.edu/presidents-innovation-challenge",
    "https://innovationlabs.harvard.edu/terms-of-use",
-   "https://innovationlabs.harvard.edu/about/about-us",
-   "https://innovationlabs.harvard.edu/about/ecosystem",
-   "https://innovationlabs.harvard.edu/about/visit"
+   "https://innovationlabs.harvard.edu/labs/student-i-lab",
+   "https://innovationlabs.harvard.edu/funding-opportunities/social-impact",
+   "https://innovationlabs.harvard.edu/articles/announcing-the-2026-27-harvard-climate-circle-accelerator",
+   "https://innovationlabs.harvard.edu/about/about-us"
   ],
   "by": "code"
  },
@@ -2448,15 +2470,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 23 sentences mention words like 'grants' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 30 sentences mention words like 'grants' on 7 pages",
   "page_value": null,
   "searched": [
    "https://innovationlabs.harvard.edu",
    "https://innovationlabs.harvard.edu/presidents-innovation-challenge",
    "https://innovationlabs.harvard.edu/terms-of-use",
-   "https://innovationlabs.harvard.edu/about/about-us",
-   "https://innovationlabs.harvard.edu/about/ecosystem",
-   "https://innovationlabs.harvard.edu/about/visit"
+   "https://innovationlabs.harvard.edu/labs/student-i-lab",
+   "https://innovationlabs.harvard.edu/funding-opportunities/social-impact",
+   "https://innovationlabs.harvard.edu/articles/announcing-the-2026-27-harvard-climate-circle-accelerator",
+   "https://innovationlabs.harvard.edu/about/about-us"
   ],
   "by": "code"
  },
@@ -2477,9 +2500,10 @@
    "https://innovationlabs.harvard.edu",
    "https://innovationlabs.harvard.edu/presidents-innovation-challenge",
    "https://innovationlabs.harvard.edu/terms-of-use",
-   "https://innovationlabs.harvard.edu/about/about-us",
-   "https://innovationlabs.harvard.edu/about/ecosystem",
-   "https://innovationlabs.harvard.edu/about/visit"
+   "https://innovationlabs.harvard.edu/labs/student-i-lab",
+   "https://innovationlabs.harvard.edu/funding-opportunities/social-impact",
+   "https://innovationlabs.harvard.edu/articles/announcing-the-2026-27-harvard-climate-circle-accelerator",
+   "https://innovationlabs.harvard.edu/about/about-us"
   ],
   "by": "code"
  },
@@ -2497,15 +2521,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "no sentence says rolling, open or closed on 6 pages",
+  "reason": "no sentence says rolling, open or closed on 7 pages",
   "page_value": null,
   "searched": [
    "https://innovationlabs.harvard.edu",
    "https://innovationlabs.harvard.edu/presidents-innovation-challenge",
    "https://innovationlabs.harvard.edu/terms-of-use",
-   "https://innovationlabs.harvard.edu/about/about-us",
-   "https://innovationlabs.harvard.edu/about/ecosystem",
-   "https://innovationlabs.harvard.edu/about/visit"
+   "https://innovationlabs.harvard.edu/labs/student-i-lab",
+   "https://innovationlabs.harvard.edu/funding-opportunities/social-impact",
+   "https://innovationlabs.harvard.edu/articles/announcing-the-2026-27-harvard-climate-circle-accelerator",
+   "https://innovationlabs.harvard.edu/about/about-us"
   ],
   "by": "code"
  },
@@ -2534,14 +2559,14 @@
   "field": "place",
   "value": "750 Main St, Cambridge",
   "status": "supported",
-  "url": "https://engine.xyz",
-  "quote": "Fabrication space at 750 Main Street.",
-  "fetched_at": "2026-10-31T16:25:52Z",
-  "sha256": "7a1463098745767374302e74ff51f1ea48b1320220e27fef2a90b55a344b2063",
+  "url": "https://engine.xyz/spaces/residency/resident-programs",
+  "quote": "Residency Options Request a Tour 750 Main Street",
+  "fetched_at": "2026-10-31T17:07:04Z",
+  "sha256": "9ed1a1d726aac95a2335061873e0f3696a7eb12d247488a57a83cac1618db6e0",
   "reason": "the page names '750 Main St' from the Atlas location",
   "page_value": null,
   "searched": [
-   "https://engine.xyz"
+   "https://engine.xyz/spaces/residency/resident-programs"
   ],
   "by": "code"
  },
@@ -2556,13 +2581,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 47 sentences mention words like 'space' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 70 sentences mention words like 'space' on 8 pages",
   "page_value": null,
   "searched": [
    "https://engine.xyz",
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2579,13 +2606,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 2 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 9 sentences mention words like 'mentorship' on 8 pages",
   "page_value": null,
   "searched": [
    "https://engine.xyz",
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2602,13 +2631,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 117 sentences mention words like 'community' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 165 sentences mention words like 'community' on 8 pages",
   "page_value": null,
   "searched": [
    "https://engine.xyz",
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2625,13 +2656,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 25 sentences mention words like 'grants' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 36 sentences mention words like 'grants' on 8 pages",
   "page_value": null,
   "searched": [
    "https://engine.xyz",
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2658,6 +2691,8 @@
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2684,6 +2719,8 @@
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2703,13 +2740,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "8 weeks not found on 6 pages (different wording? needs review)",
+  "reason": "8 weeks not found on 8 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://engine.xyz",
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2736,6 +2775,8 @@
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2759,6 +2800,8 @@
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2778,13 +2821,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "no sentence says rolling, open or closed on 6 pages",
+  "reason": "no sentence says rolling, open or closed on 8 pages",
   "page_value": null,
   "searched": [
    "https://engine.xyz",
    "https://engine.xyz/programs",
    "https://engine.xyz/investors",
    "https://engine.xyz/tough-tech-fundamentals",
+   "https://engine.xyz/landing/apply-for-residency",
+   "https://engine.xyz/spaces/residency/resident-programs",
    "https://engine.xyz/contact",
    "https://engine.xyz/about/our-mission"
   ],
@@ -2837,15 +2882,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 83 sentences mention words like 'space' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 64 sentences mention words like 'space' on 7 pages",
   "page_value": null,
   "searched": [
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -2861,15 +2906,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 17 sentences mention words like 'customers' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 12 sentences mention words like 'customers' on 7 pages",
   "page_value": null,
   "searched": [
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -2885,15 +2930,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 211 sentences mention words like 'community' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 181 sentences mention words like 'community' on 7 pages",
   "page_value": null,
   "searched": [
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -2918,9 +2963,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -2945,9 +2990,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -2972,9 +3017,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -2996,9 +3041,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -3020,9 +3065,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -3044,9 +3089,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -3071,9 +3116,9 @@
    "https://www.massrobotics.org",
    "https://www.massrobotics.org/international-immersion-program/",
    "https://www.massrobotics.org/massrobotics-accelerator/",
+   "https://www.massrobotics.org/algorized-and-zhaw-school-of-engineering-launch-research-on-predicting-human-movement-around-collaborative-robots-funded-by-innosuisse/",
+   "https://www.massrobotics.org/startups/resident-application/",
    "https://www.massrobotics.org/about-us/",
-   "https://www.massrobotics.org/startups/",
-   "https://www.massrobotics.org/massrobotics-startups-visit-the-analog-devices-emerging-tech-hub/",
    "https://www.massrobotics.org/contact-us/"
   ],
   "by": "code"
@@ -3676,15 +3721,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:55Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 234 sentences mention words like 'mentorship' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 238 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -3700,15 +3745,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:55Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 278 sentences mention words like 'community' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 298 sentences mention words like 'community' on 7 pages",
   "page_value": null,
   "searched": [
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -3754,9 +3799,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -3781,9 +3826,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -3808,9 +3853,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -3889,8 +3934,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -3911,8 +3956,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -3933,8 +3978,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -3955,8 +4000,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -3980,8 +4025,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -4005,8 +4050,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -4030,8 +4075,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -4055,8 +4100,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -4080,8 +4125,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -4105,8 +4150,8 @@
    "https://www.auxiliumworcester.com/",
    "https://www.auxiliumworcester.com/accelerator",
    "https://www.auxiliumworcester.com/auxilium-mbi-lifesciences-accelerator",
-   "https://www.auxiliumworcester.com/contact",
-   "https://www.auxiliumworcester.com/innovation-studio"
+   "https://www.auxiliumworcester.com/innovation-studio",
+   "https://www.auxiliumworcester.com/contact"
   ],
   "by": "code"
  },
@@ -4137,7 +4182,7 @@
   "status": "supported",
   "url": "https://venturewell.org/contact-us/",
   "quote": "By Mail 57 East Pleasant Street Amherst, MA 01002",
-  "fetched_at": "2026-10-31T16:26:08Z",
+  "fetched_at": "2026-10-31T17:07:07Z",
   "sha256": "32d9a6c02ddec1e7c4eb2bb25db85c72ae8c17d4bf9a30622fc4baf2fa7d9ca8",
   "reason": "the page names '57 East Pleasant St' from the Atlas location",
   "page_value": null,
@@ -4157,15 +4202,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:59Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 83 sentences mention words like 'grants' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 110 sentences mention words like 'grants' on 8 pages",
   "page_value": null,
   "searched": [
    "https://venturewell.org/",
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4180,15 +4227,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:59Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 16 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 35 sentences mention words like 'mentorship' on 8 pages",
   "page_value": null,
   "searched": [
    "https://venturewell.org/",
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4203,15 +4252,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:59Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 156 sentences mention words like 'community' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 198 sentences mention words like 'community' on 8 pages",
   "page_value": null,
   "searched": [
    "https://venturewell.org/",
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4236,8 +4287,10 @@
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4255,15 +4308,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:59Z",
   "sha256": null,
-  "reason": "0% not found on 6 pages (different wording? needs review)",
+  "reason": "0% not found on 8 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://venturewell.org/",
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4281,15 +4336,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:59Z",
   "sha256": null,
-  "reason": "5 weeks 6 weeks not found on 6 pages (different wording? needs review)",
+  "reason": "5 weeks 6 weeks not found on 8 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://venturewell.org/",
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4307,15 +4364,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:59Z",
   "sha256": null,
-  "reason": "10 15 26 27 not found on 6 pages (different wording? needs review)",
+  "reason": "10 15 26 27 not found on 8 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://venturewell.org/",
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4340,8 +4399,10 @@
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4366,8 +4427,10 @@
    "https://venturewell.org/venturewell-accelerator/",
    "https://venturewell.org/ocean-enterprise-accelerator/",
    "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/fall-2026-stage-0-ocean-enterprise-accelerator-cohort/",
+   "https://venturewell.org/aspire-medtech/",
+   "https://venturewell.org/contact-us/",
+   "https://venturewell.org/about-us/"
   ],
   "by": "code"
  },
@@ -4380,20 +4443,15 @@
    "applyBy": "2026-12-01",
    "applyNote": "Aspire Medtech; E-Team Nov 9\u00e2\u20ac\u201cJan 25"
   },
-  "status": "silent",
-  "url": "https://venturewell.org/",
-  "quote": null,
-  "fetched_at": "2026-10-31T16:25:59Z",
-  "sha256": null,
-  "reason": "the date 2026-12-01 does not appear on 6 pages (searched as December 1, 2026, December 1 2026, Dec 1, 2026 \u2026)",
+  "status": "supported",
+  "url": "https://venturewell.org/aspire-medtech/",
+  "quote": "Info Session: November 9, 2026, 5-6 p.m. ET Application Deadline: December 1, 2026",
+  "fetched_at": "2026-10-31T17:07:05Z",
+  "sha256": "24c79649bf255e45856533aecbb1a22833d2cac0a30463c4bf7c1b946df32ba4",
+  "reason": "the page gives the deadline 2026-12-01",
   "page_value": null,
   "searched": [
-   "https://venturewell.org/",
-   "https://venturewell.org/venturewell-accelerator/",
-   "https://venturewell.org/ocean-enterprise-accelerator/",
-   "https://venturewell.org/radx-programs/",
-   "https://venturewell.org/about-us/",
-   "https://venturewell.org/contact-us/"
+   "https://venturewell.org/aspire-medtech/"
   ],
   "by": "code"
  },
@@ -4919,8 +4977,8 @@
   "page_value": null,
   "searched": [
    "https://www.etower.org",
-   "https://www.etower.org/contact",
-   "https://www.etower.org/terms"
+   "https://www.etower.org/terms",
+   "https://www.etower.org/contact"
   ],
   "by": "code"
  },
@@ -4939,8 +4997,8 @@
   "page_value": null,
   "searched": [
    "https://www.etower.org",
-   "https://www.etower.org/contact",
-   "https://www.etower.org/terms"
+   "https://www.etower.org/terms",
+   "https://www.etower.org/contact"
   ],
   "by": "code"
  },
@@ -5012,16 +5070,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:26:10Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 277 sentences mention words like 'community' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 368 sentences mention words like 'community' on 8 pages",
   "page_value": null,
   "searched": [
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5042,10 +5101,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5066,10 +5126,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5090,10 +5151,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5114,10 +5176,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5138,10 +5201,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5156,16 +5220,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:26:10Z",
   "sha256": null,
-  "reason": "neither page names the other: C10 Labs is not named on 7 pages of Boston AI Week, nor Boston AI Week on 3 of theirs",
+  "reason": "neither page names the other: C10 Labs is not named on 8 pages of Boston AI Week, nor Boston AI Week on 3 of theirs",
   "page_value": null,
   "searched": [
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5186,10 +5251,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5210,10 +5276,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5234,10 +5301,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5258,10 +5326,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5282,10 +5351,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5295,15 +5365,22 @@
   "name": "Boston AI Week",
   "field": "link",
   "value": "massrobotics",
-  "status": "supported",
-  "url": "https://aiweek.boston/visit",
-  "quote": "Use this map to orient yourself between the waterfront, MassRobotics, The Grand, Island Creek Oysters Raw Bar, and your hotel.",
-  "fetched_at": "2026-10-31T16:26:15Z",
-  "sha256": "78188306ee1198b01c159f445235b4dd8932e5b10cacb8cf95a5adffb06e3570",
-  "reason": "the page names MassRobotics (massrobotics)",
+  "status": "silent",
+  "url": "https://aiweek.boston",
+  "quote": null,
+  "fetched_at": "2026-10-31T16:26:10Z",
+  "sha256": null,
+  "reason": "neither page names the other: MassRobotics is not named on 8 pages of Boston AI Week, nor Boston AI Week on 7 of theirs",
   "page_value": null,
   "searched": [
-   "https://aiweek.boston/visit"
+   "https://aiweek.boston",
+   "https://aiweek.boston/2027",
+   "https://aiweek.boston/proclamation",
+   "https://aiweek.boston/partners-the-open-accelerator",
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5324,10 +5401,11 @@
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5345,16 +5423,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:26:10Z",
   "sha256": null,
-  "reason": "no sentence says rolling, open or closed on 7 pages",
+  "reason": "no sentence says rolling, open or closed on 8 pages",
   "page_value": null,
   "searched": [
    "https://aiweek.boston",
    "https://aiweek.boston/2027",
    "https://aiweek.boston/proclamation",
-   "https://aiweek.boston/visit",
-   "https://aiweek.boston/about",
    "https://aiweek.boston/partners-the-open-accelerator",
-   "https://aiweek.boston/contact"
+   "https://aiweek.boston/partners-women-applying-ai",
+   "https://aiweek.boston/terms",
+   "https://aiweek.boston/contact",
+   "https://aiweek.boston/about"
   ],
   "by": "code"
  },
@@ -5555,7 +5634,7 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:26:09Z",
   "sha256": null,
-  "reason": "neither page names the other: The Engine is not named on 1 pages of Massachusetts AI Coalition, nor Massachusetts AI Coalition on 6 of theirs",
+  "reason": "neither page names the other: The Engine is not named on 1 pages of Massachusetts AI Coalition, nor Massachusetts AI Coalition on 8 of theirs",
   "page_value": null,
   "searched": [
    "https://massaicoalition.com"
@@ -5630,15 +5709,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 131 sentences mention words like 'funding' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 145 sentences mention words like 'funding' on 8 pages",
   "page_value": null,
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -5653,15 +5734,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 51 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 61 sentences mention words like 'mentorship' on 8 pages",
   "page_value": null,
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -5695,20 +5778,15 @@
    "label": "Equity",
    "value": "5% plus uncapped MFN SAFE"
   },
-  "status": "silent",
-  "url": "https://www.techstars.com",
-  "quote": null,
-  "fetched_at": "2026-10-31T16:54:04Z",
-  "sha256": null,
-  "reason": "5% not found on 6 pages (different wording? needs review)",
+  "status": "supported",
+  "url": "https://www.techstars.com/newsroom/investment-terms",
+  "quote": "The total equity Techstars receives will be 5% of the company in common stock plus the future value of the $200,000 uncapped MFN Safe.",
+  "fetched_at": "2026-10-31T17:06:21Z",
+  "sha256": "c252112e9596a7f68cd2ed916e82c6f1aa63ed3c9f86381e5e34eea2b52c62a1",
+  "reason": "the page gives 5%",
   "page_value": null,
   "searched": [
-   "https://www.techstars.com",
-   "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/newsroom/investment-terms"
   ],
   "by": "code"
  },
@@ -5726,15 +5804,17 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": null,
-  "reason": "13 weeks not found on 6 pages (different wording? needs review)",
+  "reason": "13 weeks not found on 8 pages (different wording? needs review)",
   "page_value": null,
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -5757,10 +5837,12 @@
   "searched": [
    "https://www.techstars.com",
    "https://www.techstars.com/accelerators/boston",
-   "https://www.techstars.com/portfolio",
-   "https://www.techstars.com/locations",
-   "https://www.techstars.com/about",
-   "https://www.techstars.com/contact"
+   "https://www.techstars.com/terms-of-use",
+   "https://www.techstars.com/newsroom/investment-terms",
+   "https://www.techstars.com/newsroom/techstars-is-no-1-on-time-and-statista-s-2026-accelerator-list",
+   "https://www.techstars.com/accelerators/abn-amro-techstars-future-of-finance-accelerator",
+   "https://www.techstars.com/contact",
+   "https://www.techstars.com/about"
   ],
   "by": "code"
  },
@@ -5820,9 +5902,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -5838,15 +5920,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:55Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 234 sentences mention words like 'mentorship' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 238 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -5862,15 +5944,15 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:55Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 278 sentences mention words like 'community' on 7 pages",
+  "reason": "offers need a reading, not a keyword: 298 sentences mention words like 'community' on 7 pages",
   "page_value": null,
   "searched": [
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -5916,9 +5998,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -5943,9 +6025,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -5970,9 +6052,9 @@
    "https://fi.co/s/boston",
    "https://fi.co/boston",
    "https://fi.co/aifounder",
-   "https://fi.co/foundergen",
    "https://fi.co/foundercapital",
-   "https://fi.co/overview",
+   "https://fi.co/event/from-founder-to-funded-interactive-q-a-with-brian-bell-boston-fall-2026",
+   "https://fi.co/insight/what-do-startup-accelerators-actually-look-for-16-years-of-founder-data-explains",
    "https://fi.co/about"
   ],
   "by": "code"
@@ -6212,7 +6294,7 @@
   },
   "status": "supported",
   "url": "https://www.techstars.com",
-  "quote": "Apply Today Review $220K Investment Terms 29 UNICORNS & COUNTING",
+  "quote": "Since 2006, we've backed the world's most promising early-stage startups, and today every company gets $220K in capital, three months of relentless hands-on mentorship, and a network of investors, operators, and corporate partners that keeps opening doors for years.",
   "fetched_at": "2026-10-31T16:54:04Z",
   "sha256": "228d27e4f5baf779fe7087b277f29bcc591ea1ab8c75f67097d0b29556bbc57e",
   "reason": "the page gives $220,000",
@@ -6379,10 +6461,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -6405,10 +6487,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -6431,10 +6513,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -6457,10 +6539,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -6480,10 +6562,10 @@
   "searched": [
    "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
    "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
    "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
-   "https://www.generalcatalyst.com/terms-and-conditions"
+   "https://www.generalcatalyst.com/terms-and-conditions",
+   "https://www.generalcatalyst.com/portfolio",
+   "https://www.generalcatalyst.com/contact"
   ],
   "by": "code"
  },
@@ -6516,15 +6598,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "none of ['Cambridge (MIT campus)'] appears on 6 pages",
+  "reason": "none of ['Cambridge (MIT campus)'] appears on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  },
@@ -6539,15 +6622,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "offers need a reading, not a keyword: 191 sentences mention words like 'mentorship' on 6 pages",
+  "reason": "offers need a reading, not a keyword: 213 sentences mention words like 'mentorship' on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  },
@@ -6565,15 +6649,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "no amount matching $999K on 6 pages",
+  "reason": "no amount matching $999K on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  },
@@ -6591,15 +6676,16 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": null,
-  "reason": "no sentence says rolling, open or closed on 6 pages",
+  "reason": "no sentence says rolling, open or closed on 7 pages",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu",
+   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service",
    "https://vms.mit.edu/promote-your-venture",
-   "https://vms.mit.edu/mit-venture-mentoring-service/vms-program-offerings",
    "https://vms.mit.edu/mit-venture-mentoring-service/vms-history",
-   "https://vms.mit.edu/contact-us"
+   "https://vms.mit.edu/application",
+   "https://vms.mit.edu/contact"
   ],
   "by": "code"
  }

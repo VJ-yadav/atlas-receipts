@@ -232,11 +232,16 @@ FACT_CTX = {"Program length": re.compile(r"program|accelerator|cohort|course|bat
             "Equity": re.compile(r"equity|stake|common stock|safe", re.I)}
 
 
+# a sentence that says what the money is, rather than a button or menu label
+PROSE_MONEY = re.compile(r"\b(invest(s|ed)?|receives?|gets?|provides?|offers?|awards?|writes?|grants?|"
+                         r"through|up to|ranging|range)\b", re.I)
+
+
 def rule_fact(claim, pages):
     label, val = claim["value"]["label"], claim["value"]["value"]
     if label in ("Check size", "Terms") and amounts(val):
         want = amounts(val.split("(")[0]) or amounts(val)
-        p, s = find(pages, lambda s: set(want) <= set(amounts(s)))
+        p, s = find(pages, lambda s: set(want) <= set(amounts(s)), prefer=lambda s: full_sentence(s) and PROSE_MONEY.search(s))
         if p:
             return supported(claim, p, s, f"the page gives {', '.join(f'${a:,}' for a in want)}")
         p1, s1 = find(pages, lambda s: set(want) & set(amounts(s)))

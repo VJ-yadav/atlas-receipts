@@ -6,5 +6,5 @@ Probe 5 lastVerified 2026-06      52 / 197
 Probe 6 west of Worcester         5 / 197
 Probe 7 hand time per entry       10-15 min (maintainer's estimate)
 Probe 8 claims with a receipt     351 / 1080  (verified by code)
-        with a sourced sentence   686 / 1080  (adds 335 model readings, labelled inferred)
+        with a sourced sentence   685 / 1080  (adds 334 model readings, labelled inferred)
         claims by type: live 197, place 197, offer 318, link 170, fact 177, deadline 21
