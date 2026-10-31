@@ -109,9 +109,9 @@ PAGE = r"""<!doctype html>
 --info:#1f5fbf;--info-soft:#eaf2ff;--test:#b4410c;--test-soft:#fdf0e8;
 --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono","SF Mono",Menlo,monospace;
 --r:10px;--shadow:0 1px 2px 0 rgb(16 17 20/.05),0 1px 1px 0 rgb(16 17 20/.03)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#131417;--side:#16171a;--muted:#212227;--ink:#ececef;--mute:#a6abb6;
+:root[data-theme=dark]{--bg:#131417;--side:#16171a;--muted:#212227;--ink:#ececef;--mute:#a6abb6;
 --faint:#8e939e;--line:#2c2e34;--hair:#24262b;--acc:#4ade80;--acc-strong:#22c55e;--acc-soft:#15291d;--warn:#fbbf24;--warn-soft:#2e2410;
---bad:#f87171;--bad-soft:#331616;--info:#8fb8ff;--info-soft:#16223a;--test:#fb923c;--test-soft:#331a0c}}
+--bad:#f87171;--bad-soft:#331616;--info:#8fb8ff;--info-soft:#16223a;--test:#fb923c;--test-soft:#331a0c}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
 a{color:var(--info);text-decoration:none}a:hover{text-decoration:underline}
 .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
@@ -190,6 +190,8 @@ details.quiet>summary{padding:10px 16px;border-top:1px solid var(--hair);cursor:
   <span class="dot d-refused"></span>Refused: not allowed to collect, or the suggested sentence is not on the page.</p>
   <div class="side-h">How it decides</div>
   <p class="side-p">Claude may suggest. Code checks every quote against the saved page. A person decides. Nothing is written to the Atlas without Accept.</p>
+  <div class="side-h">Display</div>
+  <p class="side-p"><button class="btn" id="theme">Dark mode</button></p>
   <div class="side-h">Data</div>
   <p class="side-p">Mass AI Atlas, The Open Accelerator, CC BY 4.0. <span id="gen"></span></p>
 </aside>
@@ -275,6 +277,9 @@ const ref={};for(const r of D.rows.filter(r=>r.status==='refused'))(ref[r.reason
 const nref=D.rows.filter(r=>r.status==='refused').length;
 document.getElementById('refused').innerHTML=nref?`<h3>Refused (${nref}): what it would not do, and why</h3>`+Object.entries(ref).sort((a,b)=>b[1].length-a[1].length)
   .map(([w,rs])=>`<div class="rg"><b>${rs.length}</b> · ${esc(w)}<div class="why mono">${[...new Set(rs.map(r=>r.id))].map(esc).join(', ')}</div></div>`).join(''):'';
+const th=document.getElementById('theme'),setTheme=t=>{document.documentElement.dataset.theme=t;th.textContent=t==='dark'?'Light mode':'Dark mode';try{localStorage.setItem('receipts-theme',t)}catch(e){}};
+let t0='light';try{t0=localStorage.getItem('receipts-theme')||'light'}catch(e){}setTheme(t0);
+th.onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 save();render();
 </script></body></html>
 """
