@@ -1,0 +1,3 @@
+Mass AI Atlas — validating 197 entries, 11 categories
+
+PASSED: data/ is valid.

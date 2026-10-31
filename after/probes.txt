@@ -1,0 +1,9 @@
+Probe 1 approximate pins          87 / 197
+Probe 2 entries with no links     104 / 197  (170 edges: 118 one-way, 52 both ways)
+Probe 3 no stages                 35 / 197
+Probe 4 funders with a Check size 13 of 61  (applyBy on 3 funders)
+Probe 5 lastVerified 2026-06      52 / 197
+Probe 6 west of Worcester         5 / 197
+Probe 7 hand time per entry       10-15 min (maintainer's estimate)
+Probe 8 claims with a receipt     318 / 1080
+        claims by type: live 197, place 197, offer 318, link 170, fact 177, deadline 21

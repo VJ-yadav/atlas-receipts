@@ -64,6 +64,7 @@ def run(decisions_path):
         return
     if not WORKTREE.exists():
         git("worktree", "add", "-B", BRANCH, str(WORKTREE), "main")
+        (WORKTREE / "node_modules").symlink_to(ATLAS / "node_modules")
     path = WORKTREE / "data" / "entities.yml"
     lines = path.read_text().splitlines(keepends=True)
     touched = set()
