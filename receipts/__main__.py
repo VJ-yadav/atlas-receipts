@@ -22,12 +22,19 @@ def main(argv):
             check.print_entry(fresh)
         print("this run:", check.summary(fresh))
         print("all receipts:", check.summary(allr), f"({len(allr)} claims) -> out/receipts.json")
+    elif cmd == "review":
+        from receipts import review
+        fixture = "--fixture" in args
+        review.run(fixture=fixture)
     elif cmd == "apply":
         from receipts import apply
         if not args:
             print("usage: receipts apply out/decisions.json")
             return
         apply.run(args[0])
+    elif cmd == "test":
+        from receipts import plantedtest
+        plantedtest.run(check="--check" in args or "--refresh" in args)
     else:
         print(__doc__)
 

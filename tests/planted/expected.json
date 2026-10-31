@@ -1,0 +1,32 @@
+[
+  {
+    "key": "planted-techstars:fact:0",
+    "expect": "contradicted",
+    "type": "wrong_number"
+  },
+  {
+    "key": "planted-founder-institute:place:0",
+    "expect": "contradicted",
+    "type": "wrong_place"
+  },
+  {
+    "key": "planted-nextview:live:0",
+    "expect": "contradicted",
+    "type": "dead"
+  },
+  {
+    "key": "planted-dup-techstars:live:0",
+    "expect": "duplicate:techstars",
+    "type": "duplicate"
+  },
+  {
+    "key": "planted-rough-draft:place:0",
+    "expect": "out_of_scope",
+    "type": "out_of_scope"
+  },
+  {
+    "key": "planted-vms:fact:0",
+    "expect": "silent",
+    "type": "unsourced_fact"
+  }
+]
