@@ -4,6 +4,7 @@ A claim is one checkable statement in an Atlas entry. A receipt is the result of
 make_receipt() refuses to build a receipt without its provenance, so a source is attached from
 the moment a result exists.
 """
+import re
 from datetime import datetime, timezone
 
 STATUSES = ("supported", "contradicted", "silent", "inferred", "refused")
@@ -12,6 +13,14 @@ STATUSES = ("supported", "contradicted", "silent", "inferred", "refused")
 NEEDS_QUOTE = ("supported", "inferred")
 # Review order: riskiest first.
 FIELD_RISK = {"deadline": 0, "fact": 1, "live": 2, "place": 3, "link": 4, "offer": 5}
+
+
+CONTACT = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+|\+?\d[\d\s().-]{8,}\d")
+
+
+def no_contact(v):
+    """Organizations only: contact details in Atlas text are masked in everything we output."""
+    return CONTACT.sub("[contact removed]", v) if isinstance(v, str) else v
 
 
 def enumerate_claims(entries):
@@ -29,11 +38,11 @@ def enumerate_claims(entries):
         for i, o in enumerate(e.get("offers", [])):
             add("offer", o, i)
         for i, (label, val) in enumerate(e.get("facts") or []):
-            add("fact", {"label": label, "value": val}, i)
+            add("fact", {"label": label, "value": no_contact(val)}, i)
         for i, t in enumerate(e.get("links", [])):
             add("link", t, i)
         if e.get("applyBy"):
-            add("deadline", {"applyBy": e["applyBy"], "applyNote": e.get("applyNote", "")})
+            add("deadline", {"applyBy": e["applyBy"], "applyNote": no_contact(e.get("applyNote", ""))})
     return claims
 
 

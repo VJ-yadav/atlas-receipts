@@ -3,6 +3,7 @@ import json
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 
+from receipts import model
 from receipts.claims import enumerate_claims
 from receipts.fetch import client
 from receipts.pages import pages_for
@@ -12,13 +13,19 @@ from receipts.rules import check_entry
 OUT = ROOT / "out" / "receipts.json"
 
 
-def check_one(entry, claims, by_id, refresh=False):
+def check_one(entry, claims, by_id, refresh=False, use_model=False):
     with client() as c:
         pages = pages_for(entry, c, refresh)
-    return check_entry(entry, claims, pages, by_id)
+    receipts = check_entry(entry, claims, pages, by_id)
+    if use_model:
+        try:
+            receipts = model.upgrade(receipts, pages)
+        except Exception as e:  # the model is optional: claims stay silent, with the reason logged
+            print(f"  model skipped for {entry['id']}: {type(e).__name__}: {str(e)[:120]}")
+    return receipts
 
 
-def run(ids=None, refresh=False, entries=None, out=OUT, workers=16):
+def run(ids=None, refresh=False, entries=None, out=OUT, workers=16, use_model=False):
     entries = entries or load_entries()
     by_id = {e["id"]: e for e in entries}
     todo = [by_id[i] for i in ids] if ids else entries
@@ -27,7 +34,7 @@ def run(ids=None, refresh=False, entries=None, out=OUT, workers=16):
     for c in claims:
         per.setdefault(c["entry_id"], []).append(c)
     with ThreadPoolExecutor(workers) as pool:
-        results = list(pool.map(lambda e: check_one(e, per[e["id"]], by_id, refresh), todo))
+        results = list(pool.map(lambda e: check_one(e, per[e["id"]], by_id, refresh, use_model), todo))
     fresh = [r for rs in results for r in rs]
     keep = []
     if ids and out.exists():

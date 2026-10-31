@@ -1,4 +1,4 @@
-"""receipts <command>: fetch, check, probe, review, apply, test."""
+"""receipts <command>: check, probe, review, apply, test, goals."""
 import sys
 
 
@@ -15,9 +15,9 @@ def main(argv):
         from receipts import check
         ids = [a for a in args if not a.startswith("--")]
         if not ids and "--all" not in args:
-            print("usage: receipts check [--all|<id>...] [--refresh]")
+            print("usage: receipts check [--all|<id>...] [--refresh] [--model]")
             return
-        fresh, allr = check.run(ids or None, refresh="--refresh" in args)
+        fresh, allr = check.run(ids or None, refresh="--refresh" in args, use_model="--model" in args)
         if ids:
             check.print_entry(fresh)
         print("this run:", check.summary(fresh))
@@ -28,6 +28,9 @@ def main(argv):
             print("usage: receipts apply out/decisions.json")
             return
         apply.run(args[0])
+    elif cmd == "goals":
+        from receipts import goals
+        sys.exit(1 if goals.run() else 0)
     else:
         print(__doc__)
 
