@@ -19,9 +19,10 @@ def run(entries, receipts=None):
     both = sum(1 for a, b in edges if (b, a) in edges) // 2
     funders = [e for e in entries if "funding" in e.get("offers", [])]
     claims = enumerate_claims(entries)
-    with_receipt = 0
+    with_receipt = with_sentence = 0
     if receipts:
         with_receipt = sum(1 for r in receipts if r["status"] == "supported")
+        with_sentence = with_receipt + sum(1 for r in receipts if r["status"] == "inferred")
     lines = [
         f"Probe 1 approximate pins          {sum(bool(e.get('approx')) for e in entries)} / {n}",
         f"Probe 2 entries with no links     {sum(not e.get('links') for e in entries)} / {n}"
@@ -32,7 +33,8 @@ def run(entries, receipts=None):
         f"Probe 5 lastVerified 2026-06      {sum(e['lastVerified'] == '2026-06' for e in entries)} / {n}",
         f"Probe 6 west of Worcester         {sum(e['lng'] < WORCESTER_LNG - 0.05 for e in entries)} / {n}",
         "Probe 7 hand time per entry       10-15 min (maintainer's estimate)",
-        f"Probe 8 claims with a receipt     {with_receipt} / {len(claims)}",
+        f"Probe 8 claims with a receipt     {with_receipt} / {len(claims)}  (verified by code)",
+        f"        with a sourced sentence   {with_sentence} / {len(claims)}  (adds {with_sentence - with_receipt} model readings, labelled inferred)",
     ]
     by_field = {}
     for c in claims:

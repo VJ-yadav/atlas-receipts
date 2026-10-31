@@ -8,7 +8,7 @@ from receipts.claims import enumerate_claims
 from receipts.fetch import client
 from receipts.pages import pages_for
 from receipts.probes import ROOT, load_entries
-from receipts.rules import check_entry
+from receipts.rules import check_entry, rule_link, usable
 
 OUT = ROOT / "out" / "receipts.json"
 
@@ -25,6 +25,20 @@ def check_one(entry, claims, by_id, refresh=False, use_model=False):
     return receipts
 
 
+def links_from_other_side(receipts, by_id):
+    """Second pass: a silent link is re-checked on the target org's cached pages."""
+    out = []
+    with client() as c:
+        for r in receipts:
+            if r["field"] == "link" and r["status"] == "silent" and r["value"] in by_id:
+                claim = {k: r[k] for k in ("key", "entry_id", "name", "field", "value")}
+                own = pages_for(by_id[r["entry_id"]], c)
+                theirs = pages_for(by_id[r["value"]], c)
+                r = rule_link(claim, own, by_id, theirs) if usable(own) or usable(theirs) else r
+            out.append(r)
+    return out
+
+
 def run(ids=None, refresh=False, entries=None, out=OUT, workers=16, use_model=False):
     entries = entries or load_entries()
     by_id = {e["id"]: e for e in entries}
@@ -36,6 +50,7 @@ def run(ids=None, refresh=False, entries=None, out=OUT, workers=16, use_model=Fa
     with ThreadPoolExecutor(workers) as pool:
         results = list(pool.map(lambda e: check_one(e, per[e["id"]], by_id, refresh, use_model), todo))
     fresh = [r for rs in results for r in rs]
+    fresh = links_from_other_side(fresh, by_id)
     keep = []
     if ids and out.exists():
         done = set(ids)

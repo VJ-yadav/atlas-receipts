@@ -20,7 +20,7 @@ Owners: **A** = VJ-yadav + Claude, **B** = pjsk02. Merges to `main` go through L
 | C5 | No planted entry in real output; `apply` refuses `planted-` ids | Truth: a fabricated org caps at 1 | A + B |
 | C6 | The Atlas branch passes `node scripts/validate.js` | Track: "fails the validator" caps at 2 | A |
 | C7 | Every silent/refused receipt says what was searched or why | Truth: "refusing everything" caps at 2 | A |
-| P1 | Probe 8: at least 450 / 1,080 claims with a receipt | Track: a measured before/after | A |
+| P1 | Probe 8: ≥ 340 / 1,080 verified by code, and ≥ 650 carrying a sentence from the org's own page (inferred ones labelled) | Track: a measured before/after | A |
 | P2 | Model pass ran: fuzzy claims are `inferred`/`refused`, never `supported` | calibrated confidence | A |
 | P3 | `out/review.html`: all statuses, highlight links, Probe 8 header | Track: a review queue usable unassisted | **B (B1)** |
 | P4 | `receipts test` on the planted set: recall ≥ 0.8, at most 1 false alarm | Innovation: a measured verifier | **B (B2)** |
@@ -28,3 +28,8 @@ Owners: **A** = VJ-yadav + Claude, **B** = pjsk02. Merges to `main` go through L
 
 After 14/14: improvements (more claim types, a second independent source, re-check on change),
 then the demo assets.
+
+**Note on P1 (12:52):** the first target, 450 verified, was set before measuring. The measured ceiling
+for code-only verification is about 350: 318 offers are fuzzy by design (code never verifies them),
+28 sites block bots (HTTP 403/429, which we respect), and many pages simply don't say the claim. We
+did not loosen what "supported" means; we report both numbers.

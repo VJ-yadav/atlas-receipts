@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from receipts.fetch import client, fetch, host_of
 
 MAX_PAGES = 6
+GUESS_PATHS = ("/contact", "/about")
 WANT = re.compile(r"about|contact|apply|application|program|accelerator|invest|portfolio|"
                   r"terms|faq|location|visit|deal|fund|who-we-are|mission", re.I)
 # People pages are skipped: we collect organizations only.
@@ -49,7 +50,19 @@ def pages_for(entry, c=None, refresh=False):
         home = fetch(entry["url"], c, refresh)
         pages = [home]
         if home["html"]:
-            pages += [fetch(u, c, refresh) for u in candidate_links(home, entry)]
+            links = candidate_links(home, entry)
+            pages += [fetch(u, c, refresh) for u in links]
+            # the address usually lives on a contact/about page: try the usual paths too
+            root = "/".join(home["final_url"].split("/")[:3])
+            seen = {u.rstrip("/") for u in links} | {home["final_url"].rstrip("/")}
+            for path in GUESS_PATHS:
+                if len(pages) >= MAX_PAGES + 2:
+                    break
+                if root + path not in seen and not any(path in u for u in seen):
+                    pg = fetch(root + path, c, refresh)
+                    if pg["text"] and (pg["status"] or 0) < 400 and pg["final_url"].rstrip("/") not in seen:
+                        pages.append(pg)
+                        seen.add(pg["final_url"].rstrip("/"))
         return pages
     finally:
         if own:

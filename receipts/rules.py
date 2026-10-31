@@ -241,17 +241,31 @@ def rule_fact(claim, pages):
     return silent(claim, pages, f"'{label}: {val}' is a description, not a number: needs a reading")
 
 
-def rule_link(claim, pages, entries_by_id):
+def name_patterns(entry):
+    full = re.sub(r"\s*\(.*?\)", "", entry["name"]).strip()
+    names = {full, re.sub(r"\b(Boston|Inc\.?|LLC)\b", "", full).strip()}
+    return [word(n) for n in names if len(n) > 3]
+
+
+def rule_link(claim, pages, entries_by_id, target_pages=None):
+    """A link is "related": either org's own page naming the other is evidence."""
     target = entries_by_id.get(claim["value"])
     if not target:
         return silent(claim, pages, f"link target id {claim['value']!r} is not in the Atlas")
-    full = re.sub(r"\s*\(.*?\)", "", target["name"]).strip()
-    names = {full, re.sub(r"\b(Boston|Inc\.?|LLC)\b", "", full).strip()}
-    pats = [word(n) for n in names if len(n) > 3]
+    pats = name_patterns(target)
     p, s = find(pages, lambda s: any(x.search(s.lower()) for x in pats))
     if p:
         return supported(claim, p, s, f"the page names {target['name']} ({target['id']})")
-    return silent(claim, pages, f"{target['name']} is not named on {len(usable(pages))} pages")
+    if target_pages:
+        back = name_patterns(entries_by_id[claim["entry_id"]])
+        p, s = find(target_pages, lambda s: any(x.search(s.lower()) for x in back))
+        if p:
+            return supported(claim, p, s, f"{target['name']}'s own page names {claim['name']} "
+                                          "(the link holds from the other side)")
+    return silent(claim, pages, f"neither page names the other: {target['name']} is not named on "
+                                f"{len(usable(pages))} pages of {claim['name']}"
+                                + (f", nor {claim['name']} on {len(usable(target_pages))} of theirs"
+                                   if target_pages else ""))
 
 
 def rule_offer(claim, pages):
