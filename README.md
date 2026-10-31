@@ -184,7 +184,7 @@ review console, planted test, README).
 | ✅ | Re-check workflow (on demand; monthly once enabled) and `make check` | `.github/workflows/recheck.yml` |
 | ✅ | Cost: Claude Haiku 5.5 with code-chosen sentences; full run ~$0.04 | `cache/_usage.jsonl` |
 | ✅ | Public view for founders (Track B direction) | `docs/public-view.html` |
-| ✅ | Probe 8 Track 2 | **0 → 380 / 1,080** verified; 667 with a sentence |
+| ✅ | Probe 8 | see the generated numbers block above |
 | ✅ | brief.md / BRIEF.md concept one-pager | done |
 | ✅ | `receipts dedupe` command | available |
 | ⬜ | Before screenshots of the live Atlas | VJ |
