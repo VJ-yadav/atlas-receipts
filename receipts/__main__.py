@@ -11,6 +11,17 @@ def main(argv):
         out = probes.ROOT / "out" / "receipts.json"
         receipts = json.loads(out.read_text()) if out.exists() and "--before" not in args else None
         print(probes.run(probes.load_entries(), receipts))
+    elif cmd == "check":
+        from receipts import check
+        ids = [a for a in args if not a.startswith("--")]
+        if not ids and "--all" not in args:
+            print("usage: receipts check [--all|<id>...] [--refresh]")
+            return
+        fresh, allr = check.run(ids or None, refresh="--refresh" in args)
+        if ids:
+            check.print_entry(fresh)
+        print("this run:", check.summary(fresh))
+        print("all receipts:", check.summary(allr), f"({len(allr)} claims) -> out/receipts.json")
     else:
         print(__doc__)
 

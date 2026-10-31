@@ -8,7 +8,8 @@ from datetime import datetime, timezone
 
 STATUSES = ("supported", "contradicted", "silent", "inferred", "refused")
 # Statuses that assert something about the page must carry the exact sentence.
-NEEDS_QUOTE = ("supported", "contradicted", "inferred")
+# (contradicted may instead carry page_value alone when there is no page, e.g. HTTP 404.)
+NEEDS_QUOTE = ("supported", "inferred")
 # Review order: riskiest first.
 FIELD_RISK = {"deadline": 0, "fact": 1, "live": 2, "place": 3, "link": 4, "offer": 5}
 
@@ -46,8 +47,8 @@ def make_receipt(claim, status, *, url, fetched_at, reason, quote=None, sha256=N
 
     url         the page checked (or attempted)
     fetched_at  when that page was fetched (UTC ISO)
-    quote       the exact sentence found on the cached page (required for supported,
-                contradicted, inferred)
+    quote       the exact sentence found on the cached page (required for supported and
+                inferred; contradicted needs a quote or page_value)
     sha256      hash of the cached page text the quote was checked against
     page_value  what the page says, when it differs (contradicted)
     searched    the URLs looked at, for silent
@@ -61,6 +62,8 @@ def make_receipt(claim, status, *, url, fetched_at, reason, quote=None, sha256=N
         raise ValueError(f"{claim['key']}: a receipt needs a reason")
     if status in NEEDS_QUOTE and not (quote and sha256):
         raise ValueError(f"{claim['key']}: {status} needs a quote and the page sha256")
+    if status == "contradicted" and not ((quote and sha256) or page_value):
+        raise ValueError(f"{claim['key']}: contradicted needs a quote or what the page returned")
     if status == "supported" and by != "code":
         raise ValueError(f"{claim['key']}: only code can mark a claim supported")
     return {**claim, "status": status, "url": url, "quote": quote, "fetched_at": fetched_at,
