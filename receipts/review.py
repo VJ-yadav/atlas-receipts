@@ -11,6 +11,7 @@ from collections import Counter
 
 from receipts.claims import FIELD_RISK, no_contact
 from receipts.probes import ROOT, load_entries
+from receipts.model import usage_report as model_usage
 from receipts.text import highlight_url
 
 # A founder's shortlist (pre-seed, AI infrastructure): funders whose Atlas focus fits.
@@ -108,9 +109,11 @@ def meta(receipts, entries):
         "cats": {k: v["label"] for k, v in atlas.get("cats", {}).items()},
         "june": sum(e["lastVerified"] == "2026-06" for e in entries),
         "by_type": dict(by_type), "sup_type": dict(sup_type),
-        "pages": pages, "model_calls": calls, "model": os.environ.get("RECEIPTS_MODEL", "claude-opus-5-5"),
+        "pages": pages, "model_calls": calls, "model": os.environ.get("RECEIPTS_MODEL", "claude-haiku-5-5"),
         "validator": validate[-1] if validate else "not run",
         "score": score, "clicks": clicks[-1] if clicks else "",
+        "decisions": len(json.loads(read("out/decisions.json", "[]") or "[]")),
+        "run_cost": round(model_usage().get(os.environ.get("RECEIPTS_MODEL", "claude-haiku-5-5"), {}).get("usd", 0), 3),
     }
 
 
@@ -261,6 +264,36 @@ ol.steps li.stop::before{background:var(--bad)}ol.steps li.wait::before{backgrou
 .ck{display:flex;gap:8px;font-size:13.5px}.ck.ok{color:var(--acc-strong)}.ck.bad{color:var(--bad)}.ck.wait{color:var(--mute)}
 pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/1.5 var(--mono);overflow:auto;max-width:860px}
 .empty{color:var(--mute);padding:40px 0;text-align:center}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:center}
+.kpis{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}.kpi b{display:block;font-size:24px;font-weight:650;font-variant-numeric:tabular-nums}.kpi span{font-size:12.5px;color:var(--mute)}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--side)}
+.d-big{font:700 30px var(--sans);fill:var(--ink)}.d-sub{font:12px var(--sans);fill:var(--mute)}
+ul.legend{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:5px}
+ul.legend li{display:grid;grid-template-columns:12px auto 1fr;gap:4px 8px;align-items:baseline;font-size:13px}
+ul.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}ul.legend b{font-variant-numeric:tabular-nums}
+ul.legend span{grid-column:2/-1;font-size:11.5px;color:var(--faint);margin-top:-3px}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin:34px 0 12px}.sec-h h2{margin:0}
+.ic{width:20px;height:20px;flex:none}
+.pipe{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:4px}
+.node{flex:1;min-width:150px;border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:3px}
+.node.off{opacity:.55}.n-ic{width:36px;height:36px;border-radius:10px;background:var(--muted);display:grid;place-items:center;margin-bottom:6px}
+.n-t{font-weight:650}.n-n{font-size:18px;font-weight:650;font-variant-numeric:tabular-nums}.n-d{font-size:12px;color:var(--mute)}
+.who-code,.who-person,.who-code\+{font-size:11px;font-weight:600;margin-top:auto;padding-top:6px}
+.who-code{color:var(--acc-strong)}.who-person{color:var(--info)}
+.link{display:grid;place-items:center;color:var(--faint);padding:0 4px}
+.gauges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.gauge{border:1px solid var(--line);border-radius:14px;padding:14px 12px 12px;text-align:center;position:relative;background:var(--bg)}
+.g-ic{position:absolute;top:12px;left:12px;color:var(--faint);width:18px;height:18px}
+.g-v{font-size:22px;font-weight:650;margin-top:-30px;font-variant-numeric:tabular-nums}.g-k{font-size:13px;font-weight:600;margin-top:8px}.g-s{font-size:12px;color:var(--faint)}
+.two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px}
+ul.todo{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+ul.todo li{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:12px 14px;border-top:1px solid var(--hair);cursor:pointer}
+ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:default}ul.todo li:hover{background:var(--side)}
+.t-ic{color:var(--bad)}.types .t-ic{color:var(--mute);width:18px;height:18px}
+.go{font-size:12.5px;color:var(--info);display:flex;gap:4px;align-items:center}.go .ic{width:15px;height:15px}
+.trow{display:grid;grid-template-columns:20px 80px 1fr 78px;gap:10px;align-items:center;margin:9px 0;font-size:13px}
+.trow .stack{height:10px}.trow .count{white-space:nowrap;text-align:right}.trow .stack span{display:block;height:100%}
+@media (max-width:980px){.hero,.two{grid-template-columns:1fr}.gauges{grid-template-columns:repeat(2,minmax(0,1fr))}.pipe{flex-direction:column}.link{transform:rotate(90deg)}}
 @media (max-width:900px){.tiles,.flow,.stat-list,.start{grid-template-columns:repeat(2,minmax(0,1fr))}.cols,.form{grid-template-columns:1fr}}
 @media (max-width:560px){.tiles,.flow,.stat-list,.start{grid-template-columns:1fr}.row{grid-template-columns:1fr}.bar-in,.wrap{padding-left:16px;padding-right:16px}}
 </style></head><body>
@@ -277,42 +310,34 @@ pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/
 </div></div>
 
 <section class="view" id="v-home"><div class="wrap">
-  <div class="note">Mass AI Atlas · maintainer console (proposed) · data pulled <span id="h-gen"></span></div>
-  <h1>Every claim in the Atlas, checked against the organization's own page.</h1>
-  <p class="lead">The Atlas lists 197 organizations and makes <b id="h-total"></b> checkable claims about them: that each is live,
-  where it is, what it offers, its check size and terms, who it works with, and its deadlines. Atlas Receipts finds the exact
-  sentence on each organization's own website that backs each claim, so the maintainer reviews only what changed or what
-  no page supports.</p>
-  <div class="mode-note" id="h-mode"></div>
-  <div class="tiles" id="h-tiles"></div>
-
-  <h2>How it works</h2>
-  <div class="flow">
-    <div class="step"><span class="n">1</span><h3>Fetch</h3><p>Read each organization's own pages: home, about, contact, apply, program. Respect robots.txt, one request a second per site, keep a copy of every page.</p><div class="who code">Done by code</div></div>
-    <div class="step"><span class="n">2</span><h3>Find</h3><p>Search the saved pages for the sentence behind each claim: the amount, the date, the address, the other organization's name. For wording like "offers mentorship", Claude may point at a sentence.</p><div class="who model">Code, with suggestions from Claude</div></div>
-    <div class="step"><span class="n">3</span><h3>Check</h3><p>Code confirms the exact sentence is on the saved page and compares it with the Atlas value. Claude's suggestions can never be marked verified, only "inferred".</p><div class="who code">Done by code</div></div>
-    <div class="step"><span class="n">4</span><h3>Decide</h3><p>The maintainer accepts or rejects each finding. Accepted changes go to a branch of the Atlas, then the Atlas's own validator runs. Nothing is published without that.</p><div class="who person">Done by a person</div></div>
+  <div class="hero">
+    <div class="hero-l">
+      <div class="note">Mass AI Atlas · maintainer console (proposed) · data pulled <span id="h-gen"></span></div>
+      <h1>Every claim in the Atlas, checked against the organization's own page.</h1>
+      <p class="lead">197 organizations, <b id="h-total"></b> claims: that each is live, where it is, what it offers, its check
+      size and terms, who it works with, its deadlines. For each one, Atlas Receipts finds the sentence on the
+      organization's own website that backs it. You review only what no page supports, or what a page contradicts.</p>
+      <div class="mode-note" id="h-mode"></div>
+      <div class="kpis" id="h-kpis"></div>
+    </div>
+    <div class="hero-r"><div class="donut-wrap"><svg id="h-donut" viewBox="0 0 200 200" width="210" height="210" role="img"></svg>
+      <ul class="legend" id="h-legend"></ul></div></div>
   </div>
 
-  <h2>What each status means</h2>
-  <div class="stat-list">
-    <div class="sdef"><span class="pill p-supported">Supported</span><p>Code found the sentence on the organization's own page, and it matches.</p></div>
-    <div class="sdef"><span class="pill p-contradicted">Contradicted</span><p>The organization's page says something different. Both values are shown.</p></div>
-    <div class="sdef"><span class="pill p-silent">Silent</span><p>No page says it. Needs review, with the pages that were searched.</p></div>
-    <div class="sdef"><span class="pill p-inferred">Inferred</span><p>Claude's reading of a real sentence. Useful, but not verified.</p></div>
-    <div class="sdef"><span class="pill p-refused">Refused</span><p>Not collected: the site's rules forbid it, or a suggested sentence was not on the page.</p></div>
-  </div>
+  <div class="sec-h"><h2>How a claim gets its receipt</h2><span class="note">live numbers from the last run</span></div>
+  <div class="pipe" id="h-pipe"></div>
 
-  <h2>Start here</h2>
-  <div class="start" id="h-start"></div>
+  <div class="sec-h"><h2>Is it working?</h2><span class="note">measured, not assumed</span></div>
+  <div class="gauges" id="h-gauges"></div>
 
-  <h2>The data and the system</h2>
-  <div class="cols">
-    <div class="panel"><h3>Claims by type</h3><div id="h-types"></div><div class="note" style="margin-top:8px">Green: verified by code · amber: Claude's reading · grey: nothing found · red: contradicted · black: refused</div></div>
-    <div class="panel"><h3>System status</h3><dl class="kv" id="h-sys"></dl></div>
+  <div class="two">
+    <div><div class="sec-h"><h2>Start here</h2><span class="note">the organization's own site disagrees with the Atlas</span></div>
+      <ul class="todo" id="h-start"></ul></div>
+    <div><div class="sec-h"><h2>Claims by type</h2><span class="note">verified / total</span></div>
+      <div class="types" id="h-types"></div></div>
   </div>
-  <p class="note" style="margin-top:28px">Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. Organizations only: no people and no contact details are collected or shown.
-  This console is a proposal for the Atlas maintainer; it is not part of the public Atlas.</p>
+  <p class="note" style="margin-top:34px">Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. Organizations only: no people and no contact details are
+  collected or shown. A proposal for the Atlas maintainer; not part of the public Atlas. <a href="atlas.html">Open the public view →</a></p>
 </div></section>
 
 <section class="view" id="v-entities"><div class="wrap">
@@ -388,37 +413,71 @@ const modeNote=()=>mode==='before'
  :`<b>After:</b> each claim carries a receipt, the sentence on the organization's own page that backs it, or a status saying why not.`;
 
 /* ---------- home ---------- */
+const ICON={
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+ shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
+ branch:'<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9c0 5-6 4-12 8"/>',
+ alert:'<path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17.5v.01"/>',
+ pin:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+ gift:'<rect x="3" y="8" width="18" height="5" rx="1"/><path d="M5 13v8h14v-8M12 8v13M12 8C10 4 6 4 7.5 7M12 8c2-4 6-4 4.5-1"/>',
+ chart:'<path d="M4 20V10M10 20V4M16 20v-7M2 20h20"/>',
+ link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+ cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+ click:'<path d="M9 9l11 4-5 1.5L13.5 20z"/><path d="M5 3v3M3 5h3M8.5 4.5l-1 1"/>',
+ arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>'};
+const ic=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[n]}</svg>`;
+const SCOL={supported:'var(--acc)',inferred:'var(--warn)',contradicted:'var(--bad)',silent:'var(--line)',refused:'var(--ink)'};
+const SDESC={supported:'code found the sentence on their own page',inferred:"Claude's reading of a real sentence, not verified",
+  contradicted:'their own page says something else',silent:'no page says it: needs a look',refused:'not allowed to collect, so not checked'};
+function donut(){
+  const segs=mode==='before'?[['none',T]]:['supported','inferred','contradicted','silent','refused'].map(s=>[s,C[s]||0]);
+  const R=78,L=2*Math.PI*R;let off=0;
+  const arcs=segs.map(([s,n])=>{const len=L*n/T,gap=n&&segs.length>1?1.5:0;
+    const el=`<circle cx="100" cy="100" r="${R}" fill="none" stroke="${s==='none'?'var(--line)':SCOL[s]}" stroke-width="22" stroke-dasharray="${Math.max(0,len-gap)} ${L}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"><title>${s} ${n}</title></circle>`;off+=len;return el}).join('');
+  const big=mode==='before'?'0':fmt(C.supported),sub=mode==='before'?'claims with a source':'verified by code';
+  $('h-donut').innerHTML=arcs+`<text x="100" y="98" text-anchor="middle" class="d-big">${big}</text><text x="100" y="118" text-anchor="middle" class="d-sub">${sub}</text><text x="100" y="134" text-anchor="middle" class="d-sub">of ${fmt(T)}</text>`;
+  $('h-legend').innerHTML=mode==='before'?`<li><i style="background:var(--line)"></i><b>${fmt(T)}</b> no source<span>one "last verified" month per entry</span></li>`
+    :['supported','inferred','contradicted','silent','refused'].map(s=>`<li><i style="background:${SCOL[s]}"></i><b>${fmt(C[s])}</b> ${LABEL[s].split(',')[0].toLowerCase()}<span>${SDESC[s]}</span></li>`).join('');
+}
+function gauge(pct,label,val,sub,icon,tone){
+  const R=52,L=Math.PI*R,f=Math.max(0,Math.min(1,pct));
+  return `<div class="gauge">${ic(icon,'g-ic')}<svg viewBox="0 0 130 74" width="150"><path d="M13 66a52 52 0 0 1 104 0" fill="none" stroke="var(--muted)" stroke-width="11" stroke-linecap="round"/>
+    <path d="M13 66a52 52 0 0 1 104 0" fill="none" stroke="${tone}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${L*f} ${L}"/></svg>
+    <div class="g-v">${val}</div><div class="g-k">${label}</div><div class="g-s">${sub}</div></div>`}
 function renderHome(){
   $('h-gen').textContent=M.atlas_generated;$('h-total').textContent=fmt(T);$('h-mode').innerHTML=modeNote();
-  const sent=(C.supported||0)+(C.inferred||0);
-  const tiles=mode==='before'?[
-    ['Claims with a source','0',`of ${fmt(T)}`,'Probe 8, before',''],
-    ['How "verified" is shown','1 date','per entry','e.g. "2026-06" covers every claim',''],
-    ['Entries last checked in June',fmt(M.june),'of 197','a date, not evidence',''],
-    ['Time to re-check one entry','10–15','min','by hand, every claim',''],
-  ]:[
-    ['Claims verified by code',fmt(C.supported),`of ${fmt(T)}`,'Probe 8: was 0 this morning','big'],
-    ['Carry a sentence from the org',fmt(sent),`of ${fmt(T)}`,`includes ${fmt(C.inferred)} labelled inferred`,''],
-    ['Contradicted by the org itself',fmt(C.contradicted),'claims','both values shown',''],
-    ['Need a person',fmt(T-(C.supported||0)-(C.refused||0)),'claims','silent, inferred or contradicted',''],
-  ];
-  $('h-tiles').innerHTML=tiles.map(([k,v,u,s,c])=>`<div class="tile ${c}"><div class="k">${esc(k)}</div><div class="v">${esc(v)} <small>${esc(u)}</small></div><div class="s">${esc(s)}</div></div>`).join('');
-  const contra=ents.filter(e=>e.n.contradicted).slice(0,3);
-  $('h-start').innerHTML=contra.map(e=>{const r=e.rs.find(r=>r.status==='contradicted');
-    return `<div class="panel" data-open="${esc(e.id)}"><span class="pill p-contradicted">Contradicted</span><h3 style="margin-top:8px">${esc(e.name)}</h3>
-    <div class="why">Atlas: <b>${esc(r.value)}</b><br>Their page: <span class="pv">${esc(r.page_value)}</span></div></div>`}).join('')
-    ||'<div class="note">No contradictions in this run.</div>';
-  const types=[['live','Is live'],['place','Location'],['offer','Offers'],['fact','Facts (check size, terms…)'],['link','Links to other orgs'],['deadline','Deadlines']];
-  $('h-types').innerHTML=types.map(([t,l])=>{const rs=D.rows.filter(r=>r.field===t),n=rs.length;
-    if(mode==='before')return `<div class="barrow"><span>${l}</span><div class="stack"></div><span class="count">0 / ${n}</span></div>`;
-    const seg=ORDER.slice().reverse().map(s=>{const k=rs.filter(r=>r.status===s).length;return k?`<span class="b-${s}" style="width:${100*k/n}%" title="${s} ${k}"></span>`:''}).join('');
-    return `<div class="barrow"><span>${l}</span><div class="stack">${seg}</div><span class="count">${rs.filter(r=>r.status==='supported').length} / ${n}</span></div>`}).join('');
-  const s=M.score;
-  const sys=[['Atlas data',`197 entries · pulled ${M.atlas_generated}`],['Pages read',`${fmt(M.pages)} saved pages from the orgs' own sites`],
-    ['Last check',D.head.generated],['Claude',`${M.model} · ${fmt(M.model_calls)} cached readings`],
-    ['Validator',M.validator],['Planted test',s?`${s.planted} planted errors: ${s.caught} caught, ${s.missed} missed, ${s.false_alarms} false alarm`:'not run'],
-    ['Link click test',M.clicks||'not run'],['Writes to the Atlas','only accepted decisions, on a branch, then the validator']];
-  $('h-sys').innerHTML=sys.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
+  const sent=(C.supported||0)+(C.inferred||0),need=T-(C.supported||0)-(C.refused||0);
+  $('h-kpis').innerHTML=(mode==='before'
+    ?[['1 date','per entry, for every claim in it'],['10–15 min','to re-check one entry by hand'],[fmt(M.june),'entries last checked in June']]
+    :[[fmt(sent),'carry a sentence from the org'],[fmt(C.contradicted),'contradicted by the org itself'],[fmt(need),'need a person']])
+    .map(([v,k])=>`<div class="kpi"><b>${v}</b><span>${k}</span></div>`).join('');
+  donut();
+  const before=mode==='before';
+  const steps=[['globe','Fetch','code',before?'—':`${fmt(M.pages)} pages`,'their own site, robots.txt, 1 req/s'],
+    ['search','Find','code + Claude',before?'—':`${fmt(T)} claims`,'amounts, dates, places, names'],
+    ['shield','Check','code',before?'—':`${fmt(sent)} sentences`,'exact text on the saved page'],
+    ['user','Decide','person',before?'by hand':`${fmt(M.decisions)} decided`,'accept or reject each finding'],
+    ['branch','Atlas branch','code',before?'—':M.validator.startsWith('PASSED')?'validator passed':M.validator,'only accepted rows, then validate.js']];
+  $('h-pipe').innerHTML=steps.map(([i,t,who,n,d],k)=>`<div class="node ${before?'off':''}"><div class="n-ic">${ic(i)}</div><div class="n-t">${t}</div><div class="n-n">${n}</div><div class="n-d">${d}</div><div class="who-${who.split(' ')[0]}">${who}</div></div>${k<steps.length-1?`<div class="link">${ic('arrow')}</div>`:''}`).join('');
+  const s=M.score||{planted:0,caught:0,false_alarms:0},clk=(M.clicks.match(/(\d+) \/ (\d+)/)||[0,0,1]);
+  $('h-gauges').innerHTML=before
+    ?`<div class="note" style="grid-column:1/-1">Nothing is measured before: there is no source to check, no test, no queue.</div>`
+    :gauge((C.supported||0)/T,'claims verified by code',`${Math.round(100*(C.supported||0)/T)}%`,`${fmt(C.supported)} of ${fmt(T)}`,'target','var(--acc)')
+    +gauge(s.planted?s.caught/s.planted:0,'planted errors caught',`${s.caught} / ${s.planted}`,`${s.false_alarms} false alarm on real data`,'alert','var(--info)')
+    +gauge(clk[2]?clk[1]/clk[2]:0,'random receipts land on the sentence',`${clk[1]} / ${clk[2]}`,'opened in a real browser','click','var(--acc)')
+    +gauge(Math.min(1,(M.run_cost||0)/0.10),'model cost of a full run',`$${(M.run_cost||0).toFixed(2)}`,`${M.model}; code does the verifying`,'coin','var(--warn)');
+  const contra=ents.filter(e=>e.n.contradicted);
+  $('h-start').innerHTML=before?'<li class="plain note">No way to know: nothing is compared with the organizations\' own pages.</li>'
+    :contra.map(e=>{const r=e.rs.find(r=>r.status==='contradicted');
+    return `<li data-open="${esc(e.id)}">${ic('alert','t-ic')}<div><b>${esc(e.name)}</b> <span class="note">${esc(r.field)}</span><div class="why">Atlas: ${esc(r.value)} · their site: <span class="pv">${esc(r.page_value)}</span></div></div><span class="go">Review ${ic('arrow')}</span></li>`}).join('');
+  const types=[['live','globe','Is live'],['place','pin','Location'],['offer','gift','Offers'],['fact','chart','Facts'],['link','link','Links'],['deadline','cal','Deadlines']];
+  $('h-types').innerHTML=types.map(([t,i,l])=>{const rs=D.rows.filter(r=>r.field===t),n=rs.length,v=rs.filter(r=>r.status==='supported').length;
+    const seg=before?'':['supported','inferred','contradicted','silent','refused'].map(s=>{const k=rs.filter(r=>r.status===s).length;return k?`<span style="width:${100*k/n}%;background:${SCOL[s]}"></span>`:''}).join('');
+    return `<div class="trow">${ic(i,'t-ic')}<span class="t-l">${l}</span><div class="stack">${seg}</div><span class="count">${before?0:v} / ${n}</span></div>`}).join('');
 }
 $('h-start').onclick=e=>{const p=e.target.closest('[data-open]');if(p)openEntity(p.dataset.open)};
 
