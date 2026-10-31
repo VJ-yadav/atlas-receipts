@@ -21,7 +21,7 @@ OUT = ROOT / "after" / "metrics.json"
 
 def _read(rel, default=""):
     p = ROOT / rel
-    return p.read_text() if p.exists() else default
+    return p.read_text(encoding="utf-8") if p.exists() else default
 
 
 def _counts(rs):
@@ -115,18 +115,18 @@ def block_text(m):
 def replace_block(path, text):
     if not path.exists():
         return False
-    s = path.read_text()
+    s = path.read_text(encoding="utf-8")
     a, b = "<!-- metrics:start -->", "<!-- metrics:end -->"
     if a not in s or b not in s:
         return False
-    path.write_text(s[:s.index(a) + len(a)] + "\n" + text + "\n" + s[s.index(b):])
+    path.write_text(s[:s.index(a) + len(a)] + "\n" + text + "\n" + s[s.index(b):], encoding="utf-8")
     return True
 
 
 def run():
     m = compute()
     OUT.parent.mkdir(exist_ok=True)
-    OUT.write_text(json.dumps(m, indent=1))
+    OUT.write_text(json.dumps(m, indent=1), encoding="utf-8")
     text = block_text(m)
     done = [p.name for p in (ROOT / "README.md", ROOT / "BRIEF.md", ROOT.parent / "DEMO.md") if replace_block(p, text)]
     print(f"wrote {OUT.relative_to(ROOT)}; updated blocks in: {', '.join(done) or 'none'}")
@@ -135,4 +135,4 @@ def run():
 
 def load():
     """The last computed metrics (compute fresh if none)."""
-    return json.loads(OUT.read_text()) if OUT.exists() else compute()
+    return json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else compute()

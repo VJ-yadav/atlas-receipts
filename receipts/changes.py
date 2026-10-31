@@ -34,7 +34,7 @@ def report(prev=None, cur=None):
     print(f"Re-check: {len(cur)} claims. {len(held)} unchanged ({still} still verified by their sentence: nobody needed).")
     print(f"Back to the maintainer: {len(back)} changed, {len(new)} new.")
     for p, r in back[:25]:
-        print(f"  {r['key']:<34} {p['status']} → {r['status']}")
+        print(f"  {r['key']:<34} {p['status']} -> {r['status']}")
         if p["quote"] and p["quote"] != r["quote"]:
             print(f"      was: \"{p['quote'][:90]}\"")
             print(f"      now: " + (f"\"{r['quote'][:90]}\"" if r["quote"] else f"(gone) {r['reason'][:80]}"))

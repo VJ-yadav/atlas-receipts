@@ -68,7 +68,13 @@ def run(decisions_path):
         return
     if not WORKTREE.exists():
         git("worktree", "add", "-B", BRANCH, str(WORKTREE), "main")
-        (WORKTREE / "node_modules").symlink_to(ATLAS / "node_modules")
+        nm, target = WORKTREE / "node_modules", ATLAS / "node_modules"
+        if not nm.exists() and target.exists():
+            try:
+                nm.symlink_to(target, target_is_directory=True)
+            except OSError:
+                # Windows without Developer Mode: a directory junction works without elevation.
+                subprocess.run(["cmd", "/c", "mklink", "/J", str(nm), str(target)], check=True)
     path = WORKTREE / "data" / "entities.yml"
     lines = path.read_text().splitlines(keepends=True)
     touched = set()
@@ -85,14 +91,15 @@ def run(decisions_path):
         touched.add(r["entry_id"])
     for eid in touched:  # a person checked these entries today
         set_field(lines, eid, "lastVerified", STAMP)
-    path.write_text("".join(lines))
+    path.write_text("".join(lines), encoding="utf-8")
     # the receipts travel with the change, as a sidecar the Atlas loader does not read
     from receipts import evidence
-    (WORKTREE / "data" / "evidence.yml").write_text(evidence.build(list(receipts.values())))
+    (WORKTREE / "data" / "evidence.yml").write_text(
+        evidence.build(list(receipts.values())), encoding="utf-8")
     v = subprocess.run(["node", "scripts/validate.js"], cwd=WORKTREE, capture_output=True, text=True)
     report = (v.stdout + v.stderr).strip()
     (ROOT / "after").mkdir(exist_ok=True)
-    (ROOT / "after" / "validate.txt").write_text(report + "\n")
+    (ROOT / "after" / "validate.txt").write_text(report + "\n", encoding="utf-8")
     print(git("diff", "--stat", cwd=WORKTREE).strip())
     print(report.splitlines()[-1] if report else "validator printed nothing")
     if v.returncode == 0:

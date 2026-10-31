@@ -1,6 +1,6 @@
 {
  "atlas_generated": "2026-10-31 12:52Z",
- "checked_at": "2026-10-31 17:46Z",
+ "checked_at": "2026-10-31 18:30Z",
  "entities": 197,
  "probes": [
   {
@@ -41,13 +41,13 @@
  ],
  "all": {
   "claims": 1080,
-  "supported": 351,
-  "contradicted": 3,
-  "silent": 416,
-  "inferred": 295,
+  "supported": 380,
+  "contradicted": 4,
+  "silent": 398,
+  "inferred": 283,
   "refused": 15,
-  "with_sentence": 649,
-  "needs_person": 714
+  "with_sentence": 667,
+  "needs_person": 685
  },
  "by_type": {
   "live": {
@@ -62,56 +62,64 @@
   },
   "place": {
    "claims": 197,
-   "supported": 119,
-   "contradicted": 2,
-   "silent": 73,
+   "supported": 125,
+   "contradicted": 3,
+   "silent": 66,
    "inferred": 0,
    "refused": 3,
-   "with_sentence": 121,
-   "needs_person": 75
+   "with_sentence": 128,
+   "needs_person": 69
   },
   "offer": {
    "claims": 318,
    "supported": 0,
    "contradicted": 0,
-   "silent": 125,
-   "inferred": 187,
+   "silent": 129,
+   "inferred": 183,
    "refused": 6,
-   "with_sentence": 187,
+   "with_sentence": 183,
    "needs_person": 312
   },
   "fact": {
    "claims": 177,
-   "supported": 6,
+   "supported": 13,
    "contradicted": 1,
-   "silent": 62,
-   "inferred": 108,
+   "silent": 63,
+   "inferred": 100,
    "refused": 0,
-   "with_sentence": 115,
-   "needs_person": 171
+   "with_sentence": 114,
+   "needs_person": 164
   },
   "link": {
    "claims": 170,
-   "supported": 63,
+   "supported": 75,
    "contradicted": 0,
-   "silent": 104,
+   "silent": 92,
    "inferred": 0,
    "refused": 3,
-   "with_sentence": 63,
-   "needs_person": 104
+   "with_sentence": 75,
+   "needs_person": 92
   },
   "deadline": {
    "claims": 21,
-   "supported": 6,
+   "supported": 10,
    "contradicted": 0,
-   "silent": 15,
+   "silent": 11,
    "inferred": 0,
    "refused": 0,
-   "with_sentence": 6,
-   "needs_person": 15
+   "with_sentence": 10,
+   "needs_person": 11
   }
  },
  "contradictions": [
+  {
+   "id": "salesforce-bos",
+   "name": "Salesforce (Cambridge)",
+   "field": "place",
+   "value": "955 Massachusetts Ave, Cambridge",
+   "page_value": "Boston, MA",
+   "url": "https://www.salesforce.com/company/locations/?bc=HL"
+  },
   {
    "id": "matrix",
    "name": "Matrix (fka Matrix Partners)",
@@ -156,51 +164,51 @@
    "techstars"
   ],
   "claims": 83,
-  "supported": 25,
+  "supported": 26,
   "contradicted": 0,
-  "silent": 15,
-  "inferred": 43,
+  "silent": 16,
+  "inferred": 41,
   "refused": 0,
-  "with_sentence": 68,
-  "needs_person": 58
+  "with_sentence": 67,
+  "needs_person": 57
  },
  "june": {
   "entries": 52,
   "claims": 256,
-  "supported": 85,
+  "supported": 92,
   "contradicted": 2,
-  "silent": 110,
-  "inferred": 54,
+  "silent": 107,
+  "inferred": 50,
   "refused": 5,
-  "with_sentence": 141,
-  "needs_person": 166,
+  "with_sentence": 144,
+  "needs_person": 159,
   "live_verified": 39,
   "with_contradiction": 2
  },
- "blocked_sites": 28,
+ "blocked_sites": 0,
  "refused_reasons": {
   "robots.txt disallows this page": 3,
   "meetup.com terms could not be verified to allow automated collection": 12
  },
- "pages_read": 1048,
+ "pages_read": 3171,
  "model": {
   "name": "claude-haiku-5-5",
-  "calls": 155,
+  "calls": 154,
   "usd": 0.039,
-  "usd_all_models": 0.11
+  "usd_all_models": 0.039
  },
  "planted": {
   "planted": 6,
-  "caught": 5,
-  "missed": 1,
+  "caught": 6,
+  "missed": 0,
   "false_alarms": 1,
-  "precision": 0.8333333333333334,
-  "recall": 0.8333333333333334
+  "precision": 0.8571428571428571,
+  "recall": 1.0
  },
  "clicks": {
   "found": 5,
   "of": 5
  },
  "validator": "PASSED: data/ is valid.",
- "decisions": 5
+ "decisions": 4
 }

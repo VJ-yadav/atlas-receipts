@@ -149,7 +149,11 @@ def upgrade(receipts, pages):
 
 def usage_report():
     p = CACHE / "_usage.jsonl"
-    rows = [json.loads(l) for l in p.read_text().splitlines()] if p.exists() else []
+    rows = []
+    if p.exists():
+        for l in p.read_text(encoding="utf-8").splitlines():
+            if l.strip():
+                rows.append(json.loads(l))
     by = {}
     for r in rows:
         m = by.setdefault(r["model"], {"calls": 0, "in": 0, "out": 0, "usd": 0.0, "claims": 0})

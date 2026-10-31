@@ -61,26 +61,26 @@ it, per claim.** Next month only the claims whose sentence changed go back to a 
 ## Probe line
 
 <!-- metrics:start -->
-**Probe 8: claims with a receipt, 0 → 351 of 1,080 verified by code.** 649 carry a sentence from the org's own page (295 of them are Claude's readings, labelled inferred; 3 are sentences that contradict the Atlas).
+**Probe 8: claims with a receipt, 0 → 380 of 1,080 verified by code.** 667 carry a sentence from the org's own page (283 of them are Claude's readings, labelled inferred; 4 are sentences that contradict the Atlas).
 
 ```
-supported 351 · contradicted 3 · silent 416 · inferred 295 · refused 15      (checked 2026-10-31 17:46Z)
+supported 380 · contradicted 4 · silent 398 · inferred 283 · refused 15      (checked 2026-10-31 18:30Z)
 ```
 
 | Number | Value |
 |---|---|
-| Probe 8: claims verified by code | 0 → **351 / 1,080** |
-| Claims carrying a sentence from the org's own page | 649 |
-| Claims that need a person (contradicted, silent, inferred) | 714 |
-| Real contradictions | 3: matrix, accomplice, deltav |
-| Probe 5: the 52 entries last checked in June | 39 confirmed live by their own site; 2 with a contradiction; 85 of 256 claims verified |
-| Links with a receipt | 63 / 170 |
-| A founder's 12-funder shortlist | 0 → 25 / 83 verified (68 with a sentence) |
-| Planted errors: caught / missed / false alarms | 5 / 1 / 1 of 6 |
+| Probe 8: claims verified by code | 0 → **380 / 1,080** |
+| Claims carrying a sentence from the org's own page | 667 |
+| Claims that need a person (contradicted, silent, inferred) | 685 |
+| Real contradictions | 4: salesforce-bos, matrix, accomplice, deltav |
+| Probe 5: the 52 entries last checked in June | 39 confirmed live by their own site; 2 with a contradiction; 92 of 256 claims verified |
+| Links with a receipt | 75 / 170 |
+| A founder's 12-funder shortlist | 0 → 26 / 83 verified (67 with a sentence) |
+| Planted errors: caught / missed / false alarms | 6 / 0 / 1 of 6 |
 | Click test, random receipts | 5 / 5 land on their sentence |
-| Pages read from the orgs' own sites | 1,048 |
-| Sites that block bots (respected) | 28 |
-| Model (claude-haiku-5-5): cost of reading all 197 | $0.04 over 155 calls |
+| Pages read from the orgs' own sites | 3,171 |
+| Sites that block bots (respected) | 0 |
+| Model (claude-haiku-5-5): cost of reading all 197 | $0.04 over 154 calls |
 | Validator on the Atlas branch | PASSED: data/ is valid. |
 <!-- metrics:end -->
 All numbers in this block come from `after/metrics.json` (`python -m receipts metrics`), the same
