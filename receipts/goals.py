@@ -80,7 +80,8 @@ def _():
     rs = receipts()
     bad = [r["key"] for r in rs if r["quote"] and r["status"] != "refused" and PERSONISH.search(r["quote"])]
     text = "".join(p.read_text(errors="ignore") for p in OUT.glob("*") if p.is_file())
-    emails = re.findall(r"[\w.+-]+@[\w-]+\.[\w.]+", text)
+    # real mailbox shape (not npm pins like leaflet@1.9.4)
+    emails = re.findall(r"[\w.+-]+@[A-Za-z][\w-]*\.[A-Za-z][\w.]*", text)
     return not bad and not emails, f"{len(bad)} person-ish quotes {bad[:3]}, {len(emails)} emails"
 
 
@@ -137,7 +138,7 @@ def _():
     p = OUT / "review.html"
     if not p.exists():
         return False, "no out/review.html (B1)"
-    h = p.read_text()
+    h = p.read_text(encoding="utf-8")
     missing = [s for s in ("supported", "contradicted", "silent", "inferred", "refused") if s not in h]
     return not missing and "#:~:text=" in h and "Probe 8" in h, f"missing {missing}" if missing else "ok"
 
