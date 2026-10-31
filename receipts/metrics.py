@@ -127,7 +127,7 @@ def run():
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(m, indent=1))
     text = block_text(m)
-    done = [p.name for p in (ROOT / "README.md", ROOT.parent / "DEMO.md") if replace_block(p, text)]
+    done = [p.name for p in (ROOT / "README.md", ROOT / "BRIEF.md", ROOT.parent / "DEMO.md") if replace_block(p, text)]
     print(f"wrote {OUT.relative_to(ROOT)}; updated blocks in: {', '.join(done) or 'none'}")
     return m
 

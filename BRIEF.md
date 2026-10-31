@@ -24,11 +24,32 @@ A claim is **verified** only when code finds an exact quote on the organization�
 | 5 lastVerified 2026-06 | 52 / 197 |
 | 6 west of Worcester | 5 / 197 |
 | 7 hand time per entry | 10–15 min (maintainer estimate) |
-| **8 claims with a receipt** | **328 / 1080** |
 
-Claims by type: live 197 · place 197 · offer 318 · link 170 · fact 177 · deadline 21.  
-This run: supported 328 · contradicted 13 · silent 724 · inferred 0 · refused 15.  
-Planted harness: 6 planted, 6 caught, 0 missed, 1 false alarm (real deltav check-size mismatch).
+Probe 8 and every number of the run (generated from `after/metrics.json` by `python -m receipts metrics`; don't edit by hand):
+
+<!-- metrics:start -->
+**Probe 8: claims with a receipt, 0 → 351 of 1,080 verified by code.** 649 carry a sentence from the org's own page (295 of them are Claude's readings, labelled inferred; 3 are sentences that contradict the Atlas).
+
+```
+supported 351 · contradicted 3 · silent 416 · inferred 295 · refused 15      (checked 2026-10-31 17:46Z)
+```
+
+| Number | Value |
+|---|---|
+| Probe 8: claims verified by code | 0 → **351 / 1,080** |
+| Claims carrying a sentence from the org's own page | 649 |
+| Claims that need a person (contradicted, silent, inferred) | 714 |
+| Real contradictions | 3: matrix, accomplice, deltav |
+| Probe 5: the 52 entries last checked in June | 39 confirmed live by their own site; 2 with a contradiction; 85 of 256 claims verified |
+| Links with a receipt | 63 / 170 |
+| A founder's 12-funder shortlist | 0 → 25 / 83 verified (68 with a sentence) |
+| Planted errors: caught / missed / false alarms | 5 / 1 / 1 of 6 |
+| Click test, random receipts | 5 / 5 land on their sentence |
+| Pages read from the orgs' own sites | 1,048 |
+| Sites that block bots (respected) | 28 |
+| Model (claude-haiku-5-5): cost of reading all 197 | $0.04 over 155 calls |
+| Validator on the Atlas branch | PASSED: data/ is valid. |
+<!-- metrics:end -->
 
 ## What it refuses
 - People’s names, emails, phones, or handles in outputs, cache, or fixtures.
