@@ -1,6 +1,6 @@
 {
  "atlas_generated": "2026-10-31 12:52Z",
- "checked_at": "2026-10-31 18:30Z",
+ "checked_at": "2026-10-31 18:47Z",
  "entities": 197,
  "probes": [
   {
@@ -41,13 +41,13 @@
  ],
  "all": {
   "claims": 1080,
-  "supported": 380,
+  "supported": 373,
   "contradicted": 4,
-  "silent": 398,
-  "inferred": 283,
+  "silent": 400,
+  "inferred": 288,
   "refused": 15,
-  "with_sentence": 667,
-  "needs_person": 685
+  "with_sentence": 665,
+  "needs_person": 692
  },
  "by_type": {
   "live": {
@@ -74,31 +74,31 @@
    "claims": 318,
    "supported": 0,
    "contradicted": 0,
-   "silent": 129,
-   "inferred": 183,
+   "silent": 128,
+   "inferred": 184,
    "refused": 6,
-   "with_sentence": 183,
+   "with_sentence": 184,
    "needs_person": 312
   },
   "fact": {
    "claims": 177,
-   "supported": 13,
+   "supported": 12,
    "contradicted": 1,
-   "silent": 63,
-   "inferred": 100,
+   "silent": 60,
+   "inferred": 104,
    "refused": 0,
-   "with_sentence": 114,
-   "needs_person": 164
+   "with_sentence": 117,
+   "needs_person": 165
   },
   "link": {
    "claims": 170,
-   "supported": 75,
+   "supported": 69,
    "contradicted": 0,
-   "silent": 92,
+   "silent": 98,
    "inferred": 0,
    "refused": 3,
-   "with_sentence": 75,
-   "needs_person": 92
+   "with_sentence": 69,
+   "needs_person": 98
   },
   "deadline": {
    "claims": 21,
@@ -164,23 +164,23 @@
    "techstars"
   ],
   "claims": 83,
-  "supported": 26,
+  "supported": 25,
   "contradicted": 0,
-  "silent": 16,
-  "inferred": 41,
+  "silent": 13,
+  "inferred": 45,
   "refused": 0,
-  "with_sentence": 67,
-  "needs_person": 57
+  "with_sentence": 70,
+  "needs_person": 58
  },
  "june": {
   "entries": 52,
   "claims": 256,
   "supported": 92,
   "contradicted": 2,
-  "silent": 107,
-  "inferred": 50,
+  "silent": 109,
+  "inferred": 48,
   "refused": 5,
-  "with_sentence": 144,
+  "with_sentence": 142,
   "needs_person": 159,
   "live_verified": 39,
   "with_contradiction": 2
@@ -193,9 +193,9 @@
  "pages_read": 962,
  "model": {
   "name": "claude-haiku-5-5",
-  "calls": 154,
-  "usd": 0.039,
-  "usd_all_models": 0.039
+  "calls": 199,
+  "usd": 0.051,
+  "usd_all_models": 0.122
  },
  "planted": {
   "planted": 6,
@@ -210,5 +210,5 @@
   "of": 5
  },
  "validator": "PASSED: data/ is valid.",
- "decisions": 4
+ "decisions": 5
 }
