@@ -16,7 +16,7 @@ HEADER = """# Atlas Receipts evidence: the sentence on each organization's own p
 #         contradicted = the page says something else (page_value); inferred = a model reading, NOT verified.
 # A claim with no item here has no sentence yet (silent or refused).
 """
-KEEP = ("supported", "contradicted", "inferred")
+from receipts.metrics import WITH_SENTENCE as KEEP  # noqa: E402  (same definition as the metrics)
 
 
 def build(receipts):
@@ -38,6 +38,7 @@ def run():
     out = ROOT / "after" / "evidence.yml"
     out.parent.mkdir(exist_ok=True)
     out.write_text(text)
-    n = sum(r["status"] in KEEP for r in receipts)
+    from receipts.metrics import compute
+    n = compute(receipts)["all"]["with_sentence"]
     print(f"wrote {out.relative_to(ROOT)}: {n} claims with a sentence, {len(text) // 1024} KB")
     return out

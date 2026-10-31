@@ -54,19 +54,37 @@ it, per claim.** Next month only the claims whose sentence changed go back to a 
   with its sentence and a link that opens the page with that sentence highlighted, and Accept / Reject.
   A re-check sends back only claims whose sentence changed, not 17 random entries a month.
 - **Founders using the Atlas.** They can see which claims (a check size, a deadline) are backed by the
-  funder's own page today. For one founder's 12-funder shortlist: 0 → 25 of 83 claims verified,
-  68 carry a sentence.
+  funder's own page today. For one founder's 12-funder shortlist, see the numbers block below.
 - **New entries.** A proposed organization is checked for duplicates and scope, and gets receipts,
   before anyone reads it.
 
 ## Probe line
 
-**Probe 8 (new): claims with a receipt, 0 → 351 of 1,080 verified by code.** 685 of 1,080 carry a
-sentence from the org's own page; the extra 334 are Claude's readings, labelled inferred.
+<!-- metrics:start -->
+**Probe 8: claims with a receipt, 0 → 351 of 1,080 verified by code.** 649 carry a sentence from the org's own page (295 of them are Claude's readings, labelled inferred; 3 are sentences that contradict the Atlas).
 
 ```
-supported 351 · contradicted 3 · silent 377 · inferred 334 · refused 15        (31 Oct, 13:26)
+supported 351 · contradicted 3 · silent 416 · inferred 295 · refused 15      (checked 2026-10-31 17:46Z)
 ```
+
+| Number | Value |
+|---|---|
+| Probe 8: claims verified by code | 0 → **351 / 1,080** |
+| Claims carrying a sentence from the org's own page | 649 |
+| Claims that need a person (contradicted, silent, inferred) | 714 |
+| Real contradictions | 3: matrix, accomplice, deltav |
+| Probe 5: the 52 entries last checked in June | 39 confirmed live by their own site; 2 with a contradiction; 85 of 256 claims verified |
+| Links with a receipt | 63 / 170 |
+| A founder's 12-funder shortlist | 0 → 25 / 83 verified (68 with a sentence) |
+| Planted errors: caught / missed / false alarms | 5 / 1 / 1 of 6 |
+| Click test, random receipts | 5 / 5 land on their sentence |
+| Pages read from the orgs' own sites | 1,048 |
+| Sites that block bots (respected) | 28 |
+| Model (claude-haiku-5-5): cost of reading all 197 | $0.04 over 155 calls |
+| Validator on the Atlas branch | PASSED: data/ is valid. |
+<!-- metrics:end -->
+All numbers in this block come from `after/metrics.json` (`python -m receipts metrics`), the same
+source the console and the probes read.
 
 - Before: `before/probes.txt`. After: `after/probes.txt`.
 - **Real contradictions** (each needs a person to confirm):

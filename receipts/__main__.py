@@ -50,6 +50,9 @@ def main(argv):
     elif cmd == "evidence":
         from receipts import evidence
         evidence.run()
+    elif cmd == "metrics":
+        from receipts import metrics
+        metrics.run()
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)

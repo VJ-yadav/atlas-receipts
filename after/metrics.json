@@ -1,0 +1,169 @@
+{
+ "atlas_generated": "2026-10-31 12:52Z",
+ "checked_at": "2026-10-31 17:46Z",
+ "entities": 197,
+ "all": {
+  "claims": 1080,
+  "supported": 351,
+  "contradicted": 3,
+  "silent": 416,
+  "inferred": 295,
+  "refused": 15,
+  "with_sentence": 649,
+  "needs_person": 714
+ },
+ "by_type": {
+  "live": {
+   "claims": 197,
+   "supported": 157,
+   "contradicted": 0,
+   "silent": 37,
+   "inferred": 0,
+   "refused": 3,
+   "with_sentence": 157,
+   "needs_person": 37
+  },
+  "place": {
+   "claims": 197,
+   "supported": 119,
+   "contradicted": 2,
+   "silent": 73,
+   "inferred": 0,
+   "refused": 3,
+   "with_sentence": 121,
+   "needs_person": 75
+  },
+  "offer": {
+   "claims": 318,
+   "supported": 0,
+   "contradicted": 0,
+   "silent": 125,
+   "inferred": 187,
+   "refused": 6,
+   "with_sentence": 187,
+   "needs_person": 312
+  },
+  "fact": {
+   "claims": 177,
+   "supported": 6,
+   "contradicted": 1,
+   "silent": 62,
+   "inferred": 108,
+   "refused": 0,
+   "with_sentence": 115,
+   "needs_person": 171
+  },
+  "link": {
+   "claims": 170,
+   "supported": 63,
+   "contradicted": 0,
+   "silent": 104,
+   "inferred": 0,
+   "refused": 3,
+   "with_sentence": 63,
+   "needs_person": 104
+  },
+  "deadline": {
+   "claims": 21,
+   "supported": 6,
+   "contradicted": 0,
+   "silent": 15,
+   "inferred": 0,
+   "refused": 0,
+   "with_sentence": 6,
+   "needs_person": 15
+  }
+ },
+ "contradictions": [
+  {
+   "id": "matrix",
+   "name": "Matrix (fka Matrix Partners)",
+   "field": "place",
+   "value": "Bay Colony, Waltham",
+   "page_value": "Cambridge, MA",
+   "url": "https://matrix.vc/"
+  },
+  {
+   "id": "accomplice",
+   "name": "Accomplice",
+   "field": "place",
+   "value": "Cambridge",
+   "page_value": "Boston, MA",
+   "url": "https://accomplice.co/"
+  },
+  {
+   "id": "deltav",
+   "name": "MIT delta v",
+   "field": "fact",
+   "value": {
+    "label": "Check size",
+    "value": "Up to $20K plus living stipend"
+   },
+   "page_value": "$75,000",
+   "url": "https://entrepreneurship.mit.edu/accelerator/program/"
+  }
+ ],
+ "shortlist": {
+  "ids": [
+   "glasswing",
+   "venture-guides",
+   "foundersedge",
+   "bcv",
+   "unusual",
+   "milemark",
+   "first-star",
+   "two-lanterns",
+   "lama",
+   "companyon",
+   "link-ventures",
+   "techstars"
+  ],
+  "claims": 83,
+  "supported": 25,
+  "contradicted": 0,
+  "silent": 15,
+  "inferred": 43,
+  "refused": 0,
+  "with_sentence": 68,
+  "needs_person": 58
+ },
+ "june": {
+  "entries": 52,
+  "claims": 256,
+  "supported": 85,
+  "contradicted": 2,
+  "silent": 110,
+  "inferred": 54,
+  "refused": 5,
+  "with_sentence": 141,
+  "needs_person": 166,
+  "live_verified": 39,
+  "with_contradiction": 2
+ },
+ "blocked_sites": 28,
+ "refused_reasons": {
+  "robots.txt disallows this page": 3,
+  "meetup.com terms could not be verified to allow automated collection": 12
+ },
+ "pages_read": 1048,
+ "model": {
+  "name": "claude-haiku-5-5",
+  "calls": 155,
+  "usd": 0.039,
+  "usd_all_models": 0.11
+ },
+ "planted": {
+  "planted": 6,
+  "caught": 5,
+  "missed": 1,
+  "false_alarms": 1,
+  "precision": 0.8333333333333334,
+  "recall": 0.8333333333333334
+ },
+ "clicks": {
+  "found": 5,
+  "of": 5
+ },
+ "validator": "PASSED: data/ is valid.",
+ "decisions": 5
+}

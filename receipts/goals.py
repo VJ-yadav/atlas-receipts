@@ -118,10 +118,10 @@ def _():
 
 @goal("P1", f"Probe 8: >= {PROBE8_TARGET} claims verified by code, >= {SOURCED_TARGET} with a sourced sentence")
 def _():
-    rs = receipts()
-    n = sum(r["status"] == "supported" for r in rs)
-    m = n + sum(r["status"] == "inferred" for r in rs)
-    return n >= PROBE8_TARGET and m >= SOURCED_TARGET, f"{n} verified, {m} with a sentence, of {len(rs)}"
+    from receipts.metrics import compute
+    a = compute(receipts())["all"]
+    n, m = a["supported"], a["with_sentence"]
+    return n >= PROBE8_TARGET and m >= SOURCED_TARGET, f"{n} verified, {m} with a sentence, of {a['claims']}"
 
 
 @goal("P2", "the model pass has run: fuzzy claims are inferred or refused, not just silent")

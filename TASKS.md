@@ -279,3 +279,12 @@ Keep a clear "Maintainer sign-in" link in the public view header that opens the 
 No login is built today, on purpose: the console cannot change the Atlas (its only output is a decisions
 file; `apply` writes to a branch; only the maintainer can merge to main). If the console is ever hosted,
 it goes behind GitHub or Clerk sign-in. Label the link "Maintainer sign-in (admin only)".
+
+### One source of numbers (14:20), for everyone
+Every number shown anywhere comes from `after/metrics.json` (`python -m receipts metrics`, also run by
+`make pages`). The console, `probe`, the goals, `evidence`, and the README and DEMO number blocks
+(between `<!-- metrics:start/end -->`) read it. **pjsk02, in the public view:** for any summary number
+(totals, shortlist, contradictions), read `after/metrics.json` (or `receipts.metrics.compute()`) instead of
+counting in JS. Counting a filtered list on screen is fine. Definitions live only in `receipts/metrics.py`:
+`with_sentence` = supported + inferred + contradicted with a quote confirmed on the page;
+`needs_person` = contradicted + silent + inferred.

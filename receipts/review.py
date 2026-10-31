@@ -9,14 +9,13 @@ import json
 import os
 from collections import Counter
 
+from receipts import metrics
 from receipts.claims import FIELD_RISK, no_contact
 from receipts.probes import ROOT, load_entries
-from receipts.model import usage_report as model_usage
 from receipts.text import highlight_url
 
 # A founder's shortlist (pre-seed, AI infrastructure): funders whose Atlas focus fits.
-SHORTLIST = ["glasswing", "venture-guides", "foundersedge", "bcv", "unusual", "milemark", "first-star",
-             "two-lanterns", "lama", "companyon", "link-ventures", "techstars"]
+from receipts.metrics import SHORTLIST  # noqa: E402  (one list, used everywhere)
 STATUS_ORDER = {"contradicted": 0, "refused": 1, "silent": 2, "inferred": 3, "supported": 4}
 
 
@@ -90,46 +89,33 @@ def rows(receipts, entries):
 
 
 
-def meta(receipts, entries):
-    """Context for the Home page: the database, the pipeline, the measurements."""
-    def read(path, default=None):
-        p = ROOT / path
-        return p.read_text() if p.exists() else default
+def meta(m):
+    """Home page context, all from receipts.metrics (the single source of numbers)."""
     atlas = json.loads((ROOT / "data" / "atlas.json").read_text())
-    score = json.loads(read("out/planted_score.json", "null") or "null")
-    validate = (read("after/validate.txt", "") or "").strip().splitlines()
-    clicks = (read("after/clicktest.txt", "") or "").strip().splitlines()
-    by_type = Counter(r["field"] for r in receipts)
-    sup_type = Counter(r["field"] for r in receipts if r["status"] == "supported")
-    cache = ROOT / "cache"
-    pages = sum(1 for p in cache.rglob("*.json") if "_model" not in p.parts) if cache.exists() else 0
-    calls = len(list((cache / "_model").glob("*.json"))) if (cache / "_model").exists() else 0
+    clicks = m["clicks"]
     return {
-        "atlas_generated": atlas.get("generated", "")[:16].replace("T", " ") + "Z",
+        "atlas_generated": m["atlas_generated"],
         "cats": {k: v["label"] for k, v in atlas.get("cats", {}).items()},
-        "june": sum(e["lastVerified"] == "2026-06" for e in entries),
-        "by_type": dict(by_type), "sup_type": dict(sup_type),
-        "pages": pages, "model_calls": calls, "model": os.environ.get("RECEIPTS_MODEL", "claude-haiku-5-5"),
-        "validator": validate[-1] if validate else "not run",
-        "score": score, "clicks": clicks[-1] if clicks else "",
-        "decisions": len(json.loads(read("out/decisions.json", "[]") or "[]")),
-        "run_cost": round(model_usage().get(os.environ.get("RECEIPTS_MODEL", "claude-haiku-5-5"), {}).get("usd", 0), 3),
+        "june": m["june"]["entries"], "pages": m["pages_read"],
+        "model": m["model"]["name"], "model_calls": m["model"]["calls"], "run_cost": m["model"]["usd"],
+        "validator": m["validator"], "score": m["planted"], "decisions": m["decisions"],
+        "clicks": f"{clicks['found']} / {clicks['of']}" if clicks else "",
+        "all": m["all"],
     }
 
 
 def build(receipts, out_path, entries=None, title="Atlas Receipts"):
     entries = entries if entries is not None else load_entries()
     data = rows(receipts, entries)
-    n = Counter(r["status"] for r in receipts)
-    sl = [r for r in receipts if r["entry_id"] in SHORTLIST]
-    head = {"total": len(receipts), "counts": dict(n), "title": title, "shortlist": SHORTLIST,
-            "sl_total": len(sl), "sl_supported": sum(r["status"] == "supported" for r in sl),
-            "sl_sentence": sum(r["status"] in ("supported", "inferred") for r in sl),
-            "generated": max((r["fetched_at"] for r in receipts), default="")[:16].replace("T", " ") + "Z"}
+    m = metrics.compute(receipts)
+    a, sl = m["all"], m["shortlist"]
+    head = {"total": a["claims"], "counts": {k: a[k] for k in metrics.STATUSES}, "title": title,
+            "shortlist": sl["ids"], "sl_total": sl["claims"], "sl_supported": sl["supported"],
+            "sl_sentence": sl["with_sentence"], "generated": m["checked_at"]}
     ents = [{k: e.get(k) for k in ("id", "name", "cat", "loc", "url", "lastVerified", "added", "approx",
                                     "offers", "links", "applyBy")} | {"desc": no_contact(e.get("desc", ""))}
             for e in entries]
-    blob = json.dumps({"head": head, "meta": meta(receipts, entries), "entities": ents, "rows": data})
+    blob = json.dumps({"head": head, "meta": meta(m), "entities": ents, "rows": data})
     out_path.parent.mkdir(exist_ok=True)
     out_path.write_text(PAGE.replace("/*DATA*/", blob.replace("</", "<\\/")))
     return out_path
@@ -452,7 +438,7 @@ function gauge(pct,label,val,sub,icon,tone){
     <div class="g-v">${val}</div><div class="g-k">${label}</div><div class="g-s">${sub}</div></div>`}
 function renderHome(){
   $('h-gen').textContent=M.atlas_generated;$('h-total').textContent=fmt(T);$('h-mode').innerHTML=modeNote();
-  const sent=(C.supported||0)+(C.inferred||0),need=T-(C.supported||0)-(C.refused||0);
+  const sent=M.all.with_sentence,need=M.all.needs_person;
   $('h-kpis').innerHTML=(mode==='before'
     ?[['1 date','per entry, for every claim in it'],['10–15 min','to re-check one entry by hand'],[fmt(M.june),'entries last checked in June']]
     :[[fmt(sent),'carry a sentence from the org'],[fmt(C.contradicted),'contradicted by the org itself'],[fmt(need),'need a person']])
