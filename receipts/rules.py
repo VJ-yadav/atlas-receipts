@@ -114,15 +114,15 @@ def rule_live(claim, pages):
         return silent(claim, pages, "the site did not answer in time today (" + home["error"] +
                                     "): retry before concluding anything")
     if home["status"] in BLOCKED:
-        return silent(claim, pages, f"the site blocks automated fetches (HTTP {home['status']}): "
-                                    "not evidence it is dead; needs a browser fetch or review")
+        return silent(claim, pages, f"blocked, not dead: the site returned HTTP {home['status']} to automated "
+                                    "fetches; needs a browser fetch or review")
     if home["status"] >= 400:
         return contradicted(claim, home, None, f"HTTP {home['status']}", f"the site answers HTTP {home['status']}")
     p, s = find([home], lambda s: PARKED.search(s))
     if p:
         return contradicted(claim, p, s, "parked or for-sale domain", "the page is a parked or for-sale domain")
     if len(home["text"]) < THIN:
-        return silent(claim, pages, f"the page has almost no text ({len(home['text'])} chars): "
+        return silent(claim, pages, f"blocked, not dead: the page has almost no text ({len(home['text'])} chars), "
                                     "probably JavaScript-only; needs a browser fetch or review")
     name = [w for w in re.findall(r"[a-z]{4,}", claim["name"].lower())]
     p, s = find([home], lambda s: len(s) > 25 and any(w in s.lower() for w in name))
@@ -138,34 +138,84 @@ def rule_live(claim, pages):
 
 US_STATES = r"(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)"
 _OTHER_STATE_ADDR = re.compile(r"\b[A-Z][a-z]+,\s*" + US_STATES + r"\s+\d{5}\b")
-# "56 Wareham Street, Fl 3 Boston, MA 02118" or "101 Main Street, 17th Floor Cambridge, MA 02142"
+# Street + MA town; zip optional so "One Lincoln Street, Boston, MA, USA" still counts.
+_STREET = (r"street|st|avenue|ave|road|rd|square|sq|way|place|pl|drive|dr|"
+           r"boulevard|blvd|parkway|pkwy|wharf|park|plaza|row|lane|ln|court|ct|broadway")
+_NUM = r"(?:\d+[A-Za-z]?|One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten)"
 _MA_TOWN_ADDR = re.compile(
-    r"\b\d+[A-Za-z]?\s+[A-Za-z][\w.' ]+?(?:street|st|avenue|ave|road|rd|square|sq|way|place|pl|drive|dr|"
-    r"boulevard|blvd|parkway|pkwy|wharf|park|plaza|row|lane|ln|court|ct|broadway)\.?,?\s+"
+    r"\b" + _NUM + r"\s+[A-Za-z][\w.' ]+?(?:" + _STREET + r")\.?,?\s+"
     r"(?:(?:\d+\w*\s+)?(?:floor|fl|suite|ste|unit|#)\.?\s*\w*,?\s+)?"
-    r"([A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)?),\s*(?:MA|Massachusetts)\s+0[12]\d{3}\b", re.I)
-_MA_ADDR = re.compile(r"\b(MA|Massachusetts)\b\s*0[12]\d{3}\b")
+    r"([A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)?),\s*(?:MA|Massachusetts)(?:\s+0[12]\d{3})?\b", re.I)
+_MA_ADDR = re.compile(r"\b(MA|Massachusetts)\b(?:\s+0[12]\d{3})?\b")
 
 
 ABBREV = {"st": "st|street", "street": "st|street", "ave": "ave|avenue", "avenue": "ave|avenue",
           "rd": "rd|road", "road": "rd|road", "sq": "sq|square", "square": "sq|square",
-          "blvd": "blvd|boulevard", "dr": "dr|drive", "pl": "pl|place", "pkwy": "pkwy|parkway"}
+          "blvd": "blvd|boulevard", "dr": "dr|drive", "pl": "pl|place", "pkwy": "pkwy|parkway",
+          "centre": "centre|center", "center": "centre|center"}
 MAILING = re.compile(r"\bby mail|mailing address|p\.?\s?o\.? box|\bpmb\b", re.I)
+# Neighborhood / campus aliases — only multi-word or distinctive forms (avoid bare "main").
+PLACE_ALIAS = {
+    "kendall sq": ("kendall square", "kendall sq", "one kendall square"),
+    "kendall square": ("kendall square", "kendall sq", "one kendall square"),
+    "central square": ("central square", "central sq"),
+    "seaport": ("seaport district", "boston seaport", "seaport"),
+    "downtown boston": ("downtown boston", "downtown crossing", "boston"),
+    "boston (downtown)": ("downtown boston", "boston"),
+    "boston (back bay)": ("back bay", "boston"),
+    "boston (meets downtown)": ("downtown boston", "boston"),
+    "downtown crossing": ("downtown crossing", "downtown boston"),
+    "south boston": ("south boston",),
+    "newton centre": ("newton centre", "newton center"),
+    "wellesley hills": ("wellesley hills", "wellesley"),
+    "massrobotics": ("massrobotics", "mass robotics"),
+    "the engine": ("the engine",),
+    "cic": ("cambridge innovation center",),
+    "mit campus": ("mit", "massachusetts institute of technology"),
+    "cambridge (mit campus)": ("cambridge", "mit"),
+    "cambridge (trust center)": ("cambridge", "trust center"),
+}
 
 
 def place_pattern(part):
     """'325 Main St' also matches '325 Main Street'."""
     toks = re.findall(r"[a-z0-9]+", part.lower())
+    # Bare "main" / "park" without a street number is too sticky for FAQ copy.
+    if toks == ["main"] or (len(toks) == 1 and toks[0] in {"park", "plaza", "row", "way"}):
+        return None
     body = r"[\s.,-]+".join(f"(?:{ABBREV[t]})" if t in ABBREV else re.escape(t) for t in toks)
     return re.compile(r"(?<![a-z0-9])" + body + r"\.?(?![a-z0-9])")
 
 
+def place_parts(value):
+    """Atlas loc fragments, plus parentheticals stripped and a few neighborhood aliases."""
+    raw = []
+    for p in re.split(r"[,/·]| near ", value):
+        p = p.strip()
+        if len(p) <= 2:
+            continue
+        raw.append(p)
+        bare = re.sub(r"\s*\([^)]*\)", "", p).strip()
+        if bare and bare != p and len(bare) > 2:
+            raw.append(bare)
+    out = set()
+    for p in raw:
+        out.add(p)
+        key = normalize(p)
+        for alias in PLACE_ALIAS.get(key, ()):
+            out.add(alias)
+    return sorted(out, key=len, reverse=True)
+
+
 def rule_place(claim, pages):
-    parts = sorted({p.strip() for p in re.split(r"[,/·]| near ", claim["value"]) if len(p.strip()) > 2},
-                   key=len, reverse=True)
+    parts = place_parts(claim["value"])
+    if not parts or all(normalize(p) in {"venues vary", "citywide", "online"} for p in parts):
+        return silent(claim, pages, f"Atlas location {claim['value']!r} is not a specific place to match")
     for part in parts:
         pat = place_pattern(part)
-        p, s = find(pages, lambda s: pat.search(s.lower()))
+        if not pat:
+            continue
+        p, s = find(pages, lambda s, pat=pat: pat.search(s.lower()))
         if p:
             return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
     # a Massachusetts street address in a different town, and the Atlas town nowhere on the site
@@ -185,16 +235,31 @@ def rule_place(claim, pages):
     return silent(claim, pages, f"none of {parts} appears on {len(usable(pages))} pages")
 
 
+def _ordinal(n):
+    if 10 <= n % 100 <= 20:
+        suf = "th"
+    else:
+        suf = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suf}"
+
+
 def _date_patterns(d):
     m = MONTHS[d.month - 1]
+    ord_ = _ordinal(d.day)
     return [f"{m} {d.day}, {d.year}", f"{m} {d.day} {d.year}", f"{m[:3]} {d.day}, {d.year}",
             f"{m[:3]} {d.day} {d.year}", f"{d.day} {m} {d.year}", f"{d.month}/{d.day}/{d.year}",
-            d.isoformat(), f"{m} {d.day}", f"{m[:3]} {d.day}"]
+            f"{d.month}-{d.day}-{d.year}", f"{d.year}/{d.month}/{d.day}", f"{d.year}-{d.month}-{d.day}",
+            f"{m} {ord_}, {d.year}", f"{m} {ord_} {d.year}", f"{m[:3]} {ord_}, {d.year}",
+            d.isoformat(), f"{m} {d.day}", f"{m[:3]} {d.day}", f"{m} {ord_}"]
 
 
-CLOSED = re.compile(r"applications? (are |is )?(now )?closed|no longer accepting|not currently accepting", re.I)
+CLOSED = re.compile(r"applications? (are |is )?(now )?closed|no longer accepting|not currently accepting|"
+                    r"applications? (have |has )?closed|cohort (is |has )?closed|"
+                    r"deadline has passed|submission(s)? (are |is )?closed", re.I)
 ROLLING = re.compile(r"rolling|apply (at )?any ?time|applications? (are |is )?(now )?open\b|"
-                     r"accepting applications|year-round|year round|ongoing basis", re.I)
+                     r"accepting applications|year-round|year round|ongoing basis|"
+                     r"continuous(ly)? (accept|open)|no (fixed )?deadline|always open|"
+                     r"open enrollment|applications? accepted year", re.I)
 
 
 def rule_deadline(claim, pages):
@@ -224,30 +289,52 @@ def rule_deadline(claim, pages):
 
 
 CHECK_CTX = re.compile(r"\binvest(s|ing|ment)?\b|\bchecks?\b|equity-free|non-dilutive|stipend|"
-                       r"per (company|startup|team|project)|up to \$|in funding|funding of", re.I)
+                       r"per (company|startup|team|project)|up to \$|in funding|funding of|"
+                       r"\bgrant\b|\bprize\b|\baward", re.I)
 NOT_A_CHECK = re.compile(r"\bfund [ivx\d]+\b|raised|exits?\b|valuation|under management|aum\b|"
                          r"awards \$|arbitrat|settlement|billion|\$[\d.]+\s*b\b|total|to date|"
                          r"portfolio companies have", re.I)
 
 
 NUMERIC_FACTS = ("Equity", "Program length", "Cohort size", "Board seat")
-FACT_CTX = {"Program length": re.compile(r"program|accelerator|cohort|course|batch|curriculum|residency", re.I),
+FACT_CTX = {"Program length": re.compile(r"program|accelerator|cohort|course|batch|curriculum|residency|"
+                                         r"fellowship|bootcamp", re.I),
             "Cohort size": re.compile(r"cohort|companies|startups|teams|class", re.I),
-            "Equity": re.compile(r"equity|stake|common stock|safe", re.I)}
+            "Equity": re.compile(r"equity|stake|common stock|safe|dilutive|warrant", re.I)}
+# Atlas "0% / equity-free / none" — match wording, not a stray percent from another deal.
+EQUITY_FREE = re.compile(
+    r"equity[-\s]?free|zero[-\s]?equity|non[-\s]?dilutive|no equity|takes? no equity|"
+    r"does not take (any )?equity|without (taking )?equity|0\s*%|zero percent", re.I)
+EQUITY_FREE_CLAIM = re.compile(
+    r"0\s*%|equity[-\s]?free|zero|none|no fee|non[-\s]?dilutive|no equity|not investment", re.I)
+TAKES_EQUITY = re.compile(r"\b([1-9]\d?(?:\.\d+)?)\s*%\b.{0,40}\bequity|\bequity\b.{0,40}\b([1-9]\d?(?:\.\d+)?)\s*%", re.I)
 
 
 # a sentence that says what the money is, rather than a button or menu label
 PROSE_MONEY = re.compile(r"\b(invest(s|ed)?|receives?|gets?|provides?|offers?|awards?|writes?|grants?|"
-                         r"through|up to|ranging|range)\b", re.I)
+                         r"through|up to|ranging|range|stipend|funding|prize)\b", re.I)
 
 
 def rule_fact(claim, pages):
     label, val = claim["value"]["label"], claim["value"]["value"]
+    if label == "Equity" and EQUITY_FREE_CLAIM.search(val):
+        p, s = find(pages, lambda s: EQUITY_FREE.search(s) and not TAKES_EQUITY.search(s),
+                    prefer=lambda s: full_sentence(s) and FACT_CTX["Equity"].search(s))
+        if p:
+            return supported(claim, p, s, "the page says the program is equity-free / non-dilutive / 0%")
+        return silent(claim, pages, f"no equity-free / 0% wording on {len(usable(pages))} pages "
+                                    "(different wording? needs review)")
     if label in ("Check size", "Terms") and amounts(val):
         want = amounts(val.split("(")[0]) or amounts(val)
         p, s = find(pages, lambda s: set(want) <= set(amounts(s)), prefer=lambda s: full_sentence(s) and PROSE_MONEY.search(s))
         if p:
             return supported(claim, p, s, f"the page gives {', '.join(f'${a:,}' for a in want)}")
+        # single advertised amount that covers an "up to $X" Atlas claim
+        if len(want) == 1 and re.search(r"\bup to\b", val, re.I):
+            p, s = find(pages, lambda s: want[0] in amounts(s) and CHECK_CTX.search(s)
+                        and not NOT_A_CHECK.search(s), prefer=lambda s: full_sentence(s) and PROSE_MONEY.search(s))
+            if p:
+                return supported(claim, p, s, f"the page gives ${want[0]:,}")
         p1, s1 = find(pages, lambda s: set(want) & set(amounts(s)))
         p2, s2 = find(pages, lambda s: amounts(s) and max(amounts(s)) < 50_000_000 and CHECK_CTX.search(s)
                       and not NOT_A_CHECK.search(s) and not set(want) & set(amounts(s)))
@@ -262,8 +349,14 @@ def rule_fact(claim, pages):
         return silent(claim, pages, f"'{label}: {val}' is a description, not a number: needs a reading")
     tokens = re.findall(r"\d+(?:\.\d+)?%|\d+(?:\.\d+)?(?:[\s-]+[a-z]+)?", val)
     if tokens:
-        pats = [re.compile(r"(?<![\d.])" + re.escape(t.lower()).replace(r"\ ", r"[\s-]+").rstrip("s") + r"s?\b"
-                           if re.search(r"[a-z]", t) else word(t)) for t in tokens]
+        pats = []
+        for t in tokens:
+            if re.search(r"[a-z]", t):
+                # "13 weeks" also matches "13-week" / "13 week"
+                core = re.escape(t.lower()).replace(r"\ ", r"[\s-]+").rstrip("s")
+                pats.append(re.compile(r"(?<![\d.])" + core + r"s?\b"))
+            else:
+                pats.append(word(t))
         ctx = FACT_CTX.get(label)
         p, s = find(pages, lambda s: all(x.search(s.lower()) for x in pats) and (not ctx or ctx.search(s)))
         if p:
@@ -274,8 +367,25 @@ def rule_fact(claim, pages):
 
 
 def name_patterns(entry):
-    full = re.sub(r"\s*\(.*?\)", "", entry["name"]).strip()
-    names = {full, re.sub(r"\b(Boston|Inc\.?|LLC)\b", "", full).strip()}
+    """Org name plus parenthetical aliases and short forms (e.g. CSAIL, NERD)."""
+    raw = entry["name"]
+    full = re.sub(r"\s*\(.*?\)", "", raw).strip()
+    names = {full, re.sub(r"\b(Boston|Inc\.?|LLC|Corp\.?|Ltd\.?)\b", "", full, flags=re.I).strip()}
+    for m in re.findall(r"\(([^)]+)\)", raw):
+        alias = m.strip()
+        if 2 < len(alias) < 48:
+            names.add(alias)
+            # "NERD" from "Microsoft New England R&D (NERD)" already; also "R&D" alone is too short
+    toks = re.findall(r"[A-Za-z][A-Za-z0-9&/-]*", full)
+    if len(toks) >= 2:
+        last = toks[-1]
+        if last.isupper() and len(last) >= 3:
+            names.add(last)
+        # "MIT CSAIL" / "UMass Amherst Manning CICS" → drop leading university token when long enough
+        if toks[0].upper() in {"MIT", "UMASS", "BU", "NEU", "NORTHEASTERN", "HARVARD", "TUFTS", "IBM"} and len(toks) >= 2:
+            rest = " ".join(toks[1:])
+            if len(rest) > 3:
+                names.add(rest)
     return [word(n) for n in names if len(n) > 3]
 
 
