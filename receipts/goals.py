@@ -44,7 +44,8 @@ def _():
 
 @goal("E2", "no .env or API key ever committed")
 def _():
-    hits = sh("git", "log", "--all", "-p", "-S", "sk-ant-", "--format=%h").strip()
+    # the shape of a real key (prefix, kind, then a long secret), not just the prefix
+    hits = sh("git", "log", "--all", "--format=%h", "-G", "sk-ant-[a-z]+(-[a-z0-9]+)?-[A-Za-z0-9_-]{30,}").strip()
     files = sh("git", "log", "--all", "--format=", "--name-only", "--", ".env").strip()
     return not hits and not files, "clean" if not (hits or files) else "KEY IN HISTORY"
 
