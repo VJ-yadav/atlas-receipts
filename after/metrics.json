@@ -2,6 +2,43 @@
  "atlas_generated": "2026-10-31 12:52Z",
  "checked_at": "2026-10-31 17:46Z",
  "entities": 197,
+ "probes": [
+  {
+   "n": 1,
+   "name": "approximate pins",
+   "value": "87 / 197"
+  },
+  {
+   "n": 2,
+   "name": "entries with no links",
+   "value": "104 / 197"
+  },
+  {
+   "n": 3,
+   "name": "entries with no stages",
+   "value": "35 / 197"
+  },
+  {
+   "n": 4,
+   "name": "funders with a check size",
+   "value": "13 of 61"
+  },
+  {
+   "n": 5,
+   "name": "last verified in June",
+   "value": "52 / 197"
+  },
+  {
+   "n": 6,
+   "name": "west of Worcester",
+   "value": "5 / 197"
+  },
+  {
+   "n": 7,
+   "name": "hand time per entry",
+   "value": "10\u201315 min"
+  }
+ ],
  "all": {
   "claims": 1080,
   "supported": 351,

@@ -100,7 +100,7 @@ def meta(m):
         "model": m["model"]["name"], "model_calls": m["model"]["calls"], "run_cost": m["model"]["usd"],
         "validator": m["validator"], "score": m["planted"], "decisions": m["decisions"],
         "clicks": f"{clicks['found']} / {clicks['of']}" if clicks else "",
-        "all": m["all"],
+        "all": m["all"], "probes": m["probes"],
     }
 
 
@@ -250,6 +250,14 @@ ol.steps li.stop::before{background:var(--bad)}ol.steps li.wait::before{backgrou
 .ck{display:flex;gap:8px;font-size:13.5px}.ck.ok{color:var(--acc-strong)}.ck.bad{color:var(--bad)}.ck.wait{color:var(--mute)}
 pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/1.5 var(--mono);overflow:auto;max-width:860px}
 .empty{color:var(--mute);padding:40px 0;text-align:center}
+.probes{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.pr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
+.pr .pn{font:600 11px var(--mono);color:var(--faint)}.pr b{font-size:16px;font-variant-numeric:tabular-nums}.pr span:last-child{font-size:12px;color:var(--mute)}
+.pr.p8{border:1.5px solid var(--acc);background:var(--acc-soft)}.pr.p8 b{color:var(--acc-strong)}.pr em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--bg);background:var(--acc);border-radius:5px;padding:0 5px;margin-left:4px}
+.p8-note{font-size:13px;color:var(--mute);max-width:860px;margin:10px 0 0}.p8-note b{color:var(--ink)}
+.tip{position:relative;display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px solid var(--line);font:600 10px var(--sans);color:var(--faint);cursor:help;vertical-align:middle;margin-left:4px;font-style:normal}
+.tip:hover::after,.tip:focus::after{content:attr(data-tip);position:absolute;left:50%;bottom:130%;transform:translateX(-50%);width:240px;background:var(--ink);color:var(--bg);font:400 12px/1.45 var(--sans);padding:8px 10px;border-radius:8px;z-index:20;text-align:left;box-shadow:var(--shadow-lg)}
+@media (max-width:980px){.probes{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:center}
 .kpis{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}.kpi{max-width:300px}.kpi b{display:block;font-size:24px;font-weight:650;font-variant-numeric:tabular-nums}.kpi span{font-size:12.5px;color:var(--mute)}
 .donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--side)}
@@ -310,6 +318,12 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
     <div class="hero-r"><div class="donut-wrap"><svg id="h-donut" viewBox="0 0 200 200" width="210" height="210" role="img"></svg>
       <div class="probe8" id="h-p8"></div><ul class="legend" id="h-legend"></ul></div></div>
   </div>
+
+  <div class="sec-h"><h2>The probes</h2><span class="note">how the Atlas is measured</span></div>
+  <div class="probes" id="h-probes"></div>
+  <p class="p8-note"><b>Probe 8 is new.</b> The organizers' probes 1–7 count gaps in the Atlas. Probe 8 counts what
+  none of them can: how many of the Atlas's claims carry a source you can click, a sentence on the organization's own
+  page that code confirmed is there. This morning it was 0. It is the number this project moves.</p>
 
   <div class="sec-h"><h2>How a claim gets its receipt</h2><span class="note">live numbers from the last run</span></div>
   <div class="pipe" id="h-pipe"></div>
@@ -427,37 +441,54 @@ function donut(){
     const el=`<circle cx="100" cy="100" r="${R}" fill="none" stroke="${s==='none'?'var(--line)':SCOL[s]}" stroke-width="22" stroke-dasharray="${Math.max(0,len-gap)} ${L}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"><title>${s} ${n}</title></circle>`;off+=len;return el}).join('');
   const big=mode==='before'?'0':fmt(C.supported),sub=mode==='before'?'claims with a source':'verified by code';
   $('h-donut').innerHTML=arcs+`<text x="100" y="98" text-anchor="middle" class="d-big">${big}</text><text x="100" y="118" text-anchor="middle" class="d-sub">${sub}</text><text x="100" y="134" text-anchor="middle" class="d-sub">of ${fmt(T)}</text>`;
-  $('h-p8').innerHTML=`<b>Probe 8</b>, claims with a receipt: 0 → <b>${mode==='before'?0:fmt(C.supported)}</b> of ${fmt(T)}`;
+  $('h-p8').innerHTML=tip(TIPS.donut)+` <b>Probe 8</b>, claims with a receipt: 0 → <b>${mode==='before'?0:fmt(C.supported)}</b> of ${fmt(T)}`;
   $('h-legend').innerHTML=mode==='before'?`<li><i style="background:var(--line)"></i><b>${fmt(T)}</b> no source<span>one "last verified" month per entry</span></li>`
     :['supported','inferred','contradicted','silent','refused'].map(s=>`<li><i style="background:${SCOL[s]}"></i><b>${fmt(C[s])}</b> ${LABEL[s].split(',')[0].toLowerCase()}<span>${SDESC[s]}</span></li>`).join('');
 }
-function gauge(pct,label,val,sub,icon,tone){
+function gauge(pct,label,val,sub,icon,tone,tipkey){
   const R=52,L=Math.PI*R,f=Math.max(0,Math.min(1,pct));
   return `<div class="gauge">${ic(icon,'g-ic')}<svg viewBox="0 0 130 74" width="150"><path d="M13 66a52 52 0 0 1 104 0" fill="none" stroke="var(--muted)" stroke-width="11" stroke-linecap="round"/>
     <path d="M13 66a52 52 0 0 1 104 0" fill="none" stroke="${tone}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${L*f} ${L}"/></svg>
-    <div class="g-v">${val}</div><div class="g-k">${label}</div><div class="g-s">${sub}</div></div>`}
+    <div class="g-v">${val}</div><div class="g-k">${label} ${tip(TIPS[tipkey])}</div><div class="g-s">${sub}</div></div>`}
+const tip=t=>`<span class="tip" tabindex="0" data-tip="${esc(t)}">i</span>`;
+const TIPS={
+ sentence:"Claims where the organization's own page has a sentence about it: verified, Claude's reading, or contradicting.",
+ contra:"Claims where the organization's own page says something different from the Atlas. Both values are shown; a person decides.",
+ need:"Contradicted, silent and inferred claims: the ones a person should look at. Verified and refused ones need no decision.",
+ donut:"All 1,080 claims by status. Green is verified by code: Probe 8.",
+ fetch:"Pages read from the organizations' own sites that returned text. Saved to disk; robots.txt respected.",
+ find:"Every checkable claim in the Atlas: live, location, offers, facts, links, deadlines.",
+ check:"Sentences code confirmed are on the saved page, word for word.",
+ decide:"Claims a person accepted or rejected in this console.",
+ branch:"Accepted changes are written to a branch of the Atlas, then the Atlas's own validator runs.",
+ g1:"Probe 8 as a share: claims verified by code out of all claims.",
+ g2:"We planted known errors in a test copy (never the real data) and count how many the checks catch.",
+ g3:"Random receipts opened in a real browser: does the quoted sentence appear on the page?",
+ g4:"What the model cost to read all 197 organizations once. Code does the verifying, so this stays small."};
 function renderHome(){
   $('h-gen').textContent=M.atlas_generated;$('h-total').textContent=fmt(T);$('h-mode').innerHTML=modeNote();
   const sent=M.all.with_sentence,need=M.all.needs_person;
   $('h-kpis').innerHTML=(mode==='before'
     ?[['1 date','per entry, for every claim in it'],['10–15 min','to re-check one entry by hand'],[fmt(M.june),'entries last checked in June']]
     :[[fmt(sent),`have a sentence from the org: ${fmt(C.supported)} verified + ${fmt(C.inferred)} Claude's reading + ${fmt(C.contradicted)} contradicting`],[fmt(C.contradicted),'contradicted by the org itself'],[fmt(need),'need a person']])
-    .map(([v,k])=>`<div class="kpi"><b>${v}</b><span>${k}</span></div>`).join('');
+    .map(([v,k],i)=>`<div class="kpi"><b>${v}${mode==='after'?tip(TIPS[['sentence','contra','need'][i]]):''}</b><span>${k}</span></div>`).join('');
   donut();
+  $('h-probes').innerHTML=M.probes.map(p=>`<div class="pr"><span class="pn">${p.n}</span><b>${esc(p.value)}</b><span>${esc(p.name)}</span></div>`).join('')
+    +`<div class="pr p8"><span class="pn">8</span><b>${mode==='before'?'0':fmt(C.supported)} / ${fmt(T)}</b><span>claims with a receipt <em>new</em></span></div>`;
   const before=mode==='before';
   const steps=[['globe','Fetch','code',before?'—':`${fmt(M.pages)} pages`,'their own site, robots.txt, 1 req/s'],
     ['search','Find','code + Claude',before?'—':`${fmt(T)} claims`,'amounts, dates, places, names'],
     ['shield','Check','code',before?'—':`${fmt(sent)} sentences`,'exact text on the saved page'],
     ['user','Decide','person',before?'by hand':`${fmt(M.decisions)} decided`,'accept or reject each finding'],
     ['branch','Atlas branch','code',before?'—':M.validator.startsWith('PASSED')?'validator passed':M.validator,'only accepted rows, then validate.js']];
-  $('h-pipe').innerHTML=steps.map(([i,t,who,n,d],k)=>`<div class="node ${before?'off':''}"><div class="n-ic">${ic(i)}</div><div class="n-t">${t}</div><div class="n-n">${n}</div><div class="n-d">${d}</div><div class="who-${who.split(' ')[0]}">${who}</div></div>${k<steps.length-1?`<div class="link">${ic('arrow')}</div>`:''}`).join('');
+  $('h-pipe').innerHTML=steps.map(([i,t,who,n,d],k)=>`<div class="node ${before?'off':''}"><div class="n-ic">${ic(i)}</div><div class="n-t">${t} ${tip(TIPS[['fetch','find','check','decide','branch'][k]])}</div><div class="n-n">${n}</div><div class="n-d">${d}</div><div class="who-${who.split(' ')[0]}">${who}</div></div>${k<steps.length-1?`<div class="link">${ic('arrow')}</div>`:''}`).join('');
   const s=M.score||{planted:0,caught:0,false_alarms:0},clk=(M.clicks.match(/(\d+) \/ (\d+)/)||[0,0,1]);
   $('h-gauges').innerHTML=before
     ?`<div class="note" style="grid-column:1/-1">Nothing is measured before: there is no source to check, no test, no queue.</div>`
-    :gauge((C.supported||0)/T,'claims verified by code',`${Math.round(100*(C.supported||0)/T)}%`,`${fmt(C.supported)} of ${fmt(T)}`,'target','var(--acc)')
-    +gauge(s.planted?s.caught/s.planted:0,'planted errors caught',`${s.caught} / ${s.planted}`,`${s.false_alarms} false alarm on real data`,'alert','var(--info)')
-    +gauge(clk[2]?clk[1]/clk[2]:0,'random receipts land on the sentence',`${clk[1]} / ${clk[2]}`,'opened in a real browser','click','var(--acc)')
-    +gauge(Math.min(1,(M.run_cost||0)/0.10),'model cost of a full run',`$${(M.run_cost||0).toFixed(2)}`,`${M.model}; code does the verifying`,'coin','var(--warn)');
+    :gauge((C.supported||0)/T,'claims verified by code',`${Math.round(100*(C.supported||0)/T)}%`,`${fmt(C.supported)} of ${fmt(T)}`,'target','var(--acc)','g1')
+    +gauge(s.planted?s.caught/s.planted:0,'planted errors caught',`${s.caught} / ${s.planted}`,`${s.false_alarms} false alarm on real data`,'alert','var(--info)','g2')
+    +gauge(clk[2]?clk[1]/clk[2]:0,'random receipts land on the sentence',`${clk[1]} / ${clk[2]}`,'opened in a real browser','click','var(--acc)','g3')
+    +gauge(Math.min(1,(M.run_cost||0)/0.10),'model cost of a full run',`$${(M.run_cost||0).toFixed(2)}`,`${M.model}; code does the verifying`,'coin','var(--warn)','g4');
   const contra=ents.filter(e=>e.n.contradicted);
   $('h-start').innerHTML=before?'<li class="plain note">No way to know: nothing is compared with the organizations\' own pages.</li>'
     :contra.map(e=>{const r=e.rs.find(r=>r.status==='contradicted');

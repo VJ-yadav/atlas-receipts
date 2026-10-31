@@ -56,6 +56,7 @@ def compute(receipts=None):
         "atlas_generated": atlas.get("generated", "")[:16].replace("T", " ") + "Z",
         "checked_at": max((r["fetched_at"] for r in receipts), default="")[:16].replace("T", " ") + "Z",
         "entities": len(entries),
+        "probes": __import__("receipts.probes", fromlist=["organizer_probes"]).organizer_probes(entries),
         "all": _block(receipts),
         "by_type": {f: _block([r for r in receipts if r["field"] == f]) for f in FIELDS},
         "contradictions": [{"id": r["entry_id"], "name": r["name"], "field": r["field"], "value": r["value"],

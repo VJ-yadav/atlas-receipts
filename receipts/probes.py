@@ -12,6 +12,24 @@ def load_entries(path=ROOT / "data" / "atlas.json"):
     return json.loads(Path(path).read_text())["data"]
 
 
+def organizer_probes(entries):
+    """Probes 1-7 as the organizers define them: gaps in the Atlas itself."""
+    n = len(entries)
+    ids = {e["id"] for e in entries}
+    edges = {(e["id"], t) for e in entries for t in e.get("links", []) if t in ids}
+    funders = [e for e in entries if "funding" in e.get("offers", [])]
+    return [
+        {"n": 1, "name": "approximate pins", "value": f"{sum(bool(e.get('approx')) for e in entries)} / {n}"},
+        {"n": 2, "name": "entries with no links", "value": f"{sum(not e.get('links') for e in entries)} / {n}"},
+        {"n": 3, "name": "entries with no stages", "value": f"{sum(not e.get('stages') for e in entries)} / {n}"},
+        {"n": 4, "name": "funders with a check size",
+         "value": f"{sum(any(f[0] == 'Check size' for f in e.get('facts') or []) for e in funders)} of {len(funders)}"},
+        {"n": 5, "name": "last verified in June", "value": f"{sum(e['lastVerified'] == '2026-06' for e in entries)} / {n}"},
+        {"n": 6, "name": "west of Worcester", "value": f"{sum(e['lng'] < WORCESTER_LNG - 0.05 for e in entries)} / {n}"},
+        {"n": 7, "name": "hand time per entry", "value": "10–15 min"},
+    ]
+
+
 def run(entries, receipts=None):
     n = len(entries)
     ids = {e["id"] for e in entries}
