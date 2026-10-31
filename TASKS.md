@@ -138,3 +138,12 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
     amount; otherwise `silent`. Pick techstars ($220K, cached) for the wrong-number plant.
   - Duplicates and out-of-scope are not `check` statuses: write `receipts/dedupe.py` as described in B2.
 - Pull `main` first: `git pull origin main`. Real numbers: Probe 8 is 0 → 349 / 1,080 verified, 684 with a sentence.
+
+## Status 13:10
+- **B1 is done** (Lane A): `python -m receipts review` → `out/review.html`. It has a sidebar of status
+  filters, a Probe 8 header, one card per org with problems first, a "How this was checked" step trace
+  per claim, Accept/Reject, and a decisions.json download. P3 passes. **13 / 14 goals met.**
+- **The only open goal is P4 = B2 (pjsk02).** If you haven't started by 13:30, say so and Lane A
+  will build it, so the 14:00 stranger test has the whole product.
+- UI copy rule for anything you add: plain, short sentences. No em dashes, no emoji, no "AI magic"
+  words. Name things by what they are ("Claude's reading", "checked by code").
