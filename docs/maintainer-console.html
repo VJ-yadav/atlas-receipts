@@ -127,6 +127,21 @@ ol.steps li.stop::before{background:var(--bad)}ol.steps li.wait::before{backgrou
 .ck{display:flex;gap:8px;font-size:13.5px}.ck.ok{color:var(--acc-strong)}.ck.bad{color:var(--bad)}.ck.wait{color:var(--mute)}
 pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/1.5 var(--mono);overflow:auto;max-width:860px}
 .empty{color:var(--mute);padding:40px 0;text-align:center}
+.data3{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px;align-items:start}
+.dcard{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--bg)}
+.dk{font-size:14px;color:var(--mute)}.dk b{font-size:26px;color:var(--ink);font-weight:650;margin-right:4px;font-variant-numeric:tabular-nums}
+.dp{font-size:13px;color:var(--mute);margin:6px 0 12px}.dp b{color:var(--ink)}
+.cr{display:grid;grid-template-columns:1fr 70px 28px;gap:8px;align-items:center;font-size:12.5px;margin:4px 0}
+.cb{height:6px;background:var(--muted);border-radius:3px;overflow:hidden}.cb i{display:block;height:100%;background:var(--faint)}
+.ct .t-ic{color:var(--mute);width:18px;height:18px}
+.ct{display:grid;grid-template-columns:20px 1fr 44px;gap:10px;align-items:start;padding:7px 0;border-top:1px solid var(--hair)}
+.ctl{display:flex;justify-content:space-between;gap:8px;font-size:13px}.ctm{font-size:12px;color:var(--faint);margin:1px 0 4px}
+.ct .stack{height:6px}.ct .stack span{display:block;height:100%}.ctv{text-align:right;color:var(--acc-strong)}
+.sum{font:12.5px var(--mono);color:var(--mute);border-top:1px solid var(--line);padding-top:8px;margin:6px 0}
+.rc{background:var(--side)}.anat{border:1px solid var(--line);border-radius:10px;background:var(--bg);overflow:hidden;margin-bottom:8px}
+.anat.off{opacity:.75}.ar{display:grid;grid-template-columns:82px 1fr;gap:8px;padding:7px 10px;border-top:1px solid var(--hair);font-size:12.5px}
+.ar:first-child{border-top:0}.ar>span{color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}.ar b{font-weight:500}.aq{font-style:italic}
+@media (max-width:1100px){.data3{grid-template-columns:1fr}}
 .probes{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
 .pr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
 .pr .pn{font:600 11px var(--mono);color:var(--faint)}.pr b{font-size:16px;font-variant-numeric:tabular-nums}.pr span:last-child{font-size:12px;color:var(--mute)}
@@ -196,6 +211,9 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
       <div class="probe8" id="h-p8"></div><ul class="legend" id="h-legend"></ul></div></div>
   </div>
 
+  <div class="sec-h"><h2>What's in the data</h2><span class="note">the Atlas as Atlas Receipts reads it</span></div>
+  <div class="data3"><div class="dcard" id="h-orgs"></div><div class="dcard" id="h-claims"></div><div class="dcard rc" id="h-receipt"></div></div>
+
   <div class="sec-h"><h2>The probes</h2><span class="note">how the Atlas is measured</span></div>
   <div class="probes" id="h-probes"></div>
   <p class="p8-note"><b>Probe 8 is new.</b> The organizers' probes 1–7 count gaps in the Atlas. Probe 8 counts what
@@ -208,12 +226,8 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
   <div class="sec-h"><h2>Is it working?</h2><span class="note">measured, not assumed</span></div>
   <div class="gauges" id="h-gauges"></div>
 
-  <div class="two">
-    <div><div class="sec-h"><h2>Start here</h2><span class="note">the organization's own site disagrees with the Atlas</span></div>
-      <ul class="todo" id="h-start"></ul></div>
-    <div><div class="sec-h"><h2>Claims by type</h2><span class="note">verified / total</span></div>
-      <div class="types" id="h-types"></div></div>
-  </div>
+  <div class="sec-h"><h2>Start here</h2><span class="note">the organization's own site disagrees with the Atlas</span></div>
+  <ul class="todo" id="h-start"></ul>
   <p class="note" style="margin-top:34px">Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. Organizations only: no people and no contact details are
   collected or shown. A proposal for the Atlas maintainer; not part of the public Atlas. <a href="public-view.html">Open the public view →</a></p>
 </div></section>
@@ -370,10 +384,32 @@ function renderHome(){
   $('h-start').innerHTML=before?'<li class="plain note">No way to know: nothing is compared with the organizations\' own pages.</li>'
     :contra.map(e=>{const r=e.rs.find(r=>r.status==='contradicted');
     return `<li data-open="${esc(e.id)}">${ic('alert','t-ic')}<div><b>${esc(e.name)}</b> <span class="note">${esc(r.field)}</span><div class="why">Atlas: ${esc(r.value)} · their site: <span class="pv">${esc(r.page_value)}</span></div></div><span class="go">Review ${ic('arrow')}</span></li>`}).join('');
-  const types=[['live','globe','Is live'],['place','pin','Location'],['offer','gift','Offers'],['fact','chart','Facts'],['link','link','Links'],['deadline','cal','Deadlines']];
-  $('h-types').innerHTML=types.map(([t,i,l])=>{const rs=D.rows.filter(r=>r.field===t),n=rs.length,v=rs.filter(r=>r.status==='supported').length;
-    const seg=before?'':['supported','inferred','contradicted','silent','refused'].map(s=>{const k=rs.filter(r=>r.status===s).length;return k?`<span style="width:${100*k/n}%;background:${SCOL[s]}"></span>`:''}).join('');
-    return `<div class="trow">${ic(i,'t-ic')}<span class="t-l">${l}</span><div class="stack">${seg}</div><span class="count">${before?0:v} / ${n}</span></div>`}).join('');
+  const CT=[['live','globe','Is live','the website is real and answers','one per organization'],
+    ['place','pin','Location','where the organization is','one per organization'],
+    ['offer','gift','Offers','what it offers founders: funding, mentorship, space, talent…','1–3 each'],
+    ['fact','chart','Facts','check size, equity, program length, stage, focus…','for funders and programs'],
+    ['link','link','Links','another Atlas organization it works with','where the Atlas lists one'],
+    ['deadline','cal','Deadlines','when applications close, or "rolling"','for programs that take applications']];
+  const bt=t=>D.rows.filter(r=>r.field===t);
+  $('h-claims').innerHTML=`<div class="dk"><b>${fmt(T)}</b> claims</div><p class="dp">A <b>claim</b> is one statement in an entry that a founder could act on and the organization's own page can confirm. About ${(T/D.entities.length).toFixed(1)} per organization.</p>
+    ${CT.map(([t,i,l,m,w])=>{const rs=bt(t),n=rs.length,v=rs.filter(r=>r.status==='supported').length;
+      const seg=before?'':['supported','inferred','contradicted','silent','refused'].map(s=>{const k=rs.filter(r=>r.status===s).length;return k?`<span style="width:${100*k/n}%;background:${SCOL[s]}"></span>`:''}).join('');
+      return `<div class="ct">${ic(i,'t-ic')}<div><div class="ctl"><b>${l}</b><span class="count">${fmt(n)}</span></div><div class="ctm">${m}</div><div class="stack">${seg}</div></div><span class="count ctv" title="verified by code">${before?0:v} ✓</span></div>`}).join('')}
+    <div class="sum">${CT.map(([t])=>fmt(bt(t).length)).join(' + ')} = <b>${fmt(T)}</b></div>
+    <div class="note">Not counted: the description and stages. Those are the Atlas's own wording, not facts an organization's page states.</div>`;
+  const byCat={};D.entities.forEach(e=>byCat[e.cat]=(byCat[e.cat]||0)+1);const cmax=Math.max(...Object.values(byCat));
+  $('h-orgs').innerHTML=`<div class="dk"><b>${D.entities.length}</b> organizations</div><p class="dp">An <b>organization</b> is one entry in the Atlas, a Massachusetts AI fund, startup, lab, accelerator, community or program, with its website, place, offers and facts.</p>
+    ${Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<div class="cr"><span>${esc(M.cats[k]||k)}</span><div class="cb"><i style="width:${100*n/cmax}%"></i></div><span class="count">${n}</span></div>`).join('')}`;
+  const ex=D.rows.find(r=>r.id==='techstars'&&r.field==='deadline')||D.rows.find(r=>r.status==='supported');
+  $('h-receipt').innerHTML=`<div class="dk"><b>1</b> receipt per claim</div><p class="dp"><b>Atlas Receipts</b> gives every claim a <b>receipt</b>: proof from the organization's own page, kept with the claim, re-checked when the page changes.</p>
+    ${before?`<div class="anat off"><div class="ar"><span>claim</span><b>${esc(ex.name)} · apply by ${esc(ex.value.split(' · ')[0])}</b></div><div class="ar"><span>proof today</span><b>"last verified ${esc((ents.find(e=>e.id===ex.id)||{}).lastVerified)}" for the whole entry. No link, no sentence.</b></div></div>`
+    :`<div class="anat"><div class="ar"><span>claim</span><b>${esc(ex.name)} · ${esc(ex.field)} · ${esc(ex.value)}</b></div>
+      <div class="ar"><span>sentence</span><b class="aq">“${esc(ex.quote)}”</b></div>
+      <div class="ar"><span>where</span><a href="${esc(ex.link)}" target="_blank" rel="noopener">${esc(ex.url.replace(/^https?:\/\//,''))} ↗</a></div>
+      <div class="ar"><span>read at</span><b class="mono">${esc(ex.fetched)}</b></div>
+      <div class="ar"><span>fingerprint</span><b class="mono">${esc((ex.trace.find(t=>t[1]==='Checked by code')||['','',''])[2].match(/hash (\w+)/)?.[1]||'')}… of the saved page</b></div>
+      <div class="ar"><span>status</span><b><span class="pill p-${ex.status}">${LABEL[ex.status]}</span> checked by code</b></div></div>
+      <div class="note">Next month the page is read again. If the sentence is still there, nothing to do. If it changed, the claim comes back to you.</div>`}`;
 }
 $('h-start').onclick=e=>{const p=e.target.closest('[data-open]');if(p)openEntity(p.dataset.open)};
 
