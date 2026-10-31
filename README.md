@@ -54,8 +54,8 @@ it, per claim.** Next month only the claims whose sentence changed go back to a 
   with its sentence and a link that opens the page with that sentence highlighted, and Accept / Reject.
   A re-check sends back only claims whose sentence changed, not 17 random entries a month.
 - **Founders using the Atlas.** They can see which claims (a check size, a deadline) are backed by the
-  funder's own page today. For one founder's 12-funder shortlist: 0 → 24 of 83 claims verified,
-  67 carry a sentence.
+  funder's own page today. For one founder's 12-funder shortlist: 0 → 25 of 83 claims verified,
+  68 carry a sentence.
 - **New entries.** A proposed organization is checked for duplicates and scope, and gets receipts,
   before anyone reads it.
 

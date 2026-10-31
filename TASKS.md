@@ -273,3 +273,9 @@ How to submit, so Lane A can merge:
 ### Lane A (VJ-yadav + Claude), in parallel
 - Data infrastructure: an evidence sidecar for the Atlas PR, a monthly re-check workflow, and `make check`.
 - Consolidation: we merge P-UI and P-CLAIMS after checking them against the bar above.
+
+### P-UI note (14:10): admin entry point
+Keep a clear "Maintainer sign-in" link in the public view header that opens the console (`review.html`).
+No login is built today, on purpose: the console cannot change the Atlas (its only output is a decisions
+file; `apply` writes to a branch; only the maintainer can merge to main). If the console is ever hosted,
+it goes behind GitHub or Clerk sign-in. Label the link "Maintainer sign-in (admin only)".
