@@ -668,7 +668,7 @@ table.c th { color: var(--faint); font-weight: 600; width: 28%; font-size: 12px;
       <div class="silent"><i></i>No source found</div>
     </div>
     <p class="hint">Click a pin for the receipt. Similar organizations suggest a compare. Shift-click a second pin anytime.</p>
-    <p class="map-stack">Organizations only. OpenStreetMap tiles · Leaflet.</p>
+    <p class="map-stack">Organizations only. Esri light-gray basemap · Leaflet.</p>
   </aside>
 
   <p class="trust-note"><b>Verified</b> means their own site backs the claim today — checked by code. Mentioned-but-not-exact stays labelled; it is never called verified.</p>
@@ -730,9 +730,11 @@ const map = L.map("map", {
 });
 L.control.zoom({ position: "bottomright" }).addTo(map);
 map.fitBounds(MA_BOUNDS, { padding: [24, 24], animate: false });
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Mass AI Atlas with receipts',
-  maxZoom: 19,
+/* OSM's public tile server often returns "Access blocked" for embedded apps.
+   Esri World Light Gray allows browser embedding without an API key. */
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+  attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> · Mass AI Atlas with receipts',
+  maxZoom: 16,
   bounds: MA_BOUNDS.pad(0.2)
 }).addTo(map);
 
