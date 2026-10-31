@@ -1,4 +1,4 @@
-"""receipts <command>: check, probe, review, apply, test, goals."""
+"""receipts <command>: check, changes, probe, review, apply, test, goals."""
 import sys
 
 
@@ -35,6 +35,9 @@ def main(argv):
         src = ROOT / "tests" / "fixtures" / "receipts.sample.json" if "--fixture" in args else ROOT / "out" / "receipts.json"
         out = review.build(json.loads(src.read_text()), ROOT / "out" / "review.html")
         print(f"wrote {out} ({src.name})")
+    elif cmd == "changes":
+        from receipts import changes
+        changes.report()
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)

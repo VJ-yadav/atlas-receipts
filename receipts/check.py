@@ -57,6 +57,8 @@ def run(ids=None, refresh=False, entries=None, out=OUT, workers=16, use_model=Fa
         keep = [r for r in json.loads(out.read_text()) if r["entry_id"] not in done]
     allr = keep + fresh
     out.parent.mkdir(exist_ok=True)
+    if out.exists() and out == OUT:  # keep the last run so `receipts changes` can compare
+        (out.parent / "receipts.prev.json").write_text(out.read_text())
     out.write_text(json.dumps(allr, indent=1))
     return fresh, allr
 

@@ -80,6 +80,7 @@ python -m receipts probe                      # probes 1-8
 python -m receipts review                     # out/review.html: the maintainer's queue
 python -m receipts apply out/decisions.json   # accepted rows only → Atlas branch + validate.js
 python -m receipts test                       # planted-errors test copy: caught / missed / false alarms
+python -m receipts changes                    # re-check: only claims whose sentence changed come back
 python -m receipts goals                      # every goal in GOALS.md, checked by code
 ```
 
