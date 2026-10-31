@@ -139,16 +139,51 @@ def rule_live(claim, pages):
 US_STATES = r"(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)"
 _OTHER_STATE_ADDR = re.compile(r"\b[A-Z][a-z]+,\s*" + US_STATES + r"\s+\d{5}\b")
 _MA_ADDR = re.compile(r"\b(MA|Massachusetts)\b\s*0[12]\d{3}\b")
+# Distinct MA place names used to catch Atlas loc typos (e.g. Worcester when the site says Boston).
+MA_CITIES = (
+    "Boston", "Cambridge", "Somerville", "Worcester", "Amherst", "Waltham", "Newton", "Brookline",
+    "Quincy", "Lowell", "Springfield", "Salem", "Medford", "Malden", "Chelsea", "Everett",
+    "Watertown", "Belmont", "Arlington", "Lexington", "Concord", "Bedford", "Burlington",
+    "Needham", "Wellesley", "Natick", "Framingham", "Hopkinton", "Marlborough", "Acton",
+    "Maynard", "Hudson", "Chelmsford", "Andover", "Lawrence", "Haverhill", "Newburyport",
+    "Plymouth", "Provincetown", "Northampton", "Hadley", "Holyoke", "Pittsfield", "Allston",
+    "Brighton", "Dorchester", "Roxbury", "Charlestown", "Back Bay", "Seaport", "Kendall",
+    "Fenway", "Somerville", "Davis Square", "Harvard Square", "Kendall Square",
+)
 
 
 def rule_place(claim, pages):
-    parts = sorted({p.strip() for p in re.split(r"[,/·]| near ", claim["value"]) if len(p.strip()) > 2},
+    value = claim["value"]
+    parts = sorted({p.strip() for p in re.split(r"[,/·]| near ", value) if len(p.strip()) > 2},
                    key=len, reverse=True)
+    # Tokens Atlas is asserting: raw parts, parts without parentheticals, and known MA cities named in loc.
+    atlas_tokens = set()
     for part in parts:
-        pat = word(part)
-        p, s = find(pages, lambda s: pat.search(s.lower()))
+        atlas_tokens.add(part.lower())
+        stripped = re.sub(r"\([^)]*\)", " ", part).strip().lower()
+        if len(stripped) > 2:
+            atlas_tokens.add(stripped)
+            atlas_tokens.update(w for w in stripped.split() if len(w) > 2)
+    for city in MA_CITIES:
+        if word(city).search(value.lower()):
+            atlas_tokens.add(city.lower())
+    atlas_cities = {c.lower() for c in MA_CITIES if c.lower() in atlas_tokens}
+
+    for token in sorted(atlas_tokens, key=len, reverse=True):
+        pat = word(token)
+        p, s = find(pages, lambda s, pat=pat: pat.search(s.lower()))
         if p:
-            return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
+            return supported(claim, p, s, f"the page names '{token}' from the Atlas location")
+    # Only contradict when Atlas asserted a MA city that is absent, and the page names another.
+    if atlas_cities:
+        for city in sorted(MA_CITIES, key=len, reverse=True):
+            if city.lower() in atlas_cities:
+                continue
+            pat = word(city)
+            p, s = find(pages, lambda s, pat=pat: pat.search(s.lower()))
+            if p:
+                return contradicted(claim, p, s, city,
+                                    f"Atlas says {value!r}; the page names {city!r}")
     p, s = find(pages, lambda s: _OTHER_STATE_ADDR.search(s))
     if p and not _MA_ADDR.search(p["text"]):
         return make_receipt(claim, "silent", url=p["final_url"], fetched_at=p["fetched_at"], quote=s,
