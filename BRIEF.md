@@ -1,5 +1,7 @@
 # Atlas Receipts — brief
 
+Team: Vijay Yadav (VJ-yadav), pjsk02 · Track A (backend), with a founder-facing public view (Track B) · github.com/VJ-yadav/atlas-receipts · Probe 8, claims with a receipt: 0 → 373 of 1,080
+
 ## Problem
 The Mass AI Atlas lists ~197 Massachusetts AI organizations with checkable facts (URLs, places, offers, fund sizes, deadlines, links). Hand-checking each entry takes 10–15 minutes. Stale or wrong values sneak in; “looks live” is not the same as proven.
 
