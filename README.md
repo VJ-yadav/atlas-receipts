@@ -65,7 +65,7 @@ it, per claim.** Next month only the claims whose sentence changed go back to a 
 sentence from the org's own page; the extra 334 are Claude's readings, labelled inferred.
 
 ```
-supported 351 · contradicted 3 · silent 377 · inferred 334 · refused 15        (31 Oct, 13:30)
+supported 351 · contradicted 3 · silent 377 · inferred 334 · refused 15        (31 Oct, 13:26)
 ```
 
 - Before: `before/probes.txt`. After: `after/probes.txt`.

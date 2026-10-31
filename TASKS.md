@@ -177,7 +177,7 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
 - [x] Founder view (24 verified, 67 with a sentence, of 83): a filter in review.html for VJ's 12-funder shortlist (0 → N of 83).
 - [ ] One accepted decision end to end (needs VJ to click Accept: the human gate): review.html → decisions.json → `apply` → branch + validator.
 
-## Status 13:35: pull main, read README.md first
+## Status 13:26: pull main, read README.md first
 - PR #1 is in. BRIEF.md is kept. The place-rule change was measured on the real 197 and reverted:
   it raised 12 place contradictions, most false ("East Coast - United States Boston", "Do I have
   to be in Boston?"), and supported claims on words like "main" and "the". Its two real finds,
