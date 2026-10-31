@@ -172,7 +172,7 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
       "Review these three claims." Write down what confused them in `notes/stranger.md`.
 
 ### Lane A (VJ-yadav + Claude)
-- [ ] Wrong-town rule: a page with a Massachusetts street address in a different town → `contradicted`.
-- [ ] Click test: 5 random receipt links open on the highlighted sentence (SELFCHECK Truth).
-- [ ] Founder view: a filter in review.html for VJ's 12-funder shortlist (0 → N of 83).
-- [ ] One accepted decision end to end: review.html → decisions.json → `apply` → branch + validator.
+- [x] Wrong-town rule: a page with a Massachusetts street address in a different town → `contradicted`.
+- [x] Click test (5/5, after/clicktest.txt): 5 random receipt links open on the highlighted sentence (SELFCHECK Truth).
+- [x] Founder view (24 verified, 67 with a sentence, of 83): a filter in review.html for VJ's 12-funder shortlist (0 → N of 83).
+- [ ] One accepted decision end to end (needs VJ to click Accept: the human gate): review.html → decisions.json → `apply` → branch + validator.

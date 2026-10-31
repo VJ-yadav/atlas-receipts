@@ -10,6 +10,9 @@ from receipts.claims import FIELD_RISK
 from receipts.probes import ROOT, load_entries
 from receipts.text import highlight_url
 
+# A founder's shortlist (pre-seed, AI infrastructure): funders whose Atlas focus fits.
+SHORTLIST = ["glasswing", "venture-guides", "foundersedge", "bcv", "unusual", "milemark", "first-star",
+             "two-lanterns", "lama", "companyon", "link-ventures", "techstars"]
 STATUS_ORDER = {"contradicted": 0, "refused": 1, "silent": 2, "inferred": 3, "supported": 4}
 
 
@@ -86,7 +89,10 @@ def build(receipts, out_path, entries=None, title="Atlas Receipts"):
     entries = entries if entries is not None else load_entries()
     data = rows(receipts, entries)
     n = Counter(r["status"] for r in receipts)
-    head = {"total": len(receipts), "counts": dict(n), "title": title,
+    sl = [r for r in receipts if r["entry_id"] in SHORTLIST]
+    head = {"total": len(receipts), "counts": dict(n), "title": title, "shortlist": SHORTLIST,
+            "sl_total": len(sl), "sl_supported": sum(r["status"] == "supported" for r in sl),
+            "sl_sentence": sum(r["status"] in ("supported", "inferred") for r in sl),
             "generated": max((r["fetched_at"] for r in receipts), default="")[:16].replace("T", " ") + "Z"}
     blob = json.dumps({"head": head, "rows": data}).replace("</", "<\\/")
     out_path.parent.mkdir(exist_ok=True)
@@ -118,7 +124,7 @@ aside{background:var(--side);border-right:1px solid var(--line);padding:20px 14p
 .nav button[aria-pressed=true]{background:var(--bg);color:var(--ink);font-weight:600;box-shadow:var(--shadow);outline:1px solid var(--line)}
 .nav .n{font:12px var(--mono);color:var(--faint)}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px}
-.d-supported{background:var(--acc)}.d-contradicted{background:var(--bad)}.d-silent{background:var(--faint)}.d-inferred{background:var(--warn)}.d-refused{background:var(--ink)}.d-problems{background:var(--info)}.d-all{background:var(--line)}
+.d-supported{background:var(--acc)}.d-contradicted{background:var(--bad)}.d-silent{background:var(--faint)}.d-inferred{background:var(--warn)}.d-refused{background:var(--ink)}.d-problems{background:var(--info)}.d-shortlist{background:var(--test)}.d-all{background:var(--line)}
 .side-h{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:20px 10px 6px}
 .side-p{font-size:12.5px;color:var(--mute);margin:0 10px;line-height:1.5}
 main{min-width:0}
@@ -215,7 +221,8 @@ document.getElementById('p8b').textContent=fmt((c.supported||0)+(c.inferred||0))
 document.getElementById('tot').textContent=fmt(T);
 document.getElementById('nr').textContent=fmt(T-(c.supported||0)-(c.refused||0));
 document.getElementById('gen').textContent='Pages fetched up to '+D.head.generated+'.';
-const NAV=[['problems','Needs review',T-(c.supported||0)],...ORDER.map(s=>[s,LABEL[s].split(',')[0],c[s]||0]),['all','All claims',T]];
+const NAV=[['problems','Needs review',T-(c.supported||0)],...ORDER.map(s=>[s,LABEL[s].split(',')[0],c[s]||0]),['all','All claims',T],['shortlist','Founder shortlist',D.head.sl_total]];
+const SL=new Set(D.head.shortlist);
 const nav=document.getElementById('nav');
 nav.innerHTML=NAV.map(([k,l,n])=>`<button data-f="${k}" aria-pressed="${k===filter}"><span><span class="dot d-${k}"></span>${esc(l)}</span><span class="n">${fmt(n)}</span></button>`).join('');
 nav.onclick=e=>{const b=e.target.closest('button');if(!b)return;filter=b.dataset.f;nav.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()};
@@ -243,8 +250,9 @@ function render(){
   let html='',shown=0;
   for(const id of ids){
     const rs=by[id],sup=rs.filter(r=>r.status==='supported');
-    const loud=rs.filter(r=>filter==='all'?r.status!=='supported':filter==='problems'?r.status!=='supported':r.status===filter);
-    const quiet=filter==='all'?sup:[];
+    if(filter==='shortlist'&&!SL.has(id))continue;
+    const loud=rs.filter(r=>['all','shortlist'].includes(filter)?r.status!=='supported':filter==='problems'?r.status!=='supported':r.status===filter);
+    const quiet=['all','shortlist'].includes(filter)?sup:[];
     if(!loud.length&&!quiet.length)continue;if(++shown>400)break;
     const r0=rs[0],pct=Math.round(100*sup.length/rs.length);
     html+=`<article class="card">${r0.planted?'<div class="test">TEST: planted copy with deliberate errors. Never the real data.</div>':''}
@@ -252,7 +260,9 @@ function render(){
       ${loud.map(rowHtml).join('')}
       ${quiet.length?`<details class="quiet"><summary>${quiet.length} supported, with receipts</summary>${quiet.map(rowHtml).join('')}</details>`:''}</article>`;
   }
-  document.getElementById('list').innerHTML=html||'<div class="empty">Nothing here.</div>';
+  const slh=filter==='shortlist'?`<div class="card"><div class="card-h"><h2>Founder shortlist: 12 funders for a pre-seed AI infrastructure company</h2>
+    <span class="meta">This morning 0 of ${D.head.sl_total} claims had a source. Now <b>${D.head.sl_supported}</b> are verified by code and ${D.head.sl_sentence} carry a sentence from the funder's own page.</span></div></div>`:'';
+  document.getElementById('list').innerHTML=slh+(html||'<div class="empty">Nothing here.</div>');
 }
 document.getElementById('list').onclick=e=>{const b=e.target.closest('button[data-d]');if(!b)return;
   const k=b.dataset.k,cur=dec[k]||{};if(cur.decision===b.dataset.d)delete dec[k];else dec[k]={...cur,key:k,decision:b.dataset.d};save();render()};
