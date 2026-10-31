@@ -152,6 +152,12 @@ details.about>summary{list-style:none;cursor:pointer;display:flex;align-items:ba
 details.about>summary h2{margin:0}details.about>summary::before{content:"▸";color:var(--faint)}details.about[open]>summary::before{content:"▾"}
 .origin{margin-top:12px;font-size:13px;color:var(--mute);background:var(--side)}.origin b{color:var(--ink)}
 @media (max-width:980px){.statgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pw-rows{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pw{display:grid;grid-template-columns:28px 230px 110px 1fr;gap:10px;align-items:baseline;padding:8px 14px;border-top:1px solid var(--hair);font-size:13px}
+.pw:first-child{border-top:0}.pw .pn{font:600 11px var(--mono);color:var(--faint)}.pw em{font-style:normal;color:var(--mute);font-size:12.5px}
+.pw.p8{background:var(--acc-soft)}.pw.p8 b,.pw.p8 .count{color:var(--acc-strong);font-weight:650}
+.pw-why{font-size:13.5px;color:var(--mute);max-width:900px;margin:12px 0 0}.pw-why b{color:var(--ink)}
+@media (max-width:760px){.pw{grid-template-columns:24px 1fr auto}.pw em{grid-column:2/-1}}
 .probes{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
 .pr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
 .pr .pn{font:600 11px var(--mono);color:var(--faint)}.pr b{font-size:16px;font-variant-numeric:tabular-nums}.pr span:last-child{font-size:12px;color:var(--mute)}
@@ -246,6 +252,9 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
   Facts like check size and links to other organizations are added by hand. None of it records which page it came from, and the
   only proof today is one "last verified" month per entry. Atlas Receipts goes back to the organization's own site for each value.</div>
   </details>
+
+  <div class="sec-h"><h2>Why a Probe 8</h2><span class="note">the organizers' seven probes, and the one we added</span></div>
+  <div class="pwhy" id="h-pwhy"></div>
   <p class="note" style="margin-top:34px">Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. Organizations only: no people and no contact details are
   collected or shown. A proposal for the Atlas maintainer; not part of the public Atlas. <a href="public-view.html">Open the public view →</a></p>
 </div></section>
@@ -377,6 +386,15 @@ const TIPS={
  g2:"We planted known errors in a test copy (never the real data) and count how many the checks catch.",
  g3:"Random receipts opened in a real browser: does the quoted sentence appear on the page?",
  g4:"What the model cost to read all 197 organizations once. Code does the verifying, so this stays small."};
+const PMEAN={1:"map pins placed at a rough spot, not the real address",2:"organizations linked to no other organization",
+ 3:"entries not placed on the founder journey",4:"funders that don't say how much they invest",5:"entries not re-checked in 4+ months: stale by date",
+ 6:"coverage outside Boston and Cambridge",7:"what one manual re-check costs the maintainer"};
+function renderPwhy(){
+  $('h-pwhy').innerHTML=`<div class="pw-rows">${M.probes.map(p=>`<div class="pw"><span class="pn">${p.n}</span><b>${esc(p.name)}</b><span class="count">${esc(p.value)}</span><em>${PMEAN[p.n]||''}</em></div>`).join('')}
+    <div class="pw p8"><span class="pn">8</span><b>claims with a receipt</b><span class="count">${mode==='before'?0:fmt(C.supported)} / ${fmt(T)}</span><em>claims backed by a sentence on the organization's own page that code confirmed</em></div></div>
+    <p class="pw-why"><b>Probes 1–7 count gaps in the Atlas. Probe 8 counts something none of them can: how many claims carry a source you can click.</b>
+    It went from 0 this morning to ${fmt(C.supported)}. It also gives two of the others evidence: Probe 5 becomes "still holds on their own site" instead of a date,
+    and Probe 7 shrinks to the claims that need a person, each with its sentence one click away.</p>`}
 function renderHome(){
   $('h-gen').textContent=M.atlas_generated;$('h-mode').innerHTML=modeNote();
   const sent=M.all.with_sentence,need=M.all.needs_person;
@@ -384,7 +402,7 @@ function renderHome(){
     ?[['1 date','per entry, for every claim in it'],['10–15 min','to re-check one entry by hand'],[fmt(M.june),'entries last checked in June']]
     :[[fmt(sent),`have a sentence from the org: ${fmt(C.supported)} verified + ${fmt(C.inferred)} Claude's reading + ${fmt(C.contradicted)} contradicting`],[fmt(C.contradicted),'contradicted by the org itself'],[fmt(need),'need a person']])
     .map(([v,k],i)=>`<div class="kpi"><b>${v}${mode==='after'?tip(TIPS[['sentence','contra','need'][i]]):''}</b><span>${k}</span></div>`).join('');
-  donut();
+  donut();renderPwhy();
   $('h-probes').innerHTML=M.probes.map(p=>`<div class="pr"><span class="pn">${p.n}</span><b>${esc(p.value)}</b><span>${esc(p.name)}</span></div>`).join('')
     +`<div class="pr p8"><span class="pn">8</span><b>${mode==='before'?'0':fmt(C.supported)} / ${fmt(T)}</b><span>claims with a receipt <em>new</em></span></div>`;
   const before=mode==='before';
