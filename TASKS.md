@@ -122,7 +122,7 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
 - **B2:** use the real `check` to score: `receipts.check.run(entries=<planted list>, out=<tests/planted/out.json>)`
   takes any entry list. Planted `.invalid` URLs fail DNS → `contradicted` on live.
 
-## Status 12:58: read this first, pjsk02
+## Status 12:45: read this first, pjsk02
 - **Goals:** `python -m receipts goals` → **12 / 14 met**. The two open goals are P3 (review page)
   and P4 (planted test). See GOALS.md.
 - **Change of plan:** Lane A is building **B1 (review page) now**, because it's on the demo's
@@ -139,7 +139,7 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
   - Duplicates and out-of-scope are not `check` statuses: write `receipts/dedupe.py` as described in B2.
 - Pull `main` first: `git pull origin main`. Real numbers: Probe 8 is 0 → 349 / 1,080 verified, 684 with a sentence.
 
-## Status 13:10
+## Status 12:53
 - **B1 is done** (Lane A): `python -m receipts review` → `out/review.html`. It has a sidebar of status
   filters, a Probe 8 header, one card per org with problems first, a "How this was checked" step trace
   per claim, Accept/Reject, and a decisions.json download. P3 passes. **13 / 14 goals met.**
