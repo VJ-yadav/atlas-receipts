@@ -288,3 +288,13 @@ Every number shown anywhere comes from `after/metrics.json` (`python -m receipts
 counting in JS. Counting a filtered list on screen is fine. Definitions live only in `receipts/metrics.py`:
 `with_sentence` = supported + inferred + contradicted with a quote confirmed on the page;
 `needs_person` = contradicted + silent + inferred.
+
+## 14:45: review of pjsk02's direct pushes to main (163e92f, 3d2ea4f, 7df20f4)
+Good work: 0 receipts lost, planted test now 6/6, the Windows fixes and the stricter equity/rolling wording are in.
+Measured on the real 197: 379 supported, but an eye check found link aliases too loose. Fixed in `6097b94`:
+- an alias counts only if no other Atlas org's name contains it ("Northeastern", "Boston University" were
+  matching), which dropped 6 false links (draper→diu, eai→neuai, idea-neu→nu-eclub, msr-ne, amazon-robotics, ilab);
+- a town inside the org's own name doesn't count as its location ("Boston Harbor Angels").
+Probe 8 is now **373**. Still weak, for the next pass: `7ai:place:0` (an event's "Boston, MA"),
+`tufts-ai-institute:link:1` (the sentence doesn't name the other org).
+**Please open PRs instead of pushing to main**, so we can run the bar before it lands.
