@@ -176,3 +176,17 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
 - [x] Click test (5/5, after/clicktest.txt): 5 random receipt links open on the highlighted sentence (SELFCHECK Truth).
 - [x] Founder view (24 verified, 67 with a sentence, of 83): a filter in review.html for VJ's 12-funder shortlist (0 → N of 83).
 - [ ] One accepted decision end to end (needs VJ to click Accept: the human gate): review.html → decisions.json → `apply` → branch + validator.
+
+## Status 13:35: pull main, read README.md first
+- PR #1 is in. BRIEF.md is kept. The place-rule change was measured on the real 197 and reverted:
+  it raised 12 place contradictions, most false ("East Coast - United States Boston", "Do I have
+  to be in Boston?"), and supported claims on words like "main" and "the". Its two real finds,
+  **matrix** and **accomplice**, are now caught by a wider address pattern. Good catch, credited in the commit messages.
+- **The README is now the single guide**: what it is, who it's for, how to run, and the status checklist.
+- `out/review.html` is now a **maintainer console**: Home, Entities (grid of 197 + detail panel),
+  Review queue, Refused, Add an entity, and a Before/After switch. Run `python -m receipts review`
+  after `check --all` (see README "How to run"). `.env` is optional for you: without a key the fuzzy
+  claims stay silent.
+- Please **don't run `check --all --model` with a key** unless asked: it costs API credits for pages not cached.
+- Your open items: **B4** (`receipts dedupe` across the 197), **B6** (stranger test with the console
+  at 14:00). B5 (more plants) only if time allows.
