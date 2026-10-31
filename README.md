@@ -125,11 +125,16 @@ open out/review.html
 | `review` | the maintainer console → `out/review.html` (Home, Entities grid, Review queue, Refused, Add an entity; Before/After switch) |
 | `public` | the founder-facing public view → `out/atlas.html` (I need…, proof marks per claim, compare two, Before/After) and the enriched dataset `after/atlas-with-receipts.json` |
 | `apply out/decisions.json` | accepted rows only → Atlas branch `receipts/2026-10-31` + `validate.js`; refuses `planted-` ids |
+| `evidence` | the sidecar `after/evidence.yml`: per entry, each claim's sentence, URL, fetch time and page hash. `apply` puts it on the Atlas branch as `data/evidence.yml`, which the Atlas loader ignores, so the entry schema is untouched |
 | `changes` | a re-check: only claims whose sentence changed come back |
 | `propose new-entry.json` | a new organization: duplicate, scope and https checks, then receipts → `out/proposed/` |
 | `test` | the planted-errors test copy: caught / missed / false alarms |
 | `probe` | probes 1–8 |
 | `goals` | every goal in GOALS.md, checked by code (exit 0 only when all pass) |
+
+`make all` runs the whole pipeline from the cache; `make check` is the mechanical self-check (goals and the Atlas validator).
+`.github/workflows/recheck.yml` re-checks every claim on demand (monthly once enabled), code only, and reports what changed in the job summary.
+Built pages for reference: [docs/public-view.html](docs/public-view.html), [docs/maintainer-console.html](docs/maintainer-console.html).
 
 Lanes and tasks are in [TASKS.md](TASKS.md); goals in [GOALS.md](GOALS.md); the one-page brief is
 [BRIEF.md](BRIEF.md).
@@ -155,6 +160,12 @@ review console, planted test, README).
 | ✅ | README: gap, sources, probe line, validator output, how to run | this file |
 | ⬜ | Before screenshots of the live Atlas (Directory, Techstars drawer, Galaxy, Kendall pins) | VJ |
 | ⬜ | Stranger test on the console (14:00) | pjsk02 (B6) |
+| ✅ | Evidence sidecar on the Atlas branch (`data/evidence.yml`, 649 claims) + validator PASSED | Atlas branch `8730e32` |
+| ✅ | Re-check workflow (on demand; monthly once enabled) and `make check` | `.github/workflows/recheck.yml` |
+| ✅ | Cost: model step on Claude Haiku 5.5 with code-chosen sentences; full run $0.04 (was ~$12) | `cache/_usage.jsonl` |
+| ✅ | Public view for founders (Track B direction) | `docs/public-view.html` |
+| ⬜ | Public view, next version | pjsk02 (P-UI) |
+| ⬜ | Probe 8 from 351 toward 600–700, code-verified | pjsk02 (P-CLAIMS) |
 | ⬜ | De-duplication across the 197 (`receipts dedupe`) | pjsk02 (B4) |
 | ⬜ | BRIEF.md numbers updated to the final run | 14:30 |
 | ⬜ | DEMO.md and PREP.md numbers, SELFCHECK log | end of day |

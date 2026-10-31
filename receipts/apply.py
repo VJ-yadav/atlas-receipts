@@ -86,6 +86,9 @@ def run(decisions_path):
     for eid in touched:  # a person checked these entries today
         set_field(lines, eid, "lastVerified", STAMP)
     path.write_text("".join(lines))
+    # the receipts travel with the change, as a sidecar the Atlas loader does not read
+    from receipts import evidence
+    (WORKTREE / "data" / "evidence.yml").write_text(evidence.build(list(receipts.values())))
     v = subprocess.run(["node", "scripts/validate.js"], cwd=WORKTREE, capture_output=True, text=True)
     report = (v.stdout + v.stderr).strip()
     (ROOT / "after").mkdir(exist_ok=True)
@@ -93,8 +96,12 @@ def run(decisions_path):
     print(git("diff", "--stat", cwd=WORKTREE).strip())
     print(report.splitlines()[-1] if report else "validator printed nothing")
     if v.returncode == 0:
-        git("commit", "-qam", f"Receipts: {len(accepted)} accepted claims on {len(touched)} entries",
-            cwd=WORKTREE)
+        git("add", "data/entities.yml", "data/evidence.yml", cwd=WORKTREE)
+        if not git("status", "--porcelain", "--", "data", cwd=WORKTREE).strip():
+            print(f"branch {BRANCH} already has these changes: nothing new to commit")
+            return
+        git("commit", "-qm", f"Receipts: {len(accepted)} accepted claims on {len(touched)} entries, "
+                             "with evidence", cwd=WORKTREE)
         print(f"committed on branch {BRANCH} in {WORKTREE.name}/ (not pushed; open a PR by hand)")
     else:
         print("validator FAILED: nothing committed; see after/validate.txt")

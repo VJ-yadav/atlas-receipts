@@ -1,0 +1,51 @@
+# Receipts re-check: re-read every organization's own pages and report only the claims whose
+# sentence changed. A report, not a gate: it never edits the Atlas and never fails the build on a
+# finding. Runs on demand. To run it monthly (the Atlas already has a monthly health job on the 1st),
+# uncomment the schedule. Code only: no API key needed, so no model cost.
+name: Receipts re-check
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 14 1 * *"   # 1st of the month, an hour after the Atlas health check
+
+jobs:
+  recheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      # last month's receipts, so `changes` can compare
+      - uses: actions/cache@v4
+        with:
+          path: out/receipts.json
+          key: receipts-${{ github.run_id }}
+          restore-keys: receipts-
+      - name: Pull the current Atlas data
+        timeout-minutes: 2
+        run: curl -sf https://the-open-accelerator.com/ecosystem/atlas.json -o data/atlas.json
+      - name: Check every claim (fresh fetch, polite, robots.txt respected)
+        timeout-minutes: 20
+        run: python -m receipts check --all --refresh
+      - name: What changed since last time
+        if: always()
+        run: |
+          { echo '## Receipts re-check'; echo '```'; python -m receipts probe | tail -3;
+            [ -f out/receipts.prev.json ] && python -m receipts changes || echo "first run: nothing to compare";
+            echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Evidence and console
+        if: always()
+        run: python -m receipts evidence && python -m receipts review && python -m receipts public
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: receipts
+          path: |
+            out/receipts.json
+            out/review.html
+            out/atlas.html
+            after/evidence.yml

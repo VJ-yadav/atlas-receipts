@@ -47,6 +47,9 @@ def main(argv):
         from receipts import public
         from receipts.probes import ROOT
         print("wrote", public.build(json.loads((ROOT / "out" / "receipts.json").read_text())))
+    elif cmd == "evidence":
+        from receipts import evidence
+        evidence.run()
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)
