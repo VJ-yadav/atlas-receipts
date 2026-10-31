@@ -268,6 +268,7 @@ pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/
 .kpis{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}.kpi b{display:block;font-size:24px;font-weight:650;font-variant-numeric:tabular-nums}.kpi span{font-size:12.5px;color:var(--mute)}
 .donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--side)}
 .d-big{font:700 30px var(--sans);fill:var(--ink)}.d-sub{font:12px var(--sans);fill:var(--mute)}
+.probe8{font-size:13px;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:8px;width:100%;text-align:center}
 ul.legend{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:5px}
 ul.legend li{display:grid;grid-template-columns:12px auto 1fr;gap:4px 8px;align-items:baseline;font-size:13px}
 ul.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}ul.legend b{font-variant-numeric:tabular-nums}
@@ -321,7 +322,7 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
       <div class="kpis" id="h-kpis"></div>
     </div>
     <div class="hero-r"><div class="donut-wrap"><svg id="h-donut" viewBox="0 0 200 200" width="210" height="210" role="img"></svg>
-      <ul class="legend" id="h-legend"></ul></div></div>
+      <div class="probe8" id="h-p8"></div><ul class="legend" id="h-legend"></ul></div></div>
   </div>
 
   <div class="sec-h"><h2>How a claim gets its receipt</h2><span class="note">live numbers from the last run</span></div>
@@ -440,6 +441,7 @@ function donut(){
     const el=`<circle cx="100" cy="100" r="${R}" fill="none" stroke="${s==='none'?'var(--line)':SCOL[s]}" stroke-width="22" stroke-dasharray="${Math.max(0,len-gap)} ${L}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"><title>${s} ${n}</title></circle>`;off+=len;return el}).join('');
   const big=mode==='before'?'0':fmt(C.supported),sub=mode==='before'?'claims with a source':'verified by code';
   $('h-donut').innerHTML=arcs+`<text x="100" y="98" text-anchor="middle" class="d-big">${big}</text><text x="100" y="118" text-anchor="middle" class="d-sub">${sub}</text><text x="100" y="134" text-anchor="middle" class="d-sub">of ${fmt(T)}</text>`;
+  $('h-p8').innerHTML=`<b>Probe 8</b>, claims with a receipt: 0 → <b>${mode==='before'?0:fmt(C.supported)}</b> of ${fmt(T)}`;
   $('h-legend').innerHTML=mode==='before'?`<li><i style="background:var(--line)"></i><b>${fmt(T)}</b> no source<span>one "last verified" month per entry</span></li>`
     :['supported','inferred','contradicted','silent','refused'].map(s=>`<li><i style="background:${SCOL[s]}"></i><b>${fmt(C[s])}</b> ${LABEL[s].split(',')[0].toLowerCase()}<span>${SDESC[s]}</span></li>`).join('');
 }
