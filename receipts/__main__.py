@@ -41,6 +41,13 @@ def main(argv):
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)
+    elif cmd == "test":
+        import json
+        from receipts import plantedtest
+        from receipts.probes import ROOT
+        score = plantedtest.run(check="--cached" not in args)
+        (ROOT / "out").mkdir(exist_ok=True)
+        (ROOT / "out" / "planted_score.json").write_text(json.dumps(score, indent=1))
     else:
         print(__doc__)
 

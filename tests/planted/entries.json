@@ -1,0 +1,1490 @@
+[
+  {
+    "id": "techstars",
+    "name": "Techstars Boston",
+    "cat": "accel",
+    "loc": "Boston",
+    "approx": true,
+    "lat": 42.351,
+    "lng": -71.045,
+    "url": "https://www.techstars.com",
+    "desc": "The storied global accelerator's Boston program \u00e2\u20ac\u201d mentor-driven, 13 weeks, $220K standard deal.",
+    "why": "The classic accelerator brand with a deep Boston mentor bench.",
+    "facts": [
+      [
+        "Check size",
+        "$220K ($20K + $200K MFN SAFE)"
+      ],
+      [
+        "Equity",
+        "5% plus uncapped MFN SAFE"
+      ],
+      [
+        "Program length",
+        "13 weeks"
+      ],
+      [
+        "Focus",
+        "Mentor-driven; Boston program active"
+      ]
+    ],
+    "tags": [
+      "seed",
+      "founders"
+    ],
+    "stages": [
+      4
+    ],
+    "offers": [
+      "funding",
+      "mentorship"
+    ],
+    "applyBy": "2026-11-18",
+    "applyNote": "Class starts Mar 2027",
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "nextview",
+    "name": "NextView Ventures",
+    "cat": "vc",
+    "loc": "Boston, Seaport",
+    "approx": true,
+    "lat": 42.3519,
+    "lng": -71.0444,
+    "url": "https://nextview.vc",
+    "desc": "Seed-stage fund focused on 'redesigning the everyday economy' \u00e2\u20ac\u201d backing founders using software and AI to solve mass-market problems.",
+    "why": "Boston-native since 2010. Writes $500K\u00e2\u20ac\u201c$2M checks at seed. Notable exit: Hatch acquired by Yelp for $300M (2026).",
+    "facts": [
+      [
+        "Stage",
+        "Seed"
+      ],
+      [
+        "Check size",
+        "$500K\u00e2\u20ac\u201c$2M"
+      ],
+      [
+        "Focus",
+        "Everyday economy \u00e2\u20ac\u201d software and AI"
+      ]
+    ],
+    "tags": [
+      "seed",
+      "consumer"
+    ],
+    "stages": [
+      3,
+      4
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "rough-draft",
+    "name": "GC Venture Fellowship (fka Rough Draft Ventures)",
+    "cat": "vc",
+    "loc": "Cambridge",
+    "approx": true,
+    "lat": 42.3656,
+    "lng": -71.1009,
+    "url": "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
+    "desc": "General Catalyst's student-focused venture arm \u00e2\u20ac\u201d invests exclusively in student and recent-graduate founders.",
+    "why": "The earliest entry point for MIT/Harvard AI founders. $25K\u00e2\u20ac\u201c$100K checks. Critical pipeline for academic spinouts before they're on anyone else's radar.",
+    "facts": [
+      [
+        "Check size",
+        "$25K\u00e2\u20ac\u201c$100K"
+      ],
+      [
+        "Stage",
+        "Student and recent-grad founders"
+      ],
+      [
+        "Focus",
+        "Earliest checks for academic spinouts"
+      ]
+    ],
+    "tags": [
+      "students",
+      "pre-seed"
+    ],
+    "stages": [
+      1,
+      2,
+      3
+    ],
+    "links": [
+      "gc"
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "massventures",
+    "name": "MassVentures",
+    "cat": "vc",
+    "loc": "1075 Main St, Waltham",
+    "lat": 42.3768,
+    "lng": -71.2541,
+    "url": "https://www.mass-ventures.com",
+    "desc": "The Commonwealth's own venture arm \u00e2\u20ac\u201d START grants and early capital for MA deep-tech startups.",
+    "why": "Non-dilutive state grants: $100K at Round 1, $200K at Round 2, then up to $500K of Round 3 seed capital in a spinout. Needs an SBIR/STTR Phase II; the window reopens Feb 1, 2027. MV Accelerate adds free SBIR coaching and Founders School.",
+    "facts": [
+      [
+        "Check size",
+        "$100K Round 1; up to $500K by Round 3"
+      ],
+      [
+        "Equity",
+        "0% on Rounds 1-2 grants"
+      ],
+      [
+        "Terms",
+        "SBIR/STTR Phase II; reopens Feb 1, 2027"
+      ],
+      [
+        "Focus",
+        "MA deep-tech startups"
+      ],
+      [
+        "Stage",
+        "Seed equity; MA academic spinouts"
+      ],
+      [
+        "Cohort size",
+        "26 START awards/yr: 16 R1, 7 R2, 3 R3"
+      ]
+    ],
+    "tags": [
+      "strategic",
+      "deep tech",
+      "equity-free",
+      "diverse founders"
+    ],
+    "stages": [
+      3,
+      4
+    ],
+    "links": [
+      "aihub"
+    ],
+    "offers": [
+      "grants",
+      "funding",
+      "mentorship"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "foundersedge",
+    "name": "FoundersEdge",
+    "cat": "vc",
+    "loc": "100 Summer St, Boston",
+    "approx": true,
+    "lat": 42.3538,
+    "lng": -71.0574,
+    "url": "https://www.foundersedge.com",
+    "desc": "Pre-seed fund writing $100\u00e2\u20ac\u201c$200K first checks into AI-native, software-first B2B startups, run by post-exit operators Greg Raiz (Raizlabs, Techstars Boston) and Jess Lynch (Wishroute).",
+    "why": "Operator GPs who lead or co-invest without taking a board seat, plus a CEO peer cohort and open demo nights like Ditch the Deck \u00e2\u20ac\u201d first-check money that comes with hands-on company.",
+    "facts": [
+      [
+        "Check size",
+        "$100K\u00e2\u20ac\u201c$200K first checks"
+      ],
+      [
+        "Stage",
+        "Pre-seed"
+      ],
+      [
+        "Board seat",
+        "None taken"
+      ],
+      [
+        "Terms",
+        "Leads or co-invests"
+      ],
+      [
+        "Focus",
+        "AI-native, software-first B2B"
+      ]
+    ],
+    "tags": [
+      "pre-seed",
+      "enterprise",
+      "AI-native"
+    ],
+    "stages": [
+      2,
+      4
+    ],
+    "offers": [
+      "funding",
+      "mentorship",
+      "community"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "innospark",
+    "name": "Innospark Ventures",
+    "cat": "vc",
+    "loc": "31 St James Ave, Boston",
+    "approx": true,
+    "lat": 42.3509,
+    "lng": -71.0718,
+    "url": "https://innospark.vc",
+    "desc": "Boston seed fund investing only where AI is the core product \u00e2\u20ac\u201d applied AI and deep tech across healthcare, life sciences and enterprise; checks typically $1M\u00e2\u20ac\u201c$3M.",
+    "why": "Run by a repeat AI founder and backs nothing but AI companies \u00e2\u20ac\u201d as on-thesis as Boston seed money gets.",
+    "facts": [
+      [
+        "Check size",
+        "$1M\u00e2\u20ac\u201c$3M typical"
+      ],
+      [
+        "Stage",
+        "Seed"
+      ],
+      [
+        "Focus",
+        "AI-core only: health, life sci, enterprise"
+      ]
+    ],
+    "tags": [
+      "applied AI",
+      "seed"
+    ],
+    "stages": [
+      4
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "first-star",
+    "name": "First Star Ventures",
+    "cat": "vc",
+    "loc": "245 Main St, Cambridge",
+    "lat": 42.3625,
+    "lng": -71.0847,
+    "url": "https://firststar.vc",
+    "desc": "Cambridge pre-seed fund writing $100K\u00e2\u20ac\u201c$1M first checks into AI, robotics and frontier-computing companies; both partners are technical ex-founders.",
+    "why": "First-check money from two GPs who can read your research \u00e2\u20ac\u201d they show up before anyone else does.",
+    "facts": [
+      [
+        "Check size",
+        "$100K\u00e2\u20ac\u201c$1M first checks"
+      ],
+      [
+        "Stage",
+        "Pre-seed"
+      ],
+      [
+        "Focus",
+        "AI, robotics, frontier computing"
+      ]
+    ],
+    "tags": [
+      "pre-seed",
+      "deep tech"
+    ],
+    "stages": [
+      4
+    ],
+    "links": [
+      "cic"
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "hubspot-v",
+    "name": "HubSpot Ventures",
+    "cat": "vc",
+    "loc": "2 Canal Park, Cambridge",
+    "lat": 42.3701,
+    "lng": -71.0763,
+    "url": "https://www.hubspot.com/ventures",
+    "desc": "HubSpot's strategic venture arm \u00e2\u20ac\u201d $500K\u00e2\u20ac\u201c$5M checks from seed through Series B, focused on AI & agent development and intelligent apps for SMBs; investments include Lovable and ElevenLabs.",
+    "why": "Strategic capital with distribution: the HubSpot platform and its SMB customer base come with the check.",
+    "facts": [
+      [
+        "Check size",
+        "$500K\u00e2\u20ac\u201c$5M"
+      ],
+      [
+        "Stage",
+        "Seed through Series B"
+      ],
+      [
+        "Focus",
+        "AI agents and SMB intelligent apps"
+      ],
+      [
+        "Terms",
+        "Strategic \u00e2\u20ac\u201d HubSpot distribution"
+      ]
+    ],
+    "tags": [
+      "strategic",
+      "generative AI"
+    ],
+    "stages": [
+      4,
+      5
+    ],
+    "offers": [
+      "funding",
+      "customers"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "bcv",
+    "name": "Bain Capital Ventures",
+    "cat": "vc",
+    "loc": "200 Clarendon St, Boston",
+    "lat": 42.3492,
+    "lng": -71.0751,
+    "url": "https://www.baincapitalventures.com",
+    "desc": "Boston-founded multi-stage firm with named AI-apps and AI-infrastructure practices \u00e2\u20ac\u201d $1\u00e2\u20ac\u201c5M seed checks through $100M growth rounds, plus the BCV Labs AI incubator.",
+    "why": "Seed through growth without leaving the cap table, and an AI incubator on top.",
+    "facts": [
+      [
+        "Check size",
+        "$1M\u00e2\u20ac\u201c$5M seed; up to $100M growth"
+      ],
+      [
+        "Stage",
+        "Seed through growth"
+      ],
+      [
+        "Focus",
+        "AI apps and AI infrastructure"
+      ]
+    ],
+    "tags": [
+      "multi-stage",
+      "infrastructure"
+    ],
+    "stages": [
+      4,
+      5
+    ],
+    "offers": [
+      "funding",
+      "mentorship"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "january",
+    "name": "January Ventures",
+    "cat": "vc",
+    "loc": "Boston (Back Bay)",
+    "approx": true,
+    "lat": 42.3496,
+    "lng": -71.0746,
+    "url": "https://www.january.ventures",
+    "desc": "Woman-led pre-seed fund writing $150K\u00e2\u20ac\u201c$750K checks before product, customers or revenue \u00e2\u20ac\u201d currently focused on founders transforming healthcare, manufacturing and supply chain with AI.",
+    "why": "True pre-seed money with an explicit thesis on AI founders from non-traditional backgrounds \u00e2\u20ac\u201d they invest earlier than almost anyone.",
+    "facts": [
+      [
+        "Check size",
+        "$150K\u00e2\u20ac\u201c$750K"
+      ],
+      [
+        "Stage",
+        "Pre-seed \u00e2\u20ac\u201d pre-product, pre-revenue"
+      ],
+      [
+        "Focus",
+        "AI in health, manufacturing, supply chain"
+      ]
+    ],
+    "tags": [
+      "pre-seed",
+      "diverse founders"
+    ],
+    "stages": [
+      4
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "sbxi",
+    "name": "SBXi",
+    "cat": "vc",
+    "loc": "Kendall Sq, Cambridge",
+    "approx": true,
+    "lat": 42.3601,
+    "lng": -71.09,
+    "url": "https://www.sbxi.com",
+    "desc": "Sponsor-backed syndicate writing fast first checks exclusively for MIT-alumni founders \u00e2\u20ac\u201d $10K\u00e2\u20ac\u201c$100K on SAFEs, up to $1M matching a qualifying term sheet; grew out of the MIT Sandbox program.",
+    "why": "One of the quickest paths to a first yes for the large MIT-born share of Boston AI startups.",
+    "facts": [
+      [
+        "Check size",
+        "$10K\u00e2\u20ac\u201c$100K; up to $1M match"
+      ],
+      [
+        "Terms",
+        "SAFEs; match needs qualifying term sheet"
+      ],
+      [
+        "Focus",
+        "MIT-alumni founders only"
+      ]
+    ],
+    "tags": [
+      "MIT",
+      "pre-seed"
+    ],
+    "stages": [
+      4
+    ],
+    "offers": [
+      "funding"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "bosch-v",
+    "name": "Bosch Ventures",
+    "cat": "vc",
+    "loc": "Cambridge",
+    "approx": true,
+    "lat": 42.365,
+    "lng": -71.085,
+    "url": "https://bosch.ventures",
+    "desc": "Robert Bosch's corporate venture arm, whose Boston-area office anchors its North American enterprise-AI investing \u00e2\u20ac\u201d a $270M sixth fund writing $5M\u00e2\u20ac\u201c$10M checks, with local investments including Blitzy.",
+    "why": "Strategic capital plus a route to industrial customers \u00e2\u20ac\u201d strongest for AI applied to the physical world.",
+    "facts": [
+      [
+        "Check size",
+        "$5M\u00e2\u20ac\u201c$10M"
+      ],
+      [
+        "Focus",
+        "Enterprise AI, industrial/physical AI"
+      ],
+      [
+        "Terms",
+        "Corporate strategic investor"
+      ]
+    ],
+    "tags": [
+      "strategic",
+      "industrial"
+    ],
+    "stages": [
+      4,
+      5
+    ],
+    "links": [
+      "blitzy"
+    ],
+    "offers": [
+      "funding",
+      "customers"
+    ],
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "deltav",
+    "name": "MIT delta v",
+    "cat": "accel",
+    "loc": "1 Amherst St, Cambridge (Trust Center)",
+    "lat": 42.3601,
+    "lng": -71.0852,
+    "url": "https://entrepreneurship.mit.edu/accelerator/",
+    "desc": "MIT's summer venture accelerator: up to $20K equity-free plus living stipends, ending in a famous September Demo Day.",
+    "why": "The single best on-ramp for MIT student founders. Zero dilution.",
+    "facts": [
+      [
+        "Check size",
+        "Up to $20K plus living stipend"
+      ],
+      [
+        "Equity",
+        "0% \u00e2\u20ac\u201d equity-free"
+      ],
+      [
+        "Program length",
+        "Summer; Demo Day in September"
+      ],
+      [
+        "Focus",
+        "MIT student founders"
+      ]
+    ],
+    "tags": [
+      "equity-free",
+      "students"
+    ],
+    "stages": [
+      3,
+      4
+    ],
+    "links": [
+      "trust",
+      "deltav-demo"
+    ],
+    "offers": [
+      "grants",
+      "mentorship"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "vms",
+    "name": "MIT Venture Mentoring Service",
+    "cat": "accel",
+    "loc": "Cambridge (MIT campus)",
+    "approx": true,
+    "lat": 42.3612,
+    "lng": -71.092,
+    "url": "https://vms.mit.edu",
+    "desc": "Free, team-based mentoring from vetted entrepreneurs and executives for MIT-affiliated ventures. No equity, ever.",
+    "why": "Arguably the most underrated free resource in the ecosystem.",
+    "tags": [
+      "equity-free"
+    ],
+    "stages": [
+      2
+    ],
+    "offers": [
+      "mentorship"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "ilab",
+    "name": "Harvard Innovation Labs",
+    "cat": "accel",
+    "loc": "125 Western Ave, Allston",
+    "lat": 42.3637,
+    "lng": -71.1252,
+    "url": "https://innovationlabs.harvard.edu",
+    "desc": "Harvard's venture launchpad \u00e2\u20ac\u201d programming, space and accelerator tracks for student and alumni founders.",
+    "why": "Free for Harvard affiliates and the President's Innovation Challenge awards $500K+ yearly.",
+    "tags": [
+      "students",
+      "equity-free"
+    ],
+    "stages": [
+      2,
+      3,
+      4
+    ],
+    "links": [
+      "kempner"
+    ],
+    "offers": [
+      "mentorship",
+      "space",
+      "grants"
+    ],
+    "applyBy": "rolling",
+    "applyNote": "Student membership open year-round",
+    "added": "2026-06",
+    "lastVerified": "2026-09"
+  },
+  {
+    "id": "engine",
+    "name": "The Engine",
+    "cat": "accel",
+    "loc": "750 Main St, Cambridge",
+    "lat": 42.3636,
+    "lng": -71.0973,
+    "url": "https://engine.xyz",
+    "desc": "MIT created this tough-tech hub in 2016; it became an independent 501(c)(3) in 2025, and Engine Ventures spun out as a separate investment firm in 2023. 220,000 sq ft of managed wet lab, engineering and office space, plus Blueprint, a free 8-week mostly virtual program for researchers turning lab work into a company.",
+    "why": "Lab space and equipment that would otherwise cost millions, for AI that meets hardware, energy or bio. Fee-based and month-to-month, no equity, no MIT affiliation or Engine Ventures funding required. Residency grants can subsidize teams short on cash; the space itself brings no investment.",
+    "tags": [
+      "lab space",
+      "deep tech",
+      "MIT",
+      "events"
+    ],
+    "stages": [
+      2,
+      3
+    ],
+    "links": [
+      "engine-v"
+    ],
+    "offers": [
+      "space",
+      "mentorship",
+      "community",
+      "grants"
+    ],
+    "applyBy": "rolling",
+    "facts": [
+      [
+        "Equity",
+        "None; residency is fee-based"
+      ],
+      [
+        "Terms",
+        "Month-to-month, no minimum term"
+      ],
+      [
+        "Program length",
+        "Blueprint: 8 weeks, mostly virtual, free"
+      ],
+      [
+        "Focus",
+        "Applied AI & ML plus 14 tough-tech fields"
+      ]
+    ],
+    "applyNote": "Blueprint: Fall and Spring cohorts",
+    "added": "2026-06",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "massrobotics",
+    "name": "MassRobotics",
+    "cat": "accel",
+    "loc": "12 Channel St, Seaport",
+    "lat": 42.345,
+    "lng": -71.0454,
+    "url": "https://www.massrobotics.org",
+    "desc": "The world's largest independent robotics innovation hub: shared labs, test space and corporate partners for robotics & physical-AI startups.",
+    "why": "Embodied-AI founders get equipment, space and intros that nowhere else in the US concentrates this densely.",
+    "facts": [
+      [
+        "Equity",
+        "0% \u00e2\u20ac\u201d nonprofit innovation hub"
+      ],
+      [
+        "Focus",
+        "Robotics and physical AI"
+      ],
+      [
+        "Terms",
+        "Shared labs, test space, corp partners"
+      ]
+    ],
+    "tags": [
+      "robotics",
+      "lab space"
+    ],
+    "stages": [
+      3
+    ],
+    "links": [
+      "masstech",
+      "nvidia-bos",
+      "amazon-sea"
+    ],
+    "offers": [
+      "space",
+      "customers",
+      "community"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "greentown",
+    "name": "Greentown Labs",
+    "cat": "accel",
+    "loc": "444 Somerville Ave, Somerville",
+    "lat": 42.3818,
+    "lng": -71.1057,
+    "url": "https://greentown.org",
+    "desc": "North America's largest climatetech incubator \u00e2\u20ac\u201d increasingly home to AI-for-energy and AI-for-climate startups.",
+    "why": "If your AI serves climate or energy, this is your tribe (and your lab bench).",
+    "facts": [
+      [
+        "Equity",
+        "0% \u00e2\u20ac\u201d no equity taken"
+      ],
+      [
+        "Focus",
+        "Climatetech; AI for energy and climate"
+      ],
+      [
+        "Terms",
+        "Membership incubator with lab space"
+      ]
+    ],
+    "tags": [
+      "climate",
+      "incubator"
+    ],
+    "stages": [
+      3
+    ],
+    "links": [
+      "masscec"
+    ],
+    "offers": [
+      "space",
+      "community"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-09"
+  },
+  {
+    "id": "idea-neu",
+    "name": "IDEA (Northeastern)",
+    "cat": "accel",
+    "loc": "Northeastern, Boston",
+    "approx": true,
+    "lat": 42.3398,
+    "lng": -71.0892,
+    "url": "https://www.ideaneu.com/",
+    "desc": "Northeastern's student-led venture accelerator with gap funding up to $10K.",
+    "why": "Equity-free gap funding and coaching, run by students for students.",
+    "facts": [
+      [
+        "Check size",
+        "Gap funding up to $10K"
+      ],
+      [
+        "Equity",
+        "0% \u00e2\u20ac\u201d equity-free"
+      ],
+      [
+        "Focus",
+        "Northeastern students"
+      ]
+    ],
+    "tags": [
+      "students",
+      "equity-free"
+    ],
+    "stages": [
+      2,
+      3
+    ],
+    "links": [
+      "nu-eclub"
+    ],
+    "offers": [
+      "grants",
+      "mentorship"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "c10",
+    "name": "C10 Labs",
+    "cat": "accel",
+    "loc": "CIC, 1 Broadway, Cambridge",
+    "approx": true,
+    "lat": 42.3626,
+    "lng": -71.0842,
+    "url": "https://www.c10labs.com",
+    "desc": "AI-native venture studio and fund at CIC in Kendall Square \u00e2\u20ac\u201d invests pre-seed to Series A and co-builds applied-AI companies; runs the AI BioHub with LabCentral and a Dimensional AI Hub with CIC.",
+    "why": "A venture-studio path: trade some ownership for hands-on company building, with dedicated tracks for AI-in-bio and enterprise AI.",
+    "facts": [
+      [
+        "Stage",
+        "Pre-seed to Series A"
+      ],
+      [
+        "Terms",
+        "Venture studio \u00e2\u20ac\u201d co-builds companies"
+      ],
+      [
+        "Focus",
+        "Applied AI; AI-bio and enterprise tracks"
+      ]
+    ],
+    "tags": [
+      "venture studio",
+      "applied AI"
+    ],
+    "stages": [
+      2,
+      3,
+      4
+    ],
+    "links": [
+      "cic",
+      "ai-biohub"
+    ],
+    "offers": [
+      "funding",
+      "mentorship"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "founder-institute",
+    "name": "Founder Institute Boston",
+    "cat": "accel",
+    "loc": "Boston",
+    "approx": true,
+    "lat": 42.3554,
+    "lng": -71.062,
+    "url": "https://fi.co/s/boston",
+    "desc": "Global pre-seed accelerator's Boston chapter. Four-month program for idea-stage to early-traction founders, with a paid entrance fee and a 2.5% equity warrant pledged about two-thirds of the way through rather than at enrollment.",
+    "why": "A structured first step for founders not yet ready for Techstars or MassChallenge \u00e2\u20ac\u201d but note it charges an entrance fee, and the equity warrant activates once you raise $100K or more.",
+    "facts": [
+      [
+        "Equity",
+        "2.5% warrant, pledged mid-program"
+      ],
+      [
+        "Terms",
+        "Entrance fee $999-$1,299"
+      ],
+      [
+        "Program length",
+        "4 months"
+      ],
+      [
+        "Stage",
+        "Idea stage to early traction"
+      ]
+    ],
+    "tags": [
+      "pre-seed"
+    ],
+    "stages": [
+      1,
+      2
+    ],
+    "offers": [
+      "mentorship",
+      "community"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "auxilium",
+    "name": "Auxilium Worcester",
+    "cat": "accel",
+    "loc": "311 Main St, Worcester",
+    "lat": 42.266,
+    "lng": -71.801,
+    "url": "https://www.auxiliumworcester.com/",
+    "desc": "Worcester innovation studio and accelerator backed by the Rucker Investments family office since June 2025. The accelerator invests $250K per company; pitched at two to three cohorts a year, only two have run (June 2025; June 2026 with Massachusetts Biomedical Initiatives (MBI) on life sciences). A studio residency adds up to $100K. Applications are closed and by invitation as of October 2026.",
+    "why": "A first institutional check plus a free 24/7 desk for founders who will build in Central Massachusetts, and AI is explicitly in scope. It is full-time and on-site at 311 Main St, so expect to relocate for the program; cohorts to date have skewed to healthcare and medtech.",
+    "facts": [
+      [
+        "Check size",
+        "$250K accelerator; up to $100K studio"
+      ],
+      [
+        "Terms",
+        "Convertible note; studio milestone-based"
+      ],
+      [
+        "Stage",
+        "Post-ideation with MVP; pre-revenue OK"
+      ],
+      [
+        "Program length",
+        "3 months; studio up to 12 months"
+      ],
+      [
+        "Cohort size",
+        "3\u00e2\u20ac\u201c4 companies per class to date"
+      ],
+      [
+        "Focus",
+        "Broad incl. AI, medtech; no drug development"
+      ]
+    ],
+    "tags": [
+      "seed",
+      "pre-seed",
+      "incubator",
+      "healthcare"
+    ],
+    "stages": [
+      2,
+      3,
+      4
+    ],
+    "links": [],
+    "offers": [
+      "funding",
+      "space",
+      "mentorship",
+      "community"
+    ],
+    "added": "2026-10",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "venturewell",
+    "name": "VentureWell",
+    "cat": "accel",
+    "loc": "57 East Pleasant St, Amherst",
+    "lat": 42.3811,
+    "lng": -72.519,
+    "url": "https://venturewell.org/",
+    "badge": "Up to $25K equity-free",
+    "desc": "Nonprofit founded 1995 as the NCIIA, renamed 2014; long based in Hadley, now listed in downtown Amherst. E-Team grants US student invention teams up to $25K non-dilutive, plus training; Aspire and Ascend are five- and six-week investor-readiness programs for pre-seed and seed-stage science and engineering startups nationwide. Ran ARPA-H's Investor Catalyst Hub in Cambridge, Sept 2023\u00e2\u20ac\u201cFeb 2026.",
+    "why": "Equity-free money and a national investor-mentor bench for university-born hardware, medtech and applied-AI teams: $5K Pioneer, then $20K Propel, and the Summer 2026 cohort included several AI-powered devices. Programs are national rather than Boston-local, and E-Team requires currently enrolled students plus a faculty advisor.",
+    "facts": [
+      [
+        "Check size",
+        "E-Team: $5K Pioneer + $20K Propel"
+      ],
+      [
+        "Equity",
+        "0% \u00e2\u20ac\u201d E-Team grants are non-dilutive"
+      ],
+      [
+        "Program length",
+        "Aspire 5 weeks; Ascend 6 weeks"
+      ],
+      [
+        "Cohort size",
+        "Aspire/Ascend 10\u00e2\u20ac\u201c15; E-Team 26\u00e2\u20ac\u201c27/cohort"
+      ],
+      [
+        "Stage",
+        "Students; pre-seed (Ascend) to seed (Aspire)"
+      ],
+      [
+        "Focus",
+        "Science and engineering inventions"
+      ]
+    ],
+    "tags": [
+      "equity-free",
+      "students",
+      "deep tech",
+      "healthcare"
+    ],
+    "stages": [
+      2,
+      4
+    ],
+    "links": [],
+    "offers": [
+      "grants",
+      "mentorship",
+      "community"
+    ],
+    "applyBy": "2026-12-01",
+    "applyNote": "Aspire Medtech; E-Team Nov 9\u00e2\u20ac\u201cJan 25",
+    "added": "2026-10",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "build617",
+    "name": "BUILD617",
+    "cat": "community",
+    "loc": "38 Chauncy St, Downtown Crossing",
+    "lat": 42.3539,
+    "lng": -71.0597,
+    "url": "https://www.build617.org",
+    "desc": "Founder-led community for early-stage tech founders in Boston and Cambridge, started by Nathan Spielberg (Tamarin AI) and Nick Leonard (VoiceRun). Founder dinners, tactical sessions and a podcast, plus a free workspace in Downtown Crossing opened in September 2026 with the real-estate firm Synergy. Membership skews heavily to AI companies.",
+    "why": "Free desks and a peer group that takes no equity \u00e2\u20ac\u201d but it selects for AI-native startups, expects you in three days a week, and asks companies to move on past eight employees. The space is sponsor-funded and committed for a year.",
+    "tags": [
+      "founders",
+      "coworking",
+      "events",
+      "applied AI"
+    ],
+    "stages": [
+      2,
+      3
+    ],
+    "links": [],
+    "offers": [
+      "community",
+      "space",
+      "mentorship"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-10",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "humic",
+    "name": "Harvard Undergraduate Machine Intelligence Community",
+    "cat": "student",
+    "loc": "Harvard, Cambridge",
+    "approx": true,
+    "lat": 42.3741,
+    "lng": -71.1167,
+    "url": "https://www.humic.ai",
+    "desc": "Harvard's flagship undergraduate AI/ML club \u00e2\u20ac\u201d runs the Future of Intelligence Fellowship, an AI project incubator, tech talks and workshops.",
+    "why": "Where Harvard's technical AI undergrads congregate \u00e2\u20ac\u201d recruit a co-founder or your first engineer.",
+    "tags": [
+      "Harvard",
+      "ML"
+    ],
+    "stages": [
+      1
+    ],
+    "offers": [
+      "community",
+      "talent"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "tufts-ai",
+    "name": "Tufts AI Society",
+    "cat": "student",
+    "loc": "Tufts, Medford",
+    "approx": true,
+    "lat": 42.4113,
+    "lng": -71.1222,
+    "url": "https://tuftsai.org",
+    "desc": "Tufts' primary student AI organization \u00e2\u20ac\u201d hands-on workshops from neural networks to prompt engineering, semester project showcases and cross-campus AI mixers.",
+    "why": "The AI talent pool on the Medford campus, and a bridge into Tufts' CS and robotics research community.",
+    "tags": [
+      "Tufts",
+      "events"
+    ],
+    "stages": [
+      1
+    ],
+    "links": [
+      "tufts"
+    ],
+    "offers": [
+      "community",
+      "talent"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "mit-sandbox",
+    "name": "MIT Sandbox",
+    "cat": "student",
+    "loc": "292 Main St, Cambridge",
+    "lat": 42.362,
+    "lng": -71.0858,
+    "url": "https://sandbox.mit.edu",
+    "desc": "MIT's university-run venture program \u00e2\u20ac\u201d up to $25K in non-dilutive funding, mentorship and startup education for any MIT student team, across every discipline.",
+    "why": "Free money and structured mentorship before you've even incorporated \u00e2\u20ac\u201d the widest on-ramp into MIT's startup pipeline.",
+    "tags": [
+      "MIT",
+      "equity-free"
+    ],
+    "stages": [
+      1,
+      2,
+      4
+    ],
+    "links": [
+      "sbxi"
+    ],
+    "offers": [
+      "grants",
+      "mentorship",
+      "community"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "etower",
+    "name": "eTower (Babson)",
+    "cat": "student",
+    "loc": "Babson College, Wellesley",
+    "approx": true,
+    "lat": 42.2949,
+    "lng": -71.2649,
+    "url": "https://www.etower.org",
+    "desc": "Babson's live-in entrepreneurship community \u00e2\u20ac\u201d 21 residents and 250+ alumni whose startups have raised $50M+, with an open Wednesday-night speaker series.",
+    "why": "The weekly open speaker night is a standing invitation \u00e2\u20ac\u201d founders and investors show up at a dorm in Wellesley because the community is that good.",
+    "tags": [
+      "Babson",
+      "co-living"
+    ],
+    "stages": [
+      1,
+      2
+    ],
+    "offers": [
+      "community",
+      "talent"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-08",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "aiweek",
+    "name": "Boston AI Week",
+    "cat": "event",
+    "loc": "Statewide \u00c2\u00b7 Sept 16\u00e2\u20ac\u201cOct 28, 2026",
+    "lat": 42.3554,
+    "lng": -71.0603,
+    "url": "https://aiweek.boston",
+    "badge": "232+ events",
+    "approx": true,
+    "desc": "Statewide AI festival built from independently hosted events \u00e2\u20ac\u201d talks, workshops, demo nights and hackathons \u00e2\u20ac\u201d with Boston's Seaport as the hub neighborhood. The 2026 run is Sept 16 to Oct 28, with a core week Sept 24 to Oct 2. Free to attend, and most individual events are free. The 2025 edition drew 15,000+ participants to 125+ events.",
+    "why": "The week the whole Massachusetts AI ecosystem is in one place \u00e2\u20ac\u201d plan launches, hiring and investor meetings around it. Any Massachusetts host can list an event on the official calendar for free, approved on a rolling basis, so you can run your own demo night inside the program.",
+    "tags": [
+      "events",
+      "hackathons",
+      "founders"
+    ],
+    "stages": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "links": [
+      "toa",
+      "redhat-bos",
+      "masstech",
+      "glasswing",
+      "link-ventures",
+      "c10",
+      "imagination",
+      "venturelane",
+      "cic",
+      "genai-meetup",
+      "aihub",
+      "massrobotics",
+      "nerd"
+    ],
+    "offers": [
+      "community"
+    ],
+    "applyBy": "rolling",
+    "applyNote": "Host an event: free listing, rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "mass-ai-coalition",
+    "name": "Massachusetts AI Coalition",
+    "cat": "community",
+    "loc": "Boston",
+    "approx": true,
+    "lat": 42.3554,
+    "lng": -71.062,
+    "url": "https://massaicoalition.com",
+    "desc": "Private-sector coalition of Massachusetts AI founders, operators, investors and students, launched February 2026. Not an incubator or accelerator: it runs a free founder coworking space donated by Wayfair, a resource pack of compute credits and warm intros, a customer-pilot program with member companies, and a year-round event calendar.",
+    "why": "If you are committed to building in Massachusetts, the Founder Starter Pack is the concrete ask: a free desk, GPU and cloud credits and warm intros, with no equity or fees. The pilot program pitches startups to member companies as first paying customers; quarterly Founder Rooms put founders in front of pledged angels.",
+    "tags": [
+      "founders",
+      "events",
+      "equity-free",
+      "coworking"
+    ],
+    "stages": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "links": [
+      "aihub",
+      "sundai",
+      "engine"
+    ],
+    "offers": [
+      "community",
+      "space",
+      "compute",
+      "customers"
+    ],
+    "facts": [
+      [
+        "Terms",
+        "No equity, no fees; pack sent within 7 days"
+      ],
+      [
+        "Focus",
+        "AI founders building in Massachusetts"
+      ]
+    ],
+    "applyBy": "rolling",
+    "applyNote": "Founder Starter Pack applications",
+    "added": "2026-06",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "planted-techstars",
+    "name": "Techstars Boston",
+    "cat": "accel",
+    "loc": "Boston",
+    "approx": true,
+    "lat": 42.351,
+    "lng": -71.045,
+    "url": "https://www.techstars.com",
+    "desc": "The storied global accelerator's Boston program \u00e2\u20ac\u201d mentor-driven, 13 weeks, $220K standard deal.",
+    "why": "The classic accelerator brand with a deep Boston mentor bench.",
+    "facts": [
+      [
+        "Check size",
+        "$500K"
+      ],
+      [
+        "Equity",
+        "5% plus uncapped MFN SAFE"
+      ],
+      [
+        "Program length",
+        "13 weeks"
+      ],
+      [
+        "Focus",
+        "Mentor-driven; Boston program active"
+      ]
+    ],
+    "tags": [
+      "seed",
+      "founders"
+    ],
+    "stages": [
+      4
+    ],
+    "offers": [
+      "funding",
+      "mentorship"
+    ],
+    "applyBy": "2026-11-18",
+    "applyNote": "Class starts Mar 2027",
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "planted-founder-institute",
+    "name": "Founder Institute Boston",
+    "cat": "accel",
+    "loc": "Worcester",
+    "approx": true,
+    "lat": 42.3554,
+    "lng": -71.062,
+    "url": "https://fi.co/s/boston",
+    "desc": "Global pre-seed accelerator's Boston chapter. Four-month program for idea-stage to early-traction founders, with a paid entrance fee and a 2.5% equity warrant pledged about two-thirds of the way through rather than at enrollment.",
+    "why": "A structured first step for founders not yet ready for Techstars or MassChallenge \u00e2\u20ac\u201d but note it charges an entrance fee, and the equity warrant activates once you raise $100K or more.",
+    "facts": [
+      [
+        "Equity",
+        "2.5% warrant, pledged mid-program"
+      ],
+      [
+        "Terms",
+        "Entrance fee $999-$1,299"
+      ],
+      [
+        "Program length",
+        "4 months"
+      ],
+      [
+        "Stage",
+        "Idea stage to early traction"
+      ]
+    ],
+    "tags": [
+      "pre-seed"
+    ],
+    "stages": [
+      1,
+      2
+    ],
+    "offers": [
+      "mentorship",
+      "community"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-10"
+  },
+  {
+    "id": "planted-nextview",
+    "name": "NextView Ventures",
+    "cat": "vc",
+    "loc": "Boston, Seaport",
+    "approx": true,
+    "lat": 42.3519,
+    "lng": -71.0444,
+    "url": "https://planted-nextview.invalid",
+    "desc": "Seed-stage fund focused on 'redesigning the everyday economy' \u00e2\u20ac\u201d backing founders using software and AI to solve mass-market problems.",
+    "why": "Boston-native since 2010. Writes $500K\u00e2\u20ac\u201c$2M checks at seed. Notable exit: Hatch acquired by Yelp for $300M (2026).",
+    "facts": [
+      [
+        "Stage",
+        "Seed"
+      ],
+      [
+        "Check size",
+        "$500K\u00e2\u20ac\u201c$2M"
+      ],
+      [
+        "Focus",
+        "Everyday economy \u00e2\u20ac\u201d software and AI"
+      ]
+    ],
+    "tags": [
+      "seed",
+      "consumer"
+    ],
+    "stages": [
+      3,
+      4
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "planted-dup-techstars",
+    "name": "Techstars Boston Accelerator",
+    "cat": "accel",
+    "loc": "Boston",
+    "approx": true,
+    "lat": 42.351,
+    "lng": -71.045,
+    "url": "https://www.techstars.com",
+    "desc": "The storied global accelerator's Boston program \u00e2\u20ac\u201d mentor-driven, 13 weeks, $220K standard deal.",
+    "why": "The classic accelerator brand with a deep Boston mentor bench.",
+    "facts": [
+      [
+        "Check size",
+        "$220K ($20K + $200K MFN SAFE)"
+      ],
+      [
+        "Equity",
+        "5% plus uncapped MFN SAFE"
+      ],
+      [
+        "Program length",
+        "13 weeks"
+      ],
+      [
+        "Focus",
+        "Mentor-driven; Boston program active"
+      ]
+    ],
+    "tags": [
+      "seed",
+      "founders"
+    ],
+    "stages": [
+      4
+    ],
+    "offers": [
+      "funding",
+      "mentorship"
+    ],
+    "applyBy": "2026-11-18",
+    "applyNote": "Class starts Mar 2027",
+    "added": "2026-06",
+    "lastVerified": "2026-06"
+  },
+  {
+    "id": "planted-rough-draft",
+    "name": "GC Venture Fellowship (fka Rough Draft Ventures)",
+    "cat": "vc",
+    "loc": "Providence, RI",
+    "approx": true,
+    "lat": 41.824,
+    "lng": -71.4128,
+    "url": "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
+    "desc": "General Catalyst's student-focused venture arm \u00e2\u20ac\u201d invests exclusively in student and recent-graduate founders.",
+    "why": "The earliest entry point for MIT/Harvard AI founders. $25K\u00e2\u20ac\u201c$100K checks. Critical pipeline for academic spinouts before they're on anyone else's radar.",
+    "facts": [
+      [
+        "Check size",
+        "$25K\u00e2\u20ac\u201c$100K"
+      ],
+      [
+        "Stage",
+        "Student and recent-grad founders"
+      ],
+      [
+        "Focus",
+        "Earliest checks for academic spinouts"
+      ]
+    ],
+    "tags": [
+      "students",
+      "pre-seed"
+    ],
+    "stages": [
+      1,
+      2,
+      3
+    ],
+    "links": [
+      "gc"
+    ],
+    "offers": [
+      "funding"
+    ],
+    "added": "2026-06",
+    "lastVerified": "2026-08"
+  },
+  {
+    "id": "planted-vms",
+    "name": "MIT Venture Mentoring Service",
+    "cat": "accel",
+    "loc": "Cambridge (MIT campus)",
+    "approx": true,
+    "lat": 42.3612,
+    "lng": -71.092,
+    "url": "https://vms.mit.edu",
+    "desc": "Free, team-based mentoring from vetted entrepreneurs and executives for MIT-affiliated ventures. No equity, ever.",
+    "why": "Arguably the most underrated free resource in the ecosystem.",
+    "tags": [
+      "equity-free"
+    ],
+    "stages": [
+      2
+    ],
+    "offers": [
+      "mentorship"
+    ],
+    "applyBy": "rolling",
+    "added": "2026-06",
+    "lastVerified": "2026-06",
+    "facts": [
+      [
+        "Check size",
+        "$999K"
+      ]
+    ]
+  }
+]
