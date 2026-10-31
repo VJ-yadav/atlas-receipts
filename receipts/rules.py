@@ -7,6 +7,7 @@ from receipts.claims import make_receipt
 from receipts.text import normalize, quote_on_page, sentences
 
 TODAY = date(2026, 10, 31)
+BLOCKED = (401, 403, 429)
 THIN = 200  # fewer characters than this: probably a JavaScript-only page
 PARKED = re.compile(r"domain (is |may be )?for sale|buy this domain|parked (free|domain)|"
                     r"this domain has expired|domain name is available", re.I)
@@ -44,6 +45,12 @@ def units(page):
     return out
 
 
+# Organizations only: never use a sentence that is about a person or carries contact details.
+PERSONISH = re.compile(r"\b(ceo|cto|coo|cfo|co-?founder|founder|founding partner|managing partner|"
+                       r"general partner|professor|prof\.|dr\.|ph\.?d|director|president|chair|"
+                       r"led by|headed by|meet (the|our)|bio|ex [A-Z])\b|@|\+?\d[\d\s().-]{8,}\d|·", re.I)
+
+
 def full_sentence(s):
     return len(s.split()) >= 8
 
@@ -54,7 +61,7 @@ def find(pages, test, prefer=full_sentence):
     first = (None, None)
     for p in usable(pages):
         for s in units(p):
-            if test(s) and quote_on_page(s, p["text"]):
+            if test(s) and not PERSONISH.search(s) and quote_on_page(s, p["text"]):
                 if prefer(s):
                     return p, s[:400]
                 first = first if first[0] else (p, s[:400])
@@ -102,7 +109,13 @@ def rule_live(claim, pages):
     if home["error"]:
         if home["error"].startswith("refused"):
             return None  # handled for the whole entry
-        return contradicted(claim, home, None, home["error"], "the site did not answer: " + home["error"])
+        if "ConnectError" in home["error"]:  # DNS failure or refused connection
+            return contradicted(claim, home, None, home["error"], "the site did not answer: " + home["error"])
+        return silent(claim, pages, "the site did not answer in time today (" + home["error"] +
+                                    "): retry before concluding anything")
+    if home["status"] in BLOCKED:
+        return silent(claim, pages, f"the site blocks automated fetches (HTTP {home['status']}): "
+                                    "not evidence it is dead; needs a browser fetch or review")
     if home["status"] >= 400:
         return contradicted(claim, home, None, f"HTTP {home['status']}", f"the site answers HTTP {home['status']}")
     p, s = find([home], lambda s: PARKED.search(s))
@@ -138,8 +151,10 @@ def rule_place(claim, pages):
             return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
     p, s = find(pages, lambda s: _OTHER_STATE_ADDR.search(s))
     if p and not _MA_ADDR.search(p["text"]):
-        return contradicted(claim, p, s, _OTHER_STATE_ADDR.search(s).group(0),
-                            "the page gives an address outside Massachusetts and none inside it")
+        return make_receipt(claim, "silent", url=p["final_url"], fetched_at=p["fetched_at"], quote=s,
+                            sha256=p["sha256"], page_value=_OTHER_STATE_ADDR.search(s).group(0),
+                            reason="the site gives only an out-of-state address (likely a headquarters); "
+                                   "the Atlas location is not confirmed: needs review")
     return silent(claim, pages, f"none of {parts} appears on {len(usable(pages))} pages")
 
 
@@ -151,7 +166,7 @@ def _date_patterns(d):
 
 
 CLOSED = re.compile(r"applications? (are |is )?(now )?closed|no longer accepting|not currently accepting", re.I)
-ROLLING = re.compile(r"rolling|apply (now|anytime|any time|today)|applications? (are |is )?(now )?open|"
+ROLLING = re.compile(r"rolling|apply (at )?any ?time|applications? (are |is )?(now )?open\b|"
                      r"accepting applications|year-round|year round|ongoing basis", re.I)
 
 
@@ -181,7 +196,17 @@ def rule_deadline(claim, pages):
                                 f"(searched as {', '.join(_date_patterns(d)[:3])} …)")
 
 
-INVEST_CTX = re.compile(r"invest|check|fund|capital|seed|round|safe|equity|award|grant|prize|stipend", re.I)
+CHECK_CTX = re.compile(r"\binvest(s|ing|ment)?\b|\bchecks?\b|equity-free|non-dilutive|stipend|"
+                       r"per (company|startup|team|project)|up to \$|in funding|funding of", re.I)
+NOT_A_CHECK = re.compile(r"\bfund [ivx\d]+\b|raised|exits?\b|valuation|under management|aum\b|"
+                         r"awards \$|arbitrat|settlement|billion|\$[\d.]+\s*b\b|total|to date|"
+                         r"portfolio companies have", re.I)
+
+
+NUMERIC_FACTS = ("Equity", "Program length", "Cohort size", "Board seat")
+FACT_CTX = {"Program length": re.compile(r"program|accelerator|cohort|course|batch|curriculum|residency", re.I),
+            "Cohort size": re.compile(r"cohort|companies|startups|teams|class", re.I),
+            "Equity": re.compile(r"equity|stake|common stock|safe", re.I)}
 
 
 def rule_fact(claim, pages):
@@ -192,7 +217,8 @@ def rule_fact(claim, pages):
         if p:
             return supported(claim, p, s, f"the page gives {', '.join(f'${a:,}' for a in want)}")
         p1, s1 = find(pages, lambda s: set(want) & set(amounts(s)))
-        p2, s2 = find(pages, lambda s: amounts(s) and INVEST_CTX.search(s) and not set(want) & set(amounts(s)))
+        p2, s2 = find(pages, lambda s: amounts(s) and max(amounts(s)) < 50_000_000 and CHECK_CTX.search(s)
+                      and not NOT_A_CHECK.search(s) and not set(want) & set(amounts(s)))
         if p1:
             return silent(claim, pages, f"the page gives part of the range: \"{s1[:120]}\"; needs review")
         if p2 and label == "Check size":
@@ -200,11 +226,14 @@ def rule_fact(claim, pages):
                                 f"Atlas says {val}; the page gives a different amount")
         return silent(claim, pages, f"no amount matching {val} on {len(usable(pages))} pages")
     # a number together with its unit: "13 weeks" must not match a stray "13"
+    if label not in NUMERIC_FACTS:
+        return silent(claim, pages, f"'{label}: {val}' is a description, not a number: needs a reading")
     tokens = re.findall(r"\d+(?:\.\d+)?%|\d+(?:\.\d+)?(?:[\s-]+[a-z]+)?", val)
     if tokens:
         pats = [re.compile(r"(?<![\d.])" + re.escape(t.lower()).replace(r"\ ", r"[\s-]+").rstrip("s") + r"s?\b"
                            if re.search(r"[a-z]", t) else word(t)) for t in tokens]
-        p, s = find(pages, lambda s: all(x.search(s.lower()) for x in pats))
+        ctx = FACT_CTX.get(label)
+        p, s = find(pages, lambda s: all(x.search(s.lower()) for x in pats) and (not ctx or ctx.search(s)))
         if p:
             return supported(claim, p, s, f"the page gives {' '.join(tokens)}")
         return silent(claim, pages, f"{' '.join(tokens)} not found on {len(usable(pages))} pages "
@@ -226,11 +255,12 @@ def rule_link(claim, pages, entries_by_id):
 
 
 def rule_offer(claim, pages):
+    """Offers are fuzzy ("mentorship"): a keyword hit is not proof, so code never marks them
+    supported. The model may suggest a sentence later; at most that is "inferred"."""
     pat = re.compile(r"\b(" + OFFER_WORDS.get(claim["value"], re.escape(claim["value"])) + r")", re.I)
-    p, s = find(pages, lambda s: 20 < len(s) < 300 and pat.search(s))
-    if p:
-        return supported(claim, p, s, f"the sentence mentions '{pat.search(s).group(0)}' for {claim['value']}")
-    return silent(claim, pages, f"no sentence about {claim['value']} on {len(usable(pages))} pages")
+    n = sum(1 for p in usable(pages) for s in units(p) if 20 < len(s) < 300 and pat.search(s))
+    return silent(claim, pages, f"offers need a reading, not a keyword: {n} sentences mention "
+                                f"words like '{claim['value']}' on {len(usable(pages))} pages")
 
 
 def check_entry(entry, claims, pages, entries_by_id):

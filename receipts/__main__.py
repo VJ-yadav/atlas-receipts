@@ -22,6 +22,12 @@ def main(argv):
             check.print_entry(fresh)
         print("this run:", check.summary(fresh))
         print("all receipts:", check.summary(allr), f"({len(allr)} claims) -> out/receipts.json")
+    elif cmd == "apply":
+        from receipts import apply
+        if not args:
+            print("usage: receipts apply out/decisions.json")
+            return
+        apply.run(args[0])
     else:
         print(__doc__)
 
