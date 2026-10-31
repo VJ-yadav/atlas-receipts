@@ -236,3 +236,40 @@ less, and why?" Don't help them. Write down the time it took, their answer, and 
 in `notes/stranger.md`. That is the Track B test.
 
 Rules unchanged: organizations only, no `.env` in git, no Co-authored-by trailers, no `--model` runs.
+
+## 13:55: pjsk02 owns two tracks now; Lane A owns consolidation and the data infrastructure
+
+Reference builds are committed: `docs/public-view.html` (public view) and `docs/maintainer-console.html`
+(console). Open them straight from the repo. They are snapshots; regenerate them with
+`python -m receipts public` / `review`.
+
+### P-UI Public view (branch `pj/public`)
+- **You own `receipts/public.py`.** Lane A won't edit it, so there are no conflicts. Build on the current
+  version: "I need…" filter, a proof mark per claim, Compare two, Before/After.
+- Track B test: a stranger, unaided, says which of two entries to trust less, and why. Optimize for that.
+- Keep these: plain copy (no em dashes, no "AI" wording), organizations only, contradictions shown as
+  "their site says otherwise" with both values (never as corrected data), and the Before/After switch.
+- Ideas: a map or town filter, "proven" badges on the founder's shortlist, a mobile layout, keyboard compare.
+
+### P-CLAIMS Raise Probe 8 from 351 toward 600–700 verified (branch `pj/claims`)
+**The bar (non-negotiable; this is the Truth score):** "supported" still means *code* found an exact
+sentence on the org's own page that matches the Atlas value. A model reading never counts. A keyword
+hit alone never counts.
+Methods that are allowed and likely to pay off:
+1. **More of the org's own pages**: read `sitemap.xml` (if robots.txt allows) to find the
+   about/contact/apply/portfolio/terms pages the homepage doesn't link. That is the biggest lever for place, facts and links.
+2. **JavaScript-only sites**: render with Playwright (installed in `../mass-ai-atlas`) **only** when
+   robots.txt allows. Never to get around a 403/429 block: that is a "no".
+3. **Links**: name aliases (e.g. "MIT CSAIL" ↔ "CSAIL"), with both orgs' own pages already in cache.
+4. **Place**: a zip code or town on the contact page; St/Street-style matching already exists (`place_pattern`).
+5. **Facts**: number + unit variants ("12-week", "three months" is NOT 13 weeks).
+How to submit, so Lane A can merge:
+- Your PR description has to show `receipts goals` 14/14, `receipts test` (no new false alarms),
+  and the before/after of `receipts probe`.
+- Attach **20 random newly supported receipts** (key + quote) so we can check them by eye.
+  If more than 1 of 20 is wrong, the rule doesn't merge.
+- Don't run `--model` (it costs credits). Code-only gains are what count for Probe 8.
+
+### Lane A (VJ-yadav + Claude), in parallel
+- Data infrastructure: an evidence sidecar for the Atlas PR, a monthly re-check workflow, and `make check`.
+- Consolidation: we merge P-UI and P-CLAIMS after checking them against the bar above.
