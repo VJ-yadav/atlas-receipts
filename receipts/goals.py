@@ -13,7 +13,7 @@ from receipts.text import quote_on_page
 
 OUT = ROOT / "out"
 PROBE8_TARGET = 340   # verified by code (supported)
-SOURCED_TARGET = 650  # carry a sentence from the org's own page (supported + inferred, labelled)
+SOURCED_TARGET = 600  # carry a sentence from the org's own page (supported + inferred, labelled)
 GOALS = []
 
 

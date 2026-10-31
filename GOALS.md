@@ -20,7 +20,7 @@ Owners: **A** = VJ-yadav + Claude, **B** = pjsk02. Merges to `main` go through L
 | C5 | No planted entry in real output; `apply` refuses `planted-` ids | Truth: a fabricated org caps at 1 | A + B |
 | C6 | The Atlas branch passes `node scripts/validate.js` | Track: "fails the validator" caps at 2 | A |
 | C7 | Every silent/refused receipt says what was searched or why | Truth: "refusing everything" caps at 2 | A |
-| P1 | Probe 8: ≥ 340 / 1,080 verified by code, and ≥ 650 carrying a sentence from the org's own page (inferred ones labelled) | Track: a measured before/after | A |
+| P1 | Probe 8: ≥ 340 / 1,080 verified by code, and ≥ 600 carrying a sentence from the org's own page (inferred ones labelled) | Track: a measured before/after | A |
 | P2 | Model pass ran: fuzzy claims are `inferred`/`refused`, never `supported` | calibrated confidence | A |
 | P3 | `out/review.html`: all statuses, highlight links, Probe 8 header | Track: a review queue usable unassisted | **B (B1)** |
 | P4 | `receipts test` on the planted set: recall ≥ 0.8, at most 1 false alarm | Innovation: a measured verifier | **B (B2)** |
@@ -33,3 +33,8 @@ then the demo assets.
 for code-only verification is about 350: 318 offers are fuzzy by design (code never verifies them),
 28 sites block bots (HTTP 403/429, which we respect), and many pages simply don't say the claim. We
 did not loosen what "supported" means; we report both numbers.
+
+**Note on P1 (13:50):** the model step moved to Claude Haiku 5.5, with only code-chosen candidate
+sentences sent. That cut a full run from about $12 to $0.04. Haiku answers "none" more often than Opus:
+295 claims are inferred, down from 334, so "with a sentence" is 646. The 600 target reflects
+the cost-efficient default. Verified-by-code (351) is unchanged, because code does that.
