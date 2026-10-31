@@ -138,17 +138,40 @@ def rule_live(claim, pages):
 
 US_STATES = r"(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)"
 _OTHER_STATE_ADDR = re.compile(r"\b[A-Z][a-z]+,\s*" + US_STATES + r"\s+\d{5}\b")
+_MA_TOWN_ADDR = re.compile(r"\d+[A-Za-z]?\s+[A-Z][\w.' ]+?,\s*(?:(?:Suite|Floor|Ste\.?|Unit|#)[^,]{0,12},\s*)?"
+                           r"([A-Z][a-z]+(?: [A-Z][a-z]+)?),?\s+(?:MA|Massachusetts)\s+0[12]\d{3}\b")
 _MA_ADDR = re.compile(r"\b(MA|Massachusetts)\b\s*0[12]\d{3}\b")
+
+
+ABBREV = {"st": "st|street", "street": "st|street", "ave": "ave|avenue", "avenue": "ave|avenue",
+          "rd": "rd|road", "road": "rd|road", "sq": "sq|square", "square": "sq|square",
+          "blvd": "blvd|boulevard", "dr": "dr|drive", "pl": "pl|place", "pkwy": "pkwy|parkway"}
+MAILING = re.compile(r"\bby mail|mailing address|p\.?\s?o\.? box|\bpmb\b", re.I)
+
+
+def place_pattern(part):
+    """'325 Main St' also matches '325 Main Street'."""
+    toks = re.findall(r"[a-z0-9]+", part.lower())
+    body = r"[\s.,-]+".join(f"(?:{ABBREV[t]})" if t in ABBREV else re.escape(t) for t in toks)
+    return re.compile(r"(?<![a-z0-9])" + body + r"\.?(?![a-z0-9])")
 
 
 def rule_place(claim, pages):
     parts = sorted({p.strip() for p in re.split(r"[,/·]| near ", claim["value"]) if len(p.strip()) > 2},
                    key=len, reverse=True)
     for part in parts:
-        pat = word(part)
+        pat = place_pattern(part)
         p, s = find(pages, lambda s: pat.search(s.lower()))
         if p:
             return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
+    # a Massachusetts street address in a different town, and the Atlas town nowhere on the site
+    p, s = find(pages, lambda s: _MA_TOWN_ADDR.search(s) and not MAILING.search(s), prefer=lambda s: True)
+    if p:
+        town = _MA_TOWN_ADDR.search(s).group(1)
+        if not any(town.lower() in part.lower() or part.lower() in town.lower() for part in parts):
+            return contradicted(claim, p, s, f"{town}, MA",
+                                f"the site gives a Massachusetts address in {town}, and never names "
+                                f"{', '.join(parts)}")
     p, s = find(pages, lambda s: _OTHER_STATE_ADDR.search(s))
     if p and not _MA_ADDR.search(p["text"]):
         return make_receipt(claim, "silent", url=p["final_url"], fetched_at=p["fetched_at"], quote=s,

@@ -507,7 +507,7 @@
   "quote": "News Releases Public Records 1075 Main Street, Suite 100, Waltham, MA 02451",
   "fetched_at": "2026-10-31T16:54:03Z",
   "sha256": "051ee935789dd718eb14ea5b3d097b329f7e8478e69c976c6c9a3db489f936df",
-  "reason": "the page names 'Waltham' from the Atlas location",
+  "reason": "the page names '1075 Main St' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://www.mass-ventures.com"
@@ -1466,10 +1466,10 @@
   "value": "200 Clarendon St, Boston",
   "status": "supported",
   "url": "https://baincapitalventures.com/contact/",
-  "quote": "Submit OUR OFFICES Boston",
+  "quote": "OUR OFFICES Boston 200 Clarendon Street",
   "fetched_at": "2026-10-31T16:25:50Z",
   "sha256": "4252a269e3448ef36e65412c1b4d090f6dcfedb3b34644757dfd1230da0e95bf",
-  "reason": "the page names 'Boston' from the Atlas location",
+  "reason": "the page names '200 Clarendon St' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://baincapitalventures.com/contact/"
@@ -2381,7 +2381,7 @@
   "value": "125 Western Ave, Allston",
   "status": "supported",
   "url": "https://innovationlabs.harvard.edu/about/visit",
-  "quote": "Harvard i-lab, Batten Hall, 125 Western Ave, Allston, MA 02163",
+  "quote": "first floor of Batten Hall at 125 Western Avenue is home to our",
   "fetched_at": "2026-10-31T16:25:56Z",
   "sha256": "47703f58cc42b70220fe970f90eb5df563a4ca6ebb169c50191a1ebc24c7aeca",
   "reason": "the page names '125 Western Ave' from the Atlas location",
@@ -2535,10 +2535,10 @@
   "value": "750 Main St, Cambridge",
   "status": "supported",
   "url": "https://engine.xyz",
-  "quote": "One of Atlantic Quantum's test and measurement laboratories located in Cambridge.",
+  "quote": "Fabrication space at 750 Main Street.",
   "fetched_at": "2026-10-31T16:25:52Z",
   "sha256": "7a1463098745767374302e74ff51f1ea48b1320220e27fef2a90b55a344b2063",
-  "reason": "the page names 'Cambridge' from the Atlas location",
+  "reason": "the page names '750 Main St' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://engine.xyz"
@@ -2815,14 +2815,14 @@
   "field": "place",
   "value": "12 Channel St, Seaport",
   "status": "supported",
-  "url": "https://www.massrobotics.org/international-immersion-program/",
-  "quote": "This equity-free program is committed to supporting and advancing robotics technology entrepreneurs through an in-person program, based out of MassRobotics in Boston\u2019s Seaport Innovation District.",
-  "fetched_at": "2026-10-31T16:25:53Z",
-  "sha256": "45814297700183e1f136948e4f7773ff0225edfad78f1e301e882220cf34b173",
-  "reason": "the page names 'Seaport' from the Atlas location",
+  "url": "https://www.massrobotics.org",
+  "quote": "X Contact us 12 Channel Street, Boston, MA 02210",
+  "fetched_at": "2026-10-31T16:25:52Z",
+  "sha256": "d374e5c1b593812b0b9f19f0c61d6c065dcca74880c3351614a7efb2ceebebbd",
+  "reason": "the page names '12 Channel St' from the Atlas location",
   "page_value": null,
   "searched": [
-   "https://www.massrobotics.org/international-immersion-program/"
+   "https://www.massrobotics.org"
   ],
   "by": "code"
  },
@@ -3862,10 +3862,10 @@
   "value": "311 Main St, Worcester",
   "status": "supported",
   "url": "https://www.auxiliumworcester.com/",
-  "quote": "Auxilium Worcester will open a state-of-the-art materials science lab in downtown Worcester in partnership with Flexcon, a global materials manufacturer based in Spencer, MA.",
+  "quote": "311 Main Street Worcester, MA 01608 Auxilium Worcester \u00a9 2025",
   "fetched_at": "2026-10-31T16:25:57Z",
   "sha256": "380fae705ed7e7ab665146ba5dbf966c67fe19592f27ad9911d06892d2562d7f",
-  "reason": "the page names 'Worcester' from the Atlas location",
+  "reason": "the page names '311 Main St' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://www.auxiliumworcester.com/"
@@ -4139,7 +4139,7 @@
   "quote": "By Mail 57 East Pleasant Street Amherst, MA 01002",
   "fetched_at": "2026-10-31T16:26:08Z",
   "sha256": "32d9a6c02ddec1e7c4eb2bb25db85c72ae8c17d4bf9a30622fc4baf2fa7d9ca8",
-  "reason": "the page names 'Amherst' from the Atlas location",
+  "reason": "the page names '57 East Pleasant St' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://venturewell.org/contact-us/"
@@ -4990,14 +4990,14 @@
   "field": "place",
   "value": "Statewide \u00c2\u00b7 Sept 16\u00e2\u20ac\u201cOct 28, 2026",
   "status": "supported",
-  "url": "https://aiweek.boston",
-  "quote": "Save the date for 2027 See the 2026 schedule",
-  "fetched_at": "2026-10-31T16:26:10Z",
-  "sha256": "412a17988489b822be76e75601d4c03691dfa5f19c217ff7159df59c8961ef65",
-  "reason": "the page names '2026' from the Atlas location",
+  "url": "https://aiweek.boston/2027",
+  "quote": "How 2027 is structured Events run statewide, September 16 \u2013 October 28, 2027",
+  "fetched_at": "2026-10-31T16:26:11Z",
+  "sha256": "92645ae8001adbdd428408a6824355b4c4f94815d684aeb57777be7213070d28",
+  "reason": "the page names 'Statewide \u00c2' from the Atlas location",
   "page_value": null,
   "searched": [
-   "https://aiweek.boston"
+   "https://aiweek.boston/2027"
   ],
   "by": "code"
  },
@@ -6351,19 +6351,14 @@
   "name": "GC Venture Fellowship (fka Rough Draft Ventures)",
   "field": "place",
   "value": "Providence, RI",
-  "status": "silent",
-  "url": "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
-  "quote": null,
-  "fetched_at": "2026-10-31T16:25:35Z",
-  "sha256": null,
-  "reason": "none of ['Providence'] appears on 6 pages",
-  "page_value": null,
+  "status": "contradicted",
+  "url": "https://www.generalcatalyst.com/terms-and-conditions",
+  "quote": "A Notice to the General Catalyst should be sent to: 20 University Road, Suite 450,Cambridge, Massachusetts 02138.",
+  "fetched_at": "2026-10-31T16:25:44Z",
+  "sha256": "2862eadd7a5a542f67db03dd0f2f97a5e36ac4fba27d38e72787244f396167b9",
+  "reason": "the site gives a Massachusetts address in Cambridge, and never names Providence",
+  "page_value": "Cambridge, MA",
   "searched": [
-   "https://www.generalcatalyst.com/stories/introducing-the-gc-venture-fellowship",
-   "https://www.generalcatalyst.com/",
-   "https://www.generalcatalyst.com/portfolio",
-   "https://www.generalcatalyst.com/capital",
-   "https://www.generalcatalyst.com/contact",
    "https://www.generalcatalyst.com/terms-and-conditions"
   ],
   "by": "code"

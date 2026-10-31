@@ -148,7 +148,7 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
 - UI copy rule for anything you add: plain, short sentences. No em dashes, no emoji, no "AI magic"
   words. Name things by what they are ("Claude's reading", "checked by code").
 
-## Status 13:00: 14 / 14 goals met. Thanks pjsk02, B2 is merged (`4d78858`)
+## Status 12:56: 14 / 14 goals met. Thanks pjsk02, B2 is merged (`4d78858`)
 - `python -m receipts test` → planted 6 · caught 5 · missed 1 · false alarm 1 · precision 0.83 · recall 0.83.
   - The miss: wrong town (Boston → Worcester) on founder-institute stays `silent`, because their
     global site names no town. Honest, and a good thing to show.
@@ -158,7 +158,7 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
 - **Pull main before you start anything new:** `git checkout Je-Branch && git merge origin/main`
   (or branch fresh from main).
 
-## Next round (13:00–13:45): improvements
+## Next round (12:56–13:45): improvements
 
 ### Lane B (pjsk02)
 - [ ] **B4 De-duplication against the 197** (a Track A rubric item). Run `receipts.dedupe.find_duplicate`
