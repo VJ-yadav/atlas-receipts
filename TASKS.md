@@ -190,3 +190,49 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
 - Please **don't run `check --all --model` with a key** unless asked: it costs API credits for pages not cached.
 - Your open items: **B4** (`receipts dedupe` across the 197), **B6** (stranger test with the console
   at 14:00). B5 (more plants) only if time allows.
+
+## pjsk02: test plan and next tasks (13:40)
+
+### T1 Full test from a clean pull (about 10 min). Report any line that differs.
+```bash
+git checkout main && git pull
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m receipts check techstars
+#  expect: 9 claims; "this run: supported 5 · contradicted 0 · silent 4 · inferred 0 · refused 0"
+#  expect quotes: deadline "Nov 18 2026 Final Deadline"; Equity "...will be 5% of the company..."
+.venv/bin/python -m receipts check --all
+#  about 75 s the first time (polite fetching), then about 2 s from cache/
+#  expect (no API key): "supported 351 · contradicted 3 · silent 711 · inferred 0 · refused 15 (1080 claims)"
+#  ±3 is fine (sites change). With VJ's key the 711 silent split into 377 silent + 334 inferred.
+.venv/bin/python -m receipts probe
+#  expect: "Probe 8 claims with a receipt     351 / 1080  (verified by code)"
+.venv/bin/python -m receipts review && open out/review.html
+#  expect: maintainer console. Click through Home, Entities, Review queue, Refused, Add an entity, and Before/After.
+#  On Home, "Start here" shows 3 contradictions: Matrix (Waltham vs Cambridge), Accomplice
+#  (Cambridge vs Boston), MIT delta v ($20K vs $75K).
+.venv/bin/python -m receipts review --fixture && open out/review-fixture.html
+#  expect: the 5-row fixture, in its own file (it no longer overwrites review.html)
+.venv/bin/python -m receipts test --check
+#  expect: planted 6 · caught 5 · missed 1 (planted-founder-institute:place:0) · false alarm 1 (deltav:fact:0)
+.venv/bin/python -m receipts changes
+#  expect: "0 changed, 0 new" when run right after another check
+echo '{"id":"techstars-copy","name":"Techstars Boston Accelerator","cat":"accel","loc":"Boston","url":"https://www.techstars.com"}' > /tmp/dup.json
+.venv/bin/python -m receipts propose /tmp/dup.json
+#  expect: "✕ possible duplicate of techstars" and "stopped: fix the above before fetching anything"
+.venv/bin/python -m receipts goals
+#  expect without a key: P2 (model pass) FAILs; everything else passes once check --all and test have run
+```
+Also check, by eye: (a) open 3 random ↗ links in the console. Each should open the org's page with
+the sentence highlighted. (b) No person's name, email or phone appears anywhere in the console.
+
+### T2 B4 de-duplication across the 197 (about 20 min)
+`python -m receipts dedupe` → `out/duplicates.json` and a printed list of candidate pairs among the
+real 197 (name similarity or same host). Report only, never merge. For each pair, say "same org" or
+"related but distinct" (e.g. deltav / deltav-demo). It feeds the Home page later.
+
+### T3 Stranger test at 14:00, now on the **public view** (Lane A is building `out/atlas.html`)
+Ask someone who hasn't seen it: "Here are two funders. Which one's information would you trust
+less, and why?" Don't help them. Write down the time it took, their answer, and what confused them
+in `notes/stranger.md`. That is the Track B test.
+
+Rules unchanged: organizations only, no `.env` in git, no Co-authored-by trailers, no `--model` runs.
