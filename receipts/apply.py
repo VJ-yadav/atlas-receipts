@@ -17,9 +17,12 @@ STAMP = "2026-10"
 FIELD_LINE = {"deadline": "applyBy", "place": "loc", "live": "url"}
 
 
-def scalar(v):
+def scalar(v, like=""):
+    """A YAML value in the file's own style: plain unless it must be quoted, and quoted where
+    the line it replaces was quoted (e.g. applyBy: '2026-11-18')."""
     v = str(v)
-    if re.fullmatch(r"[A-Za-z0-9][^:#'\"\[\]{},&*!|>%@`]*", v) and not re.fullmatch(r"[\d-]+", v):
+    plain = re.fullmatch(r"[A-Za-z0-9$(][^#'\"\[\]{}&*!|>%@`]*", v) and ": " not in v and not v.endswith(":")
+    if plain and not like.startswith("'"):
         return v
     return "'" + v.replace("'", "''") + "'"
 
@@ -34,7 +37,8 @@ def set_field(lines, eid, field, value):
     s, e = entry_span(lines, eid)
     for i in range(s, e):
         if lines[i].startswith(f"  {field}:"):
-            lines[i] = f"  {field}: {scalar(value)}\n"
+            old = lines[i].split(":", 1)[1].strip()
+            lines[i] = f"  {field}: {scalar(value, old)}\n"
             return
     raise KeyError(f"{eid} has no {field} line")
 

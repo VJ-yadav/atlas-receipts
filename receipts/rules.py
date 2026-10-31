@@ -138,6 +138,8 @@ def rule_live(claim, pages):
 
 US_STATES = r"(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)"
 _OTHER_STATE_ADDR = re.compile(r"\b[A-Z][a-z]+,\s*" + US_STATES + r"\s+\d{5}\b")
+_MA_TOWN_ADDR = re.compile(r"\d+[A-Za-z]?\s+[A-Z][\w.' ]+?,\s*(?:(?:Suite|Floor|Ste\.?|Unit|#)[^,]{0,12},\s*)?"
+                           r"([A-Z][a-z]+(?: [A-Z][a-z]+)?),?\s+(?:MA|Massachusetts)\s+0[12]\d{3}\b")
 _MA_ADDR = re.compile(r"\b(MA|Massachusetts)\b\s*0[12]\d{3}\b")
 # Distinct MA place names used to catch Atlas loc typos (e.g. Worcester when the site says Boston).
 MA_CITIES = (
@@ -150,6 +152,19 @@ MA_CITIES = (
     "Brighton", "Dorchester", "Roxbury", "Charlestown", "Back Bay", "Seaport", "Kendall",
     "Fenway", "Somerville", "Davis Square", "Harvard Square", "Kendall Square",
 )
+
+
+ABBREV = {"st": "st|street", "street": "st|street", "ave": "ave|avenue", "avenue": "ave|avenue",
+          "rd": "rd|road", "road": "rd|road", "sq": "sq|square", "square": "sq|square",
+          "blvd": "blvd|boulevard", "dr": "dr|drive", "pl": "pl|place", "pkwy": "pkwy|parkway"}
+MAILING = re.compile(r"\bby mail|mailing address|p\.?\s?o\.? box|\bpmb\b", re.I)
+
+
+def place_pattern(part):
+    """'325 Main St' also matches '325 Main Street'."""
+    toks = re.findall(r"[a-z0-9]+", part.lower())
+    body = r"[\s.,-]+".join(f"(?:{ABBREV[t]})" if t in ABBREV else re.escape(t) for t in toks)
+    return re.compile(r"(?<![a-z0-9])" + body + r"\.?(?![a-z0-9])")
 
 
 def rule_place(claim, pages):
@@ -169,6 +184,12 @@ def rule_place(claim, pages):
             atlas_tokens.add(city.lower())
     atlas_cities = {c.lower() for c in MA_CITIES if c.lower() in atlas_tokens}
 
+    # Street abbreviations: '325 Main St' also matches '325 Main Street'.
+    for part in parts:
+        pat = place_pattern(part)
+        p, s = find(pages, lambda s, pat=pat: pat.search(s.lower()))
+        if p:
+            return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
     for token in sorted(atlas_tokens, key=len, reverse=True):
         pat = word(token)
         p, s = find(pages, lambda s, pat=pat: pat.search(s.lower()))
@@ -184,6 +205,14 @@ def rule_place(claim, pages):
             if p:
                 return contradicted(claim, p, s, city,
                                     f"Atlas says {value!r}; the page names {city!r}")
+    # Street address in a different MA town; ignore mailing addresses.
+    p, s = find(pages, lambda s: _MA_TOWN_ADDR.search(s) and not MAILING.search(s), prefer=lambda s: True)
+    if p:
+        town = _MA_TOWN_ADDR.search(s).group(1)
+        if not any(town.lower() in part.lower() or part.lower() in town.lower() for part in parts):
+            return contradicted(claim, p, s, f"{town}, MA",
+                                f"the site gives a Massachusetts address in {town}, and never names "
+                                f"{', '.join(parts)}")
     p, s = find(pages, lambda s: _OTHER_STATE_ADDR.search(s))
     if p and not _MA_ADDR.search(p["text"]):
         return make_receipt(claim, "silent", url=p["final_url"], fetched_at=p["fetched_at"], quote=s,
@@ -244,11 +273,16 @@ FACT_CTX = {"Program length": re.compile(r"program|accelerator|cohort|course|bat
             "Equity": re.compile(r"equity|stake|common stock|safe", re.I)}
 
 
+# a sentence that says what the money is, rather than a button or menu label
+PROSE_MONEY = re.compile(r"\b(invest(s|ed)?|receives?|gets?|provides?|offers?|awards?|writes?|grants?|"
+                         r"through|up to|ranging|range)\b", re.I)
+
+
 def rule_fact(claim, pages):
     label, val = claim["value"]["label"], claim["value"]["value"]
     if label in ("Check size", "Terms") and amounts(val):
         want = amounts(val.split("(")[0]) or amounts(val)
-        p, s = find(pages, lambda s: set(want) <= set(amounts(s)))
+        p, s = find(pages, lambda s: set(want) <= set(amounts(s)), prefer=lambda s: full_sentence(s) and PROSE_MONEY.search(s))
         if p:
             return supported(claim, p, s, f"the page gives {', '.join(f'${a:,}' for a in want)}")
         p1, s1 = find(pages, lambda s: set(want) & set(amounts(s)))
@@ -276,17 +310,31 @@ def rule_fact(claim, pages):
     return silent(claim, pages, f"'{label}: {val}' is a description, not a number: needs a reading")
 
 
-def rule_link(claim, pages, entries_by_id):
+def name_patterns(entry):
+    full = re.sub(r"\s*\(.*?\)", "", entry["name"]).strip()
+    names = {full, re.sub(r"\b(Boston|Inc\.?|LLC)\b", "", full).strip()}
+    return [word(n) for n in names if len(n) > 3]
+
+
+def rule_link(claim, pages, entries_by_id, target_pages=None):
+    """A link is "related": either org's own page naming the other is evidence."""
     target = entries_by_id.get(claim["value"])
     if not target:
         return silent(claim, pages, f"link target id {claim['value']!r} is not in the Atlas")
-    full = re.sub(r"\s*\(.*?\)", "", target["name"]).strip()
-    names = {full, re.sub(r"\b(Boston|Inc\.?|LLC)\b", "", full).strip()}
-    pats = [word(n) for n in names if len(n) > 3]
+    pats = name_patterns(target)
     p, s = find(pages, lambda s: any(x.search(s.lower()) for x in pats))
     if p:
         return supported(claim, p, s, f"the page names {target['name']} ({target['id']})")
-    return silent(claim, pages, f"{target['name']} is not named on {len(usable(pages))} pages")
+    if target_pages:
+        back = name_patterns(entries_by_id[claim["entry_id"]])
+        p, s = find(target_pages, lambda s: any(x.search(s.lower()) for x in back))
+        if p:
+            return supported(claim, p, s, f"{target['name']}'s own page names {claim['name']} "
+                                          "(the link holds from the other side)")
+    return silent(claim, pages, f"neither page names the other: {target['name']} is not named on "
+                                f"{len(usable(pages))} pages of {claim['name']}"
+                                + (f", nor {claim['name']} on {len(usable(target_pages))} of theirs"
+                                   if target_pages else ""))
 
 
 def rule_offer(claim, pages):

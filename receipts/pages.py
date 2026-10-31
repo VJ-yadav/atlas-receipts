@@ -7,8 +7,11 @@ from bs4 import BeautifulSoup
 from receipts.fetch import client, fetch, host_of
 
 MAX_PAGES = 6
+GUESS_PATHS = ("/contact", "/about")
 WANT = re.compile(r"about|contact|apply|application|program|accelerator|invest|portfolio|"
                   r"terms|faq|location|visit|deal|fund|who-we-are|mission", re.I)
+# Pages that state terms, deadlines and programs come before generic about/contact pages.
+STRONG = re.compile(r"terms|invest|deal|apply|application|program|accelerator|fund", re.I)
 # People pages are skipped: we collect organizations only.
 SKIP = re.compile(r"team|people|staff|leadership|partners/|bio|login|signin|privacy|cookie|"
                   r"careers|jobs|blog/|news/|\.pdf$|mailto:|tel:", re.I)
@@ -36,7 +39,8 @@ def candidate_links(home, entry=None):
         mine = any(w in path.lower() or w in label.lower() for w in words)
         hit = WANT.search(path) or WANT.search(label)
         if (hit or mine) and href.rstrip("/") != base.rstrip("/"):
-            score = path.strip("/").count("/") - (10 if mine else 0)
+            strong = STRONG.search(path) or STRONG.search(label)
+            score = path.strip("/").count("/") - (10 if mine else 0) - (5 if strong else 0)
             scored[href] = min(scored.get(href, 99), score)
     return [u for u, _ in sorted(scored.items(), key=lambda kv: kv[1])][: MAX_PAGES - 1]
 
@@ -49,7 +53,19 @@ def pages_for(entry, c=None, refresh=False):
         home = fetch(entry["url"], c, refresh)
         pages = [home]
         if home["html"]:
-            pages += [fetch(u, c, refresh) for u in candidate_links(home, entry)]
+            links = candidate_links(home, entry)
+            pages += [fetch(u, c, refresh) for u in links]
+            # the address usually lives on a contact/about page: try the usual paths too
+            root = "/".join(home["final_url"].split("/")[:3])
+            seen = {u.rstrip("/") for u in links} | {home["final_url"].rstrip("/")}
+            for path in GUESS_PATHS:
+                if len(pages) >= MAX_PAGES + 2:
+                    break
+                if root + path not in seen and not any(path in u for u in seen):
+                    pg = fetch(root + path, c, refresh)
+                    if pg["text"] and (pg["status"] or 0) < 400 and pg["final_url"].rstrip("/") not in seen:
+                        pages.append(pg)
+                        seen.add(pg["final_url"].rstrip("/"))
         return pages
     finally:
         if own:

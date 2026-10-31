@@ -9,6 +9,7 @@ import json
 import os
 
 from receipts.claims import make_receipt
+from receipts.rules import PERSONISH
 from receipts.fetch import CACHE
 from receipts.text import quote_on_page
 
@@ -88,6 +89,10 @@ def upgrade(receipts, pages):
     for r in receipts:
         a = by_key.get(r["key"])
         if r not in todo or not a or a["reading"] == "none" or not a["quote"].strip():
+            out.append(r)
+            continue
+        if PERSONISH.search(a["quote"]):  # organizations only: never show a sentence about a person
+            r = dict(r, reason=r["reason"] + "; the only sentence found is about a person, so it is not shown")
             out.append(r)
             continue
         claim = {k: r[k] for k in ("key", "entry_id", "name", "field", "value")}

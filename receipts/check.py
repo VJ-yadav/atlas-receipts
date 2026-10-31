@@ -3,22 +3,43 @@ import json
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 
+from receipts import model
 from receipts.claims import enumerate_claims
 from receipts.fetch import client
 from receipts.pages import pages_for
 from receipts.probes import ROOT, load_entries
-from receipts.rules import check_entry
+from receipts.rules import check_entry, rule_link, usable
 
 OUT = ROOT / "out" / "receipts.json"
 
 
-def check_one(entry, claims, by_id, refresh=False):
+def check_one(entry, claims, by_id, refresh=False, use_model=False):
     with client() as c:
         pages = pages_for(entry, c, refresh)
-    return check_entry(entry, claims, pages, by_id)
+    receipts = check_entry(entry, claims, pages, by_id)
+    if use_model:
+        try:
+            receipts = model.upgrade(receipts, pages)
+        except Exception as e:  # the model is optional: claims stay silent, with the reason logged
+            print(f"  model skipped for {entry['id']}: {type(e).__name__}: {str(e)[:120]}")
+    return receipts
 
 
-def run(ids=None, refresh=False, entries=None, out=OUT, workers=16):
+def links_from_other_side(receipts, by_id):
+    """Second pass: a silent link is re-checked on the target org's cached pages."""
+    out = []
+    with client() as c:
+        for r in receipts:
+            if r["field"] == "link" and r["status"] == "silent" and r["value"] in by_id:
+                claim = {k: r[k] for k in ("key", "entry_id", "name", "field", "value")}
+                own = pages_for(by_id[r["entry_id"]], c)
+                theirs = pages_for(by_id[r["value"]], c)
+                r = rule_link(claim, own, by_id, theirs) if usable(own) or usable(theirs) else r
+            out.append(r)
+    return out
+
+
+def run(ids=None, refresh=False, entries=None, out=OUT, workers=16, use_model=False):
     entries = entries or load_entries()
     by_id = {e["id"]: e for e in entries}
     todo = [by_id[i] for i in ids] if ids else entries
@@ -27,14 +48,17 @@ def run(ids=None, refresh=False, entries=None, out=OUT, workers=16):
     for c in claims:
         per.setdefault(c["entry_id"], []).append(c)
     with ThreadPoolExecutor(workers) as pool:
-        results = list(pool.map(lambda e: check_one(e, per[e["id"]], by_id, refresh), todo))
+        results = list(pool.map(lambda e: check_one(e, per[e["id"]], by_id, refresh, use_model), todo))
     fresh = [r for rs in results for r in rs]
+    fresh = links_from_other_side(fresh, by_id)
     keep = []
     if ids and out.exists():
         done = set(ids)
         keep = [r for r in json.loads(out.read_text()) if r["entry_id"] not in done]
     allr = keep + fresh
     out.parent.mkdir(exist_ok=True)
+    if out.exists() and out == OUT:  # keep the last run so `receipts changes` can compare
+        (out.parent / "receipts.prev.json").write_text(out.read_text())
     out.write_text(json.dumps(allr, indent=1))
     return fresh, allr
 

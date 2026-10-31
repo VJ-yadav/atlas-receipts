@@ -1,0 +1,7 @@
+Click test, 31 Oct 13:00: 5 random supported receipts opened in Chromium; quoted sentence on the rendered page:
+FOUND  medialab:link:0
+FOUND  engine:place:0
+FOUND  amazon-robotics:link:1
+FOUND  hubspot-v:fact:0
+FOUND  blitzy:link:1
+5 / 5

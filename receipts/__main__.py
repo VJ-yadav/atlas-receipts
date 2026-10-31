@@ -1,4 +1,4 @@
-"""receipts <command>: fetch, check, probe, review, apply, test."""
+"""receipts <command>: check, changes, probe, review, apply, test, goals."""
 import sys
 
 
@@ -15,26 +15,39 @@ def main(argv):
         from receipts import check
         ids = [a for a in args if not a.startswith("--")]
         if not ids and "--all" not in args:
-            print("usage: receipts check [--all|<id>...] [--refresh]")
+            print("usage: receipts check [--all|<id>...] [--refresh] [--model]")
             return
-        fresh, allr = check.run(ids or None, refresh="--refresh" in args)
+        fresh, allr = check.run(ids or None, refresh="--refresh" in args, use_model="--model" in args)
         if ids:
             check.print_entry(fresh)
         print("this run:", check.summary(fresh))
         print("all receipts:", check.summary(allr), f"({len(allr)} claims) -> out/receipts.json")
-    elif cmd == "review":
-        from receipts import review
-        fixture = "--fixture" in args
-        review.run(fixture=fixture)
     elif cmd == "apply":
         from receipts import apply
         if not args:
             print("usage: receipts apply out/decisions.json")
             return
         apply.run(args[0])
+    elif cmd == "review":
+        import json
+        from receipts import review
+        from receipts.probes import ROOT
+        src = ROOT / "tests" / "fixtures" / "receipts.sample.json" if "--fixture" in args else ROOT / "out" / "receipts.json"
+        out = review.build(json.loads(src.read_text()), ROOT / "out" / "review.html")
+        print(f"wrote {out} ({src.name})")
+    elif cmd == "changes":
+        from receipts import changes
+        changes.report()
+    elif cmd == "goals":
+        from receipts import goals
+        sys.exit(1 if goals.run() else 0)
     elif cmd == "test":
+        import json
         from receipts import plantedtest
-        plantedtest.run(check="--check" in args or "--refresh" in args)
+        from receipts.probes import ROOT
+        score = plantedtest.run(check="--cached" not in args)
+        (ROOT / "out").mkdir(exist_ok=True)
+        (ROOT / "out" / "planted_score.json").write_text(json.dumps(score, indent=1))
     else:
         print(__doc__)
 

@@ -121,3 +121,58 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
   Offers are always silent until the model reads them; that's deliberate.
 - **B2:** use the real `check` to score: `receipts.check.run(entries=<planted list>, out=<tests/planted/out.json>)`
   takes any entry list. Planted `.invalid` URLs fail DNS → `contradicted` on live.
+
+## Status 12:45: read this first, pjsk02
+- **Goals:** `python -m receipts goals` → **12 / 14 met**. The two open goals are P3 (review page)
+  and P4 (planted test). See GOALS.md.
+- **Change of plan:** Lane A is building **B1 (review page) now**, because it's on the demo's
+  critical path. **pjsk02: please take B2 (planted-errors test) now**, on branch `pj/planted`.
+  If you already started B1, tell VJ right away so we don't both build it.
+- What B2 must produce for goal P4: `python -m receipts test` writes `out/planted_score.json` =
+  `{"planted": N, "caught": X, "missed": Y, "false_alarms": Z, "rows": [...]}` and prints the table.
+  The target is recall ≥ 0.8 with at most 1 false alarm on the unchanged entries.
+- How to run the real checker on your test copy (no network needed for entries already cached):
+  `from receipts import check; fresh, _ = check.run(entries=planted_entries, out=ROOT/"out"/"planted_receipts.json")`
+  - Planted `https://planted-<id>.invalid` urls fail DNS → `live` comes back `contradicted`.
+  - A wrong Check size → `contradicted` only if the page has a check-like sentence with a different
+    amount; otherwise `silent`. Pick techstars ($220K, cached) for the wrong-number plant.
+  - Duplicates and out-of-scope are not `check` statuses: write `receipts/dedupe.py` as described in B2.
+- Pull `main` first: `git pull origin main`. Real numbers: Probe 8 is 0 → 349 / 1,080 verified, 684 with a sentence.
+
+## Status 12:53
+- **B1 is done** (Lane A): `python -m receipts review` → `out/review.html`. It has a sidebar of status
+  filters, a Probe 8 header, one card per org with problems first, a "How this was checked" step trace
+  per claim, Accept/Reject, and a decisions.json download. P3 passes. **13 / 14 goals met.**
+- **The only open goal is P4 = B2 (pjsk02).** If you haven't started by 13:30, say so and Lane A
+  will build it, so the 14:00 stranger test has the whole product.
+- UI copy rule for anything you add: plain, short sentences. No em dashes, no emoji, no "AI magic"
+  words. Name things by what they are ("Claude's reading", "checked by code").
+
+## Status 12:56: 14 / 14 goals met. Thanks pjsk02, B2 is merged (`4d78858`)
+- `python -m receipts test` → planted 6 · caught 5 · missed 1 · false alarm 1 · precision 0.83 · recall 0.83.
+  - The miss: wrong town (Boston → Worcester) on founder-institute stays `silent`, because their
+    global site names no town. Honest, and a good thing to show.
+  - The "false alarm" is **deltav** in the real data ($75K on their page vs "Up to $20K" in the
+    Atlas). It is probably a real discrepancy, but it counts as an alarm until a person confirms it.
+- Your `review.py` was superseded by Lane A's version (sidebar, step trace). It's in your branch history.
+- **Pull main before you start anything new:** `git checkout Je-Branch && git merge origin/main`
+  (or branch fresh from main).
+
+## Next round (12:56–13:45): improvements
+
+### Lane B (pjsk02)
+- [ ] **B4 De-duplication against the 197** (a Track A rubric item). Run `receipts.dedupe.find_duplicate`
+      over all 197 real entries, pairwise, and write `out/duplicates.json` plus a short printed list.
+      Report only: never merge or delete. Wire it as `python -m receipts dedupe`. Expect a few
+      near-duplicates like `deltav` / `deltav-demo`. Say which ones are the same org and which are
+      related but distinct.
+- [ ] **B5 More plants**: add 2 more of each failure type (12–18 plants total) so the score isn't
+      based on 6. Prefer cached entries so the test stays fast. Keep every id `planted-`.
+- [ ] **B6 Stranger test at 14:00**: open `out/review.html` and give it to someone who hasn't seen it:
+      "Review these three claims." Write down what confused them in `notes/stranger.md`.
+
+### Lane A (VJ-yadav + Claude)
+- [x] Wrong-town rule: a page with a Massachusetts street address in a different town → `contradicted`.
+- [x] Click test (5/5, after/clicktest.txt): 5 random receipt links open on the highlighted sentence (SELFCHECK Truth).
+- [x] Founder view (24 verified, 67 with a sentence, of 83): a filter in review.html for VJ's 12-funder shortlist (0 → N of 83).
+- [ ] One accepted decision end to end (needs VJ to click Accept: the human gate): review.html → decisions.json → `apply` → branch + validator.
