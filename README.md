@@ -6,6 +6,8 @@ that proves it.
 **Track A, "The Survey" (backend).** TOA "Chart the Common Wealth" hackathon, 31 Oct 2026.
 Team: VJ-yadav, pjsk02.
 
+**Video (2 min):** https://youtu.be/HNGAh-gOVmA
+
 ## The gap
 
 The [Mass AI Atlas](https://the-open-accelerator.com/ecosystem/) lists 197 Massachusetts AI
