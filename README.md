@@ -61,26 +61,26 @@ it, per claim.** Next month only the claims whose sentence changed go back to a 
 ## Probe line
 
 <!-- metrics:start -->
-**Probe 8: claims with a receipt, 0 → 373 of 1,080 verified by code.** 665 carry a sentence from the org's own page (288 of them are Claude's readings, labelled inferred; 4 are sentences that contradict the Atlas).
+**Probe 8: claims with a receipt, 0 → 380 of 1,080 verified by code.** 667 carry a sentence from the org's own page (283 of them are Claude's readings, labelled inferred; 4 are sentences that contradict the Atlas).
 
 ```
-supported 373 · contradicted 4 · silent 400 · inferred 288 · refused 15      (checked 2026-10-31 18:47Z)
+supported 380 · contradicted 4 · silent 398 · inferred 283 · refused 15      (checked 2026-10-31 18:30Z)
 ```
 
 | Number | Value |
 |---|---|
-| Probe 8: claims verified by code | 0 → **373 / 1,080** |
-| Claims carrying a sentence from the org's own page | 665 |
-| Claims that need a person (contradicted, silent, inferred) | 692 |
+| Probe 8: claims verified by code | 0 → **380 / 1,080** |
+| Claims carrying a sentence from the org's own page | 667 |
+| Claims that need a person (contradicted, silent, inferred) | 685 |
 | Real contradictions | 4: salesforce-bos, matrix, accomplice, deltav |
 | Probe 5: the 52 entries last checked in June | 39 confirmed live by their own site; 2 with a contradiction; 92 of 256 claims verified |
-| Links with a receipt | 69 / 170 |
-| A founder's 12-funder shortlist | 0 → 25 / 83 verified (70 with a sentence) |
+| Links with a receipt | 75 / 170 |
+| A founder's 12-funder shortlist | 0 → 26 / 83 verified (67 with a sentence) |
 | Planted errors: caught / missed / false alarms | 6 / 0 / 1 of 6 |
 | Click test, random receipts | 5 / 5 land on their sentence |
 | Pages read from the orgs' own sites | 962 |
 | Sites that block bots (respected) | 28 |
-| Model (claude-haiku-5-5): cost of reading all 197 | $0.05 over 199 calls |
+| Model (claude-haiku-5-5): cost of reading all 197 | $0.04 over 154 calls |
 | Validator on the Atlas branch | PASSED: data/ is valid. |
 <!-- metrics:end -->
 All numbers in this block come from `after/metrics.json` (`python -m receipts metrics`), the same
@@ -91,17 +91,17 @@ source the console and the probes read.
 
   | Entry | The Atlas says | The org's own page says |
   |---|---|---|
+  | salesforce-bos | "955 Massachusetts Ave, Cambridge" | "Boston, MA" |
   | deltav | Check size "Up to $20K plus living stipend" | "$75K equity-free funding" |
   | matrix | "Bay Colony, Waltham" | "101 Main Street, 17th Floor Cambridge, MA 02142" |
   | accomplice | "Cambridge" | "56 Wareham Street, Fl 3 Boston, MA 02118" |
 
 - **Measured verifier** (`receipts test`, a test copy with planted errors; never the real data):
-  6 planted, 5 caught, 1 missed, 1 false alarm. Precision 0.83, recall 0.83.
-  - The miss: a wrong town on a global site that names no town.
+  6 planted, 6 caught, 0 missed, 1 false alarm. Precision 0.86, recall 1.0.
   - The "false alarm" is the real deltav discrepancy, counted conservatively.
 - **Click test:** 5 of 5 random receipts open on their sentence in a real browser
   (`after/clicktest.txt`).
-- **Validator** on the Atlas branch `receipts/2026-10-31`, after applying a maintainer's 5 accepted
+- **Validator** on the Atlas branch `receipts/2026-10-31`, after applying a maintainer's accepted
   decisions (`after/validate.txt`):
   ```
   Mass AI Atlas — validating 197 entries, 11 categories
@@ -119,7 +119,7 @@ source the console and the probes read.
   - **Respected, not worked around:** sites that block bots (HTTP 401/403/429) show as `silent`, not dead.
 - **Mass AI Atlas dataset:** https://the-open-accelerator.com/ecosystem/atlas.json (pulled
   31 Oct 2026). The Atlas repo github.com/holzerjm/mass-ai-atlas is used for `validate.js`.
-- **Claude API** (`claude-opus-5-5`): suggests a sentence for fuzzy claims only. Every quote is checked
+- **Claude API** (`claude-haiku-5-5`): suggests a sentence for fuzzy claims only. Every quote is checked
   by code, and readings are cached by page hash.
 - **Organizations only.** Sentences about a person, emails and phone numbers are never used or shown.
 
@@ -134,30 +134,34 @@ echo "ANTHROPIC_API_KEY=..." > .env       # optional; without it fuzzy claims st
 .venv/bin/python -m receipts check --all            # fetch + check all 197 (about 75 s the first time)
 .venv/bin/python -m receipts check --all --model    # plus Claude's suggestions (costs credits once, then cached)
 .venv/bin/python -m receipts review                 # build the maintainer console → out/review.html
-open out/review.html
+.venv/bin/python -m receipts review --fixture       # sample console → out/review-fixture.html
+# Windows: if console mojibake, set PYTHONUTF8=1 (or chcp 65001) before running
 ```
 
 | Command | What it does |
 |---|---|
 | `check [--all\|<id>…] [--model] [--refresh]` | one receipt per claim → `out/receipts.json` |
 | `review` | the maintainer console → `out/review.html` (Home, Entities grid, Review queue, Refused, Add an entity; Before/After switch) |
-| `public` | the founder-facing public view → `out/atlas.html` (I need…, proof marks per claim, compare two, Before/After) and the enriched dataset `after/atlas-with-receipts.json` |
+| `review --fixture` | sample console from `tests/fixtures/receipts.sample.json` → `out/review-fixture.html` |
+| `public` | the founder-facing public view → `out/atlas.html` and `after/atlas-with-receipts.json` |
 | `apply out/decisions.json` | accepted rows only → Atlas branch `receipts/2026-10-31` + `validate.js`; refuses `planted-` ids |
-| `evidence` | the sidecar `after/evidence.yml`: per entry, each claim's sentence, URL, fetch time and page hash. `apply` puts it on the Atlas branch as `data/evidence.yml`, which the Atlas loader ignores, so the entry schema is untouched |
-| `changes` | a re-check: only claims whose sentence changed come back |
-| `propose new-entry.json` | a new organization: duplicate, scope and https checks, then receipts → `out/proposed/` |
-| `test` | the planted-errors test copy: caught / missed / false alarms |
+| `evidence` | sidecar `after/evidence.yml` (sentence, URL, fetch time, page hash per claim) |
+| `changes` | re-check: only claims whose sentence changed come back |
+| `propose new-entry.json` | new org: duplicate, scope and https checks, then receipts → `out/proposed/` |
+| `dedupe` | report likely duplicate entries across the 197 |
+| `test` | planted-errors test copy: caught / missed / false alarms |
 | `probe` | probes 1–8 |
+| `metrics` | rewrite probe line + `after/metrics.json` from current receipts |
 | `goals` | every goal in GOALS.md, checked by code (exit 0 only when all pass) |
 
 `make all` runs the whole pipeline from the cache; `make check` is the mechanical self-check (goals and the Atlas validator).
 `.github/workflows/recheck.yml` re-checks every claim on demand (monthly once enabled), code only, and reports what changed in the job summary.
 Built pages for reference: [docs/public-view.html](docs/public-view.html), [docs/maintainer-console.html](docs/maintainer-console.html).
 
-Lanes and tasks are in [TASKS.md](TASKS.md); goals in [GOALS.md](GOALS.md); the one-page brief is
-[BRIEF.md](BRIEF.md).
+Lanes and tasks are in [TASKS.md](TASKS.md); goals in [GOALS.md](GOALS.md); the one-page concept brief is
+[brief.md](brief.md) (also [BRIEF.md](BRIEF.md)).
 
-## Status checklist (updated as we go)
+## Status checklist
 
 **Self-check: `python -m receipts goals` → 14 / 14 met** (eligibility, every scoring cap, Probe 8,
 review console, planted test, README).
@@ -172,23 +176,21 @@ review console, planted test, README).
 | ✅ | Model pass: Claude suggests, code checks, never "supported" | count in the numbers block |
 | ✅ | Maintainer console with Before/After, grid, queue, refused, add-entity | `out/review.html` |
 | ✅ | Human gate: decisions.json → `apply` → Atlas branch → validator PASSED | Atlas branch commit `6e1ab9d` |
-| ✅ | Planted-errors test (pjsk02) | 5 / 6 caught |
+| ✅ | Planted-errors test | 6 / 6 caught, 0 missed, 1 false alarm |
 | ✅ | Click test, 5 random receipts | 5 / 5 |
 | ✅ | Re-check ("next month"): only changed sentences come back | `receipts changes` |
 | ✅ | README: gap, sources, probe line, validator output, how to run | this file |
-| ⬜ | Before screenshots of the live Atlas (Directory, Techstars drawer, Galaxy, Kendall pins) | VJ |
-| ⬜ | Stranger test on the console (14:00) | pjsk02 (B6) |
-| ✅ | Evidence sidecar on the Atlas branch (`data/evidence.yml`, 649 claims) + validator PASSED | Atlas branch `8730e32` |
+| ✅ | Evidence sidecar on the Atlas branch (`data/evidence.yml`) + validator PASSED | Atlas branch `8730e32` |
 | ✅ | Re-check workflow (on demand; monthly once enabled) and `make check` | `.github/workflows/recheck.yml` |
-| ✅ | Cost: model step on Claude Haiku 5.5 with code-chosen sentences; full run $0.04 (was ~$12) | `cache/_usage.jsonl` |
+| ✅ | Cost: Claude Haiku 5.5 with code-chosen sentences; full run ~$0.04 | `cache/_usage.jsonl` |
 | ✅ | Public view for founders (Track B direction) | `docs/public-view.html` |
-| ⬜ | Public view, next version | pjsk02 (P-UI) |
-| ⬜ | Probe 8 from 351 toward 600–700, code-verified | pjsk02 (P-CLAIMS) |
-| ⬜ | De-duplication across the 197 (`receipts dedupe`) | pjsk02 (B4) |
-| ⬜ | BRIEF.md numbers updated to the final run | 14:30 |
-| ⬜ | DEMO.md and PREP.md numbers, SELFCHECK log | end of day |
-| ⬜ | 2-minute video, uploaded Public | 15:15 |
-| ⬜ | Judging form by 15:25 (repo, video, brief, Track A, sources, validator, probe line) | VJ |
+| ✅ | Probe 8 Track 2 | **0 → 380 / 1,080** verified; 667 with a sentence |
+| ✅ | brief.md / BRIEF.md concept one-pager | done |
+| ✅ | `receipts dedupe` command | available |
+| ⬜ | Before screenshots of the live Atlas | VJ |
+| ⬜ | DEMO.md / PREP.md / SELFCHECK log | end of day |
+| ⬜ | 2-minute video, uploaded Public | judging |
+| ⬜ | Judging form (repo, video, brief, Track A, sources, validator, probe line) | VJ |
 
 ## Attribution
 
