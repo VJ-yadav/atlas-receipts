@@ -169,7 +169,7 @@ review console, planted test, README).
 | ✅ | Fetcher: cache, robots.txt, ~1 req/s/host, project User-Agent | done |
 | ✅ | Claim rules: live, place, deadline, check size / facts, links, offers | done |
 | ✅ | Every receipt has url + quote + fetch time + page hash; quotes re-checked by code | goals C1, C2 |
-| ✅ | Model pass: Claude suggests, code checks, never "supported" | 334 inferred |
+| ✅ | Model pass: Claude suggests, code checks, never "supported" | count in the numbers block |
 | ✅ | Maintainer console with Before/After, grid, queue, refused, add-entity | `out/review.html` |
 | ✅ | Human gate: decisions.json → `apply` → Atlas branch → validator PASSED | Atlas branch commit `6e1ab9d` |
 | ✅ | Planted-errors test (pjsk02) | 5 / 6 caught |
