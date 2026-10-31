@@ -6435,7 +6435,7 @@
   "value": "Providence, RI",
   "status": "contradicted",
   "url": "https://www.generalcatalyst.com/terms-and-conditions",
-  "quote": "A Notice to the General Catalyst should be sent to: 20 University Road, Suite 450,Cambridge, Massachusetts 02138.",
+  "quote": "20 University Road Suite 450 Cambridge, Massachusetts 02138",
   "fetched_at": "2026-10-31T16:25:44Z",
   "sha256": "2862eadd7a5a542f67db03dd0f2f97a5e36ac4fba27d38e72787244f396167b9",
   "reason": "the site gives a Massachusetts address in Cambridge, and never names Providence",

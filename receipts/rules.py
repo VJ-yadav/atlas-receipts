@@ -138,8 +138,12 @@ def rule_live(claim, pages):
 
 US_STATES = r"(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)"
 _OTHER_STATE_ADDR = re.compile(r"\b[A-Z][a-z]+,\s*" + US_STATES + r"\s+\d{5}\b")
-_MA_TOWN_ADDR = re.compile(r"\d+[A-Za-z]?\s+[A-Z][\w.' ]+?,\s*(?:(?:Suite|Floor|Ste\.?|Unit|#)[^,]{0,12},\s*)?"
-                           r"([A-Z][a-z]+(?: [A-Z][a-z]+)?),?\s+(?:MA|Massachusetts)\s+0[12]\d{3}\b")
+# "56 Wareham Street, Fl 3 Boston, MA 02118" or "101 Main Street, 17th Floor Cambridge, MA 02142"
+_MA_TOWN_ADDR = re.compile(
+    r"\b\d+[A-Za-z]?\s+[A-Za-z][\w.' ]+?(?:street|st|avenue|ave|road|rd|square|sq|way|place|pl|drive|dr|"
+    r"boulevard|blvd|parkway|pkwy|wharf|park|plaza|row|lane|ln|court|ct|broadway)\.?,?\s+"
+    r"(?:(?:\d+\w*\s+)?(?:floor|fl|suite|ste|unit|#)\.?\s*\w*,?\s+)?"
+    r"([A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)?),\s*(?:MA|Massachusetts)\s+0[12]\d{3}\b", re.I)
 _MA_ADDR = re.compile(r"\b(MA|Massachusetts)\b\s*0[12]\d{3}\b")
 
 
@@ -167,7 +171,7 @@ def rule_place(claim, pages):
     # a Massachusetts street address in a different town, and the Atlas town nowhere on the site
     p, s = find(pages, lambda s: _MA_TOWN_ADDR.search(s) and not MAILING.search(s), prefer=lambda s: True)
     if p:
-        town = _MA_TOWN_ADDR.search(s).group(1)
+        town = _MA_TOWN_ADDR.search(s).group(1).title()
         if not any(town.lower() in part.lower() or part.lower() in town.lower() for part in parts):
             return contradicted(claim, p, s, f"{town}, MA",
                                 f"the site gives a Massachusetts address in {town}, and never names "
