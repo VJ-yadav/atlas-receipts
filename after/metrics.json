@@ -1,6 +1,6 @@
 {
  "atlas_generated": "2026-10-31 12:52Z",
- "checked_at": "2026-10-31 18:44Z",
+ "checked_at": "2026-10-31 18:47Z",
  "entities": 197,
  "probes": [
   {
@@ -185,12 +185,12 @@
   "live_verified": 39,
   "with_contradiction": 2
  },
- "blocked_sites": 0,
+ "blocked_sites": 28,
  "refused_reasons": {
   "robots.txt disallows this page": 3,
   "meetup.com terms could not be verified to allow automated collection": 12
  },
- "pages_read": 3185,
+ "pages_read": 962,
  "model": {
   "name": "claude-haiku-5-5",
   "calls": 199,

@@ -899,11 +899,11 @@ csail:
   status: supported
   url: https://www.csail.mit.edu
 - claim: place:0
-  fetched_at: '2026-10-31T16:25:13Z'
-  page_sha256: 801a1ec4ea07f357e4afa5bec7478303afa57d40518c43f9dd81f2fa59d5fd7c
-  quote: CSAIL in housed in the whimsical Stata center, a building reflective of our students - creative, inventive, and unconventional.
+  fetched_at: '2026-10-31T16:25:12Z'
+  page_sha256: 674649262dae3d380c972906c4d80bdc36c65ef72b520989a84387cc4ce29ec1
+  quote: 32 Vassar St, Cambridge MA 02139 Contact Press Requests
   status: supported
-  url: https://www.csail.mit.edu/about
+  url: https://www.csail.mit.edu
 cybernetix:
 - claim: fact:0
   fetched_at: '2026-10-31T16:25:41Z'
@@ -3498,7 +3498,7 @@ sloanai:
 - claim: place:0
   fetched_at: '2026-10-31T16:26:06Z'
   page_sha256: 757f47ae1a8170807421f2cb14ea1503fde5add080fda13dc7d225998438362d
-  quote: Home - AI & ML Club | MIT Sloan School of Management
+  quote: AI & ML Club 100 Main Street Cambridge MA 02139
   status: supported
   url: https://sloangroups.mit.edu/aiml/home/
 socc:

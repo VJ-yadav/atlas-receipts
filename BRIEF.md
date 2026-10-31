@@ -31,7 +31,7 @@ Probe 8 and every number of the run (generated from `after/metrics.json` by `pyt
 **Probe 8: claims with a receipt, 0 → 373 of 1,080 verified by code.** 665 carry a sentence from the org's own page (288 of them are Claude's readings, labelled inferred; 4 are sentences that contradict the Atlas).
 
 ```
-supported 373 · contradicted 4 · silent 400 · inferred 288 · refused 15      (checked 2026-10-31 18:44Z)
+supported 373 · contradicted 4 · silent 400 · inferred 288 · refused 15      (checked 2026-10-31 18:47Z)
 ```
 
 | Number | Value |
@@ -45,8 +45,8 @@ supported 373 · contradicted 4 · silent 400 · inferred 288 · refused 15     
 | A founder's 12-funder shortlist | 0 → 25 / 83 verified (70 with a sentence) |
 | Planted errors: caught / missed / false alarms | 6 / 0 / 1 of 6 |
 | Click test, random receipts | 5 / 5 land on their sentence |
-| Pages read from the orgs' own sites | 3,185 |
-| Sites that block bots (respected) | 0 |
+| Pages read from the orgs' own sites | 962 |
+| Sites that block bots (respected) | 28 |
 | Model (claude-haiku-5-5): cost of reading all 197 | $0.05 over 199 calls |
 | Validator on the Atlas branch | PASSED: data/ is valid. |
 <!-- metrics:end -->

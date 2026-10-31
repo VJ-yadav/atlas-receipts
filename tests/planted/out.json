@@ -2320,7 +2320,7 @@
   "quote": "MIT Building E38, Sixth Floor 292 Main Street Cambridge, MA 02142",
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": "37f5003bb8958441ec5e64c764c6e51d887b44c22ee92ae7bdf8ba223c87f51c",
-  "reason": "the page names 'cambridge' from the Atlas location",
+  "reason": "the page names 'Cambridge' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu"
@@ -4513,7 +4513,7 @@
   "quote": null,
   "fetched_at": "2026-10-31T16:26:05Z",
   "sha256": null,
-  "reason": "none of ['downtown crossing', 'Downtown Crossing', 'downtown boston', '38 Chauncy St'] appears on 1 pages",
+  "reason": "none of ['Downtown Crossing', 'downtown crossing', 'downtown boston', '38 Chauncy St'] appears on 1 pages",
   "page_value": null,
   "searched": [
    "https://www.build617.org"
@@ -6617,7 +6617,7 @@
   "quote": "MIT Building E38, Sixth Floor 292 Main Street Cambridge, MA 02142",
   "fetched_at": "2026-10-31T16:25:51Z",
   "sha256": "37f5003bb8958441ec5e64c764c6e51d887b44c22ee92ae7bdf8ba223c87f51c",
-  "reason": "the page names 'cambridge' from the Atlas location",
+  "reason": "the page names 'Cambridge' from the Atlas location",
   "page_value": null,
   "searched": [
    "https://vms.mit.edu"

@@ -66,9 +66,10 @@ def compute(receipts=None):
         "june": {"entries": len(june), **_block(jr),
                  "live_verified": len({r["entry_id"] for r in jr if r["field"] == "live" and r["status"] == "supported"}),
                  "with_contradiction": len({r["entry_id"] for r in jr if r["status"] == "contradicted"})},
-        "blocked_sites": sum(1 for r in receipts if r["field"] == "live" and "blocks automated" in r["reason"]),
+        # by HTTP status, not by wording: a site that answers 401/403/429 to automated fetches
+        "blocked_sites": sum(1 for r in receipts if r["field"] == "live" and re.search(r"HTTP (401|403|429)\b", r["reason"])),
         "refused_reasons": dict(Counter(r["reason"] for r in receipts if r["status"] == "refused")),
-        "pages_read": sum(1 for p in pages if p.get("text")),
+        "pages_read": sum(1 for p in pages if p.get("text") and not p.get("error") and (p.get("status") or 0) < 400),
         "model": {"name": MODEL, "calls": usage.get(MODEL, {}).get("calls", 0),
                   "usd": round(usage.get(MODEL, {}).get("usd", 0.0), 3),
                   "usd_all_models": round(sum(v["usd"] for v in usage.values()), 3)},
