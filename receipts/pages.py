@@ -4,14 +4,17 @@ from urllib.parse import urljoin, urlsplit
 
 from bs4 import BeautifulSoup
 
-from receipts.fetch import client, fetch, host_of
+from receipts.fetch import allowed, client, fetch, host_of
 
 MAX_PAGES = 6
-GUESS_PATHS = ("/contact", "/about")
+# Same-host guesses when the homepage is silent on place / facts / deadlines (capped below).
+GUESS_PATHS = ("/contact", "/about", "/faq", "/faqs", "/where", "/locations", "/location",
+               "/program", "/programs", "/apply", "/application", "/about-us", "/contact-us",
+               "/visit", "/portfolio", "/terms")
 WANT = re.compile(r"about|contact|apply|application|program|accelerator|invest|portfolio|"
-                  r"terms|faq|location|visit|deal|fund|who-we-are|mission", re.I)
+                  r"terms|faq|where|locations?|visit|deal|fund|who-we-are|mission", re.I)
 # Pages that state terms, deadlines and programs come before generic about/contact pages.
-STRONG = re.compile(r"terms|invest|deal|apply|application|program|accelerator|fund", re.I)
+STRONG = re.compile(r"terms|invest|deal|apply|application|program|accelerator|fund|faq|location", re.I)
 # People pages are skipped: we collect organizations only.
 SKIP = re.compile(r"team|people|staff|leadership|partners/|bio|login|signin|privacy|cookie|"
                   r"careers|jobs|blog/|news/|\.pdf$|mailto:|tel:", re.I)
@@ -45,6 +48,14 @@ def candidate_links(home, entry=None):
     return [u for u, _ in sorted(scored.items(), key=lambda kv: kv[1])][: MAX_PAGES - 1]
 
 
+def _guess_ok(c, url):
+    """Respect robots before probing a guessed path."""
+    try:
+        return allowed(c, url)
+    except Exception:
+        return True
+
+
 def pages_for(entry, c=None, refresh=False):
     """The entry's url, then up to 4 same-site pages linked from it. Cached."""
     own = c is None
@@ -61,11 +72,15 @@ def pages_for(entry, c=None, refresh=False):
             for path in GUESS_PATHS:
                 if len(pages) >= MAX_PAGES + 2:
                     break
-                if root + path not in seen and not any(path in u for u in seen):
-                    pg = fetch(root + path, c, refresh)
-                    if pg["text"] and (pg["status"] or 0) < 400 and pg["final_url"].rstrip("/") not in seen:
-                        pages.append(pg)
-                        seen.add(pg["final_url"].rstrip("/"))
+                url = root + path
+                if url.rstrip("/") in seen or any(path.rstrip("/") == urlsplit(u).path.rstrip("/") for u in seen):
+                    continue
+                if not _guess_ok(c, url):
+                    continue
+                pg = fetch(url, c, refresh)
+                if pg["text"] and (pg["status"] or 0) < 400 and pg["final_url"].rstrip("/") not in seen:
+                    pages.append(pg)
+                    seen.add(pg["final_url"].rstrip("/"))
         return pages
     finally:
         if own:

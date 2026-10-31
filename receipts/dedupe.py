@@ -1,9 +1,15 @@
-"""Duplicate and out-of-scope checks for planted tests and proposed new orgs."""
+"""Duplicate and out-of-scope checks for planted tests and proposed new orgs.
+
+`python -m receipts dedupe` writes a report-only `out/duplicates.json` — it never edits the Atlas.
+"""
 from __future__ import annotations
 
+import json
 import re
 from difflib import SequenceMatcher
 from urllib.parse import urlparse
+
+from receipts.probes import ROOT, load_entries
 
 # Rough Massachusetts bounding box (includes Boston / Worcester / Berkshires).
 MA_LAT = (41.20, 42.95)
@@ -88,3 +94,34 @@ def out_of_scope(entry: dict) -> bool:
         if not (MA_LAT[0] <= lat <= MA_LAT[1] and MA_LNG[0] <= lng <= MA_LNG[1]):
             return True
     return False
+
+
+def report(out_path=None):
+    """Scan the Atlas for near-duplicate pairs; write out/duplicates.json (report only)."""
+    entries = load_entries()
+    pairs = []
+    seen = set()
+    for e in entries:
+        other = find_duplicate(e, entries)
+        if not other:
+            continue
+        a, b = sorted([e["id"], other])
+        if (a, b) in seen:
+            continue
+        seen.add((a, b))
+        left = next(x for x in entries if x["id"] == a)
+        right = next(x for x in entries if x["id"] == b)
+        pairs.append({
+            "a": a, "b": b,
+            "a_name": left.get("name"), "b_name": right.get("name"),
+            "a_host": host_of(left.get("url", "")), "b_host": host_of(right.get("url", "")),
+            "name_ratio": round(SequenceMatcher(None, norm_name(left.get("name", "")),
+                                                norm_name(right.get("name", ""))).ratio(), 3),
+            "same_host": host_of(left.get("url", "")) == host_of(right.get("url", "")),
+        })
+    out_path = out_path or (ROOT / "out" / "duplicates.json")
+    out_path.parent.mkdir(exist_ok=True)
+    payload = {"count": len(pairs), "pairs": pairs}
+    out_path.write_text(json.dumps(payload, indent=1), encoding="utf-8")
+    print(f"duplicates: {len(pairs)} pair(s) → {out_path}")
+    return payload

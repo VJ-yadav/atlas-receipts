@@ -117,7 +117,7 @@ def build(receipts, out_path, entries=None, title="Atlas Receipts"):
             for e in entries]
     blob = json.dumps({"head": head, "meta": meta(m), "entities": ents, "rows": data})
     out_path.parent.mkdir(exist_ok=True)
-    out_path.write_text(PAGE.replace("/*DATA*/", blob.replace("</", "<\\/")))
+    out_path.write_text(PAGE.replace("/*DATA*/", blob.replace("</", "<\\/")), encoding="utf-8")
     return out_path
 
 

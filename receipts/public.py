@@ -54,7 +54,7 @@ def build(receipts, entries=None):
                        "shortlist": SHORTLIST}).replace("</", "<\\/")
     out = ROOT / "out" / "atlas.html"
     out.parent.mkdir(exist_ok=True)
-    out.write_text(PAGE.replace("/*DATA*/", blob))
+    out.write_text(PAGE.replace("/*DATA*/", blob), encoding="utf-8")
     return out
 
 
