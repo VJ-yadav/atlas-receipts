@@ -38,6 +38,9 @@ def main(argv):
     elif cmd == "changes":
         from receipts import changes
         changes.report()
+    elif cmd == "propose":
+        from receipts import propose
+        propose.run(args[0])
     elif cmd == "goals":
         from receipts import goals
         sys.exit(1 if goals.run() else 0)

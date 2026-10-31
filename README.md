@@ -3,92 +3,164 @@
 Every checkable claim in the Mass AI Atlas, with the sentence on the organization's own live page
 that proves it.
 
-## Track
-
-Track A, "The Survey" (backend). TOA "Chart the Common Wealth" hackathon, 31 Oct 2026.
+**Track A, "The Survey" (backend).** TOA "Chart the Common Wealth" hackathon, 31 Oct 2026.
+Team: VJ-yadav, pjsk02.
 
 ## The gap
 
-The Atlas makes **1,080 checkable claims** about 197 organizations: each org is live (197), its
-location (197), its offers (318), its facts rows such as check size and equity (177), its links to
-other orgs (170) and its deadlines (21). **None of them links to the page that says it.** "Verified"
-is one month stamp for a whole entry, so a founder can't tell whether *this* check size still holds,
-and the maintainer re-checks entries blind, 10–15 minutes each.
+The [Mass AI Atlas](https://the-open-accelerator.com/ecosystem/) lists 197 Massachusetts AI
+organizations and makes **1,080 checkable claims** about them:
 
-Atlas Receipts gives each claim a **receipt**: the URL, the exact sentence on the org's own page,
-when it was fetched and the page hash. Then "verified" means *a live page still says it*, per claim.
+| Claim | Count |
+|---|---|
+| The org is live | 197 |
+| Its location | 197 |
+| What it offers | 318 |
+| Facts rows (check size, equity, program length…) | 177 |
+| Links to other orgs | 170 |
+| Deadlines | 21 |
+
+**None of these claims links to the page that says it.** "Verified" is a single month stamp for the
+whole entry. So:
+- a founder can't tell whether *this* check size still holds;
+- the one maintainer re-checks whole entries blind, on a calendar, at 10–15 minutes each.
+
+## What it does
+
+Atlas Receipts gives every claim a **receipt**: the URL, the exact sentence on the organization's own
+page, when the page was fetched and the page's hash. **"Verified" then means a live page still says
+it, per claim.** Next month only the claims whose sentence changed go back to a person.
 
 **The model may suggest, code checks, a person decides.**
 
+| Step | Done by | What happens |
+|---|---|---|
+| 1 Fetch | code | Reads each org's own pages (home, about, contact, apply, program). Respects robots.txt, sends about 1 request a second per site, caches every page. |
+| 2 Find | code, with suggestions from Claude | Searches the saved pages for the amount, date, address or org name. For fuzzy wording ("offers mentorship"), Claude may point at one sentence. |
+| 3 Check | code | Confirms the exact sentence is on the saved page and compares it with the Atlas value. A Claude reading is never "supported", only "inferred". |
+| 4 Decide | the maintainer | Accepts or rejects in the console. `apply` writes only accepted rows to a branch of the Atlas, then runs the Atlas's own `validate.js`. |
+
 | Status | Meaning |
 |---|---|
-| `supported` | code found the sentence on the cached page and it matches the Atlas value (numbers, dates, names, places) |
-| `contradicted` | the org's own page says something else; both values are shown |
-| `silent` | nothing found: needs review, with what was searched and why |
-| `inferred` | a model reading of a sentence that code confirmed is on the page. **Never shown as verified** |
-| `refused` | the source's terms or robots.txt forbid collection, or the model offered a sentence that is not on the page |
+| `supported` | code found the sentence on the org's own page and it matches |
+| `contradicted` | the org's own page says something else; both values shown |
+| `silent` | no page says it: needs review, with the pages searched |
+| `inferred` | Claude's reading of a real sentence; **not verified** |
+| `refused` | not collected (site terms or robots.txt), or a suggested sentence was not on the page |
 
-## Declared sources
+## Who it is for
 
-- **The organizations' own websites** (the `url` of each Atlas entry, plus up to 7 same-site pages:
-  about, contact, apply, program, portfolio). Fetched with robots.txt respected, about 1 request a
-  second per host, a User-Agent naming this project, and every fetch cached to disk.
-  - **Refused:** meetup.com (its terms could not be verified to allow automated collection) and any
-    page robots.txt disallows (e.g. a LinkedIn company page).
-  - **Respected:** sites that block bots (HTTP 401/403/429) are reported as `silent`, not dead, and
-    not worked around.
-- **The Mass AI Atlas dataset:** https://the-open-accelerator.com/ecosystem/atlas.json (pulled
-  31 Oct 2026), and the Atlas repo github.com/holzerjm/mass-ai-atlas for `validate.js`.
-- **Claude API** (`claude-opus-5-5`): only *suggests* a sentence for fuzzy claims (offers,
-  descriptive facts). Code checks every suggested quote against the cached page, and a model reading
-  is never `supported`. Calls are cached by page hash.
-- **No people:** organizations only. Sentences about a person, and any email or phone number, are
-  never used as receipts or shown.
+- **The Atlas maintainer.** The maintainer console shows the review queue riskiest first, every claim
+  with its sentence and a link that opens the page with that sentence highlighted, and Accept / Reject.
+  A re-check sends back only claims whose sentence changed, not 17 random entries a month.
+- **Founders using the Atlas.** They can see which claims (a check size, a deadline) are backed by the
+  funder's own page today. For one founder's 12-funder shortlist: 0 → 24 of 83 claims verified,
+  67 carry a sentence.
+- **New entries.** A proposed organization is checked for duplicates and scope, and gets receipts,
+  before anyone reads it.
 
 ## Probe line
 
-**Probe 8 (new): claims with a receipt, 0 → 349 of 1,080 verified by code**, and 684 of 1,080 carrying
-a sentence from the org's own page (the extra 335 are model readings, labelled `inferred`).
+**Probe 8 (new): claims with a receipt, 0 → 351 of 1,080 verified by code.** 685 of 1,080 carry a
+sentence from the org's own page; the extra 334 are Claude's readings, labelled inferred.
 
 ```
-supported 349 · contradicted 1 · silent 380 · inferred 335 · refused 15      (31 Oct, 12:55)
+supported 351 · contradicted 3 · silent 377 · inferred 334 · refused 15        (31 Oct, 13:30)
 ```
 
-- Before: `before/probes.txt` (probes 1–8 on the fresh atlas.json). After: `after/probes.txt`.
-- One real contradiction: **deltav**. The Atlas says "Up to $20K plus living stipend"; MIT delta v's
-  own page says "$75K equity-free funding".
+- Before: `before/probes.txt`. After: `after/probes.txt`.
+- **Real contradictions** (each needs a person to confirm):
 
-Validator output on the branch `receipts/2026-10-31` of the Atlas (from upstream `7f8f377`),
-`after/validate.txt`:
+  | Entry | The Atlas says | The org's own page says |
+  |---|---|---|
+  | deltav | Check size "Up to $20K plus living stipend" | "$75K equity-free funding" |
+  | matrix | "Bay Colony, Waltham" | "101 Main Street, 17th Floor Cambridge, MA 02142" |
+  | accomplice | "Cambridge" | "56 Wareham Street, Fl 3 Boston, MA 02118" |
 
-```
-Mass AI Atlas — validating 197 entries, 11 categories
+- **Measured verifier** (`receipts test`, a test copy with planted errors; never the real data):
+  6 planted, 5 caught, 1 missed, 1 false alarm. Precision 0.83, recall 0.83.
+  - The miss: a wrong town on a global site that names no town.
+  - The "false alarm" is the real deltav discrepancy, counted conservatively.
+- **Click test:** 5 of 5 random receipts open on their sentence in a real browser
+  (`after/clicktest.txt`).
+- **Validator** on the Atlas branch `receipts/2026-10-31`, after applying a maintainer's 5 accepted
+  decisions (`after/validate.txt`):
+  ```
+  Mass AI Atlas — validating 197 entries, 11 categories
 
-PASSED: data/ is valid.
-```
+  PASSED: data/ is valid.
+  ```
 
-## How to run
+## Declared sources
+
+- **The organizations' own websites:** each Atlas entry's `url` plus up to 7 same-site pages.
+  robots.txt is respected, about 1 request a second per host, the User-Agent names this project, and
+  every fetch is cached in `cache/`.
+  - **Refused:** meetup.com (its terms could not be verified to allow automated collection) and pages
+    robots.txt disallows (e.g. a LinkedIn company page).
+  - **Respected, not worked around:** sites that block bots (HTTP 401/403/429) show as `silent`, not dead.
+- **Mass AI Atlas dataset:** https://the-open-accelerator.com/ecosystem/atlas.json (pulled
+  31 Oct 2026). The Atlas repo github.com/holzerjm/mass-ai-atlas is used for `validate.js`.
+- **Claude API** (`claude-opus-5-5`): suggests a sentence for fuzzy claims only. Every quote is checked
+  by code, and readings are cached by page hash.
+- **Organizations only.** Sentences about a person, emails and phone numbers are never used or shown.
+
+## How to run (for teammates too)
 
 ```bash
+git clone https://github.com/VJ-yadav/atlas-receipts && cd atlas-receipts
 python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
 git clone https://github.com/holzerjm/mass-ai-atlas ../mass-ai-atlas && (cd ../mass-ai-atlas && npm ci)
-echo "ANTHROPIC_API_KEY=..." > .env          # optional: without it, fuzzy claims stay silent
+echo "ANTHROPIC_API_KEY=..." > .env       # optional; without it fuzzy claims stay silent. Never commit .env
 
-python -m receipts check techstars            # one entry, about 10 s cold, 1 s cached
-python -m receipts check --all --model        # all 197 entries, about 75 s cold
-python -m receipts probe                      # probes 1-8
-python -m receipts review                     # out/review.html: the maintainer's queue
-python -m receipts apply out/decisions.json   # accepted rows only → Atlas branch + validate.js
-python -m receipts test                       # planted-errors test copy: caught / missed / false alarms
-python -m receipts changes                    # re-check: only claims whose sentence changed come back
-python -m receipts goals                      # every goal in GOALS.md, checked by code
+.venv/bin/python -m receipts check --all            # fetch + check all 197 (about 75 s the first time)
+.venv/bin/python -m receipts check --all --model    # plus Claude's suggestions (costs credits once, then cached)
+.venv/bin/python -m receipts review                 # build the maintainer console → out/review.html
+open out/review.html
 ```
 
-`apply` is the only path to `data/entities.yml`. It takes only the rows a person accepted in the
-review page, edits only those lines on a branch in a git worktree of the Atlas (never its `main`),
-bumps `lastVerified` on the touched entries, runs `node scripts/validate.js`, and refuses any
-`planted-` test id.
+| Command | What it does |
+|---|---|
+| `check [--all\|<id>…] [--model] [--refresh]` | one receipt per claim → `out/receipts.json` |
+| `review` | the maintainer console → `out/review.html` (Home, Entities grid, Review queue, Refused, Add an entity; Before/After switch) |
+| `apply out/decisions.json` | accepted rows only → Atlas branch `receipts/2026-10-31` + `validate.js`; refuses `planted-` ids |
+| `changes` | a re-check: only claims whose sentence changed come back |
+| `propose new-entry.json` | a new organization: duplicate, scope and https checks, then receipts → `out/proposed/` |
+| `test` | the planted-errors test copy: caught / missed / false alarms |
+| `probe` | probes 1–8 |
+| `goals` | every goal in GOALS.md, checked by code (exit 0 only when all pass) |
+
+Lanes and tasks are in [TASKS.md](TASKS.md); goals in [GOALS.md](GOALS.md); the one-page brief is
+[BRIEF.md](BRIEF.md).
+
+## Status checklist (updated as we go)
+
+**Self-check: `python -m receipts goals` → 14 / 14 met** (eligibility, every scoring cap, Probe 8,
+review console, planted test, README).
+
+| | Item | Status |
+|---|---|---|
+| ✅ | Public repo, every commit after 09:00 | done |
+| ✅ | Fresh atlas.json, before probes saved | `before/probes.txt` |
+| ✅ | Fetcher: cache, robots.txt, ~1 req/s/host, project User-Agent | done |
+| ✅ | Claim rules: live, place, deadline, check size / facts, links, offers | done |
+| ✅ | Every receipt has url + quote + fetch time + page hash; quotes re-checked by code | goals C1, C2 |
+| ✅ | Model pass: Claude suggests, code checks, never "supported" | 334 inferred |
+| ✅ | Maintainer console with Before/After, grid, queue, refused, add-entity | `out/review.html` |
+| ✅ | Human gate: decisions.json → `apply` → Atlas branch → validator PASSED | Atlas branch commit `6e1ab9d` |
+| ✅ | Planted-errors test (pjsk02) | 5 / 6 caught |
+| ✅ | Click test, 5 random receipts | 5 / 5 |
+| ✅ | Re-check ("next month"): only changed sentences come back | `receipts changes` |
+| ✅ | README: gap, sources, probe line, validator output, how to run | this file |
+| ⬜ | Before screenshots of the live Atlas (Directory, Techstars drawer, Galaxy, Kendall pins) | VJ |
+| ⬜ | Stranger test on the console (14:00) | pjsk02 (B6) |
+| ⬜ | De-duplication across the 197 (`receipts dedupe`) | pjsk02 (B4) |
+| ⬜ | BRIEF.md numbers updated to the final run | 14:30 |
+| ⬜ | DEMO.md and PREP.md numbers, SELFCHECK log | end of day |
+| ⬜ | 2-minute video, uploaded Public | 15:15 |
+| ⬜ | Judging form by 15:25 (repo, video, brief, Track A, sources, validator, probe line) | VJ |
 
 ## Attribution
 
-Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0.
+Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. This is a proposed tool for the Atlas
+maintainer; it is not part of the public Atlas.
