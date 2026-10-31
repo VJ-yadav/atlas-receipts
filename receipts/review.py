@@ -265,6 +265,16 @@ pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/
 .anat.off{opacity:.75}.ar{display:grid;grid-template-columns:82px 1fr;gap:8px;padding:7px 10px;border-top:1px solid var(--hair);font-size:12.5px}
 .ar:first-child{border-top:0}.ar>span{color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}.ar b{font-weight:500}.aq{font-style:italic}
 @media (max-width:1100px){.data3{grid-template-columns:1fr}}
+.statgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.sg{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:12px 1fr;gap:2px 8px;align-items:baseline;background:var(--bg)}
+.sg i{width:10px;height:10px;border-radius:3px;grid-row:1}.sg b{font-size:22px;font-variant-numeric:tabular-nums}
+.sg span,.sg em,.sg small{grid-column:2}.sg span{font-weight:600}.sg em{font-style:normal;font-size:12px;color:var(--faint)}
+.sg small{font-size:12px;color:var(--mute);margin-top:4px}.sg.go-q{cursor:pointer}.sg.go-q:hover{box-shadow:var(--shadow-lg)}.sg.go-q small{color:var(--info)}
+details.about{margin-top:34px;border-top:1px solid var(--line);padding-top:6px}
+details.about>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:12px;margin:18px 0 12px}
+details.about>summary h2{margin:0}details.about>summary::before{content:"▸";color:var(--faint)}details.about[open]>summary::before{content:"▾"}
+.origin{margin-top:12px;font-size:13px;color:var(--mute);background:var(--side)}.origin b{color:var(--ink)}
+@media (max-width:980px){.statgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .probes{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
 .pr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
 .pr .pn{font:600 11px var(--mono);color:var(--faint)}.pr b{font-size:16px;font-variant-numeric:tabular-nums}.pr span:last-child{font-size:12px;color:var(--mute)}
@@ -275,7 +285,7 @@ pre.code{background:var(--muted);border-radius:10px;padding:12px 14px;font:12px/
 @media (max-width:980px){.probes{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:center}
 .kpis{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}.kpi{max-width:300px}.kpi b{display:block;font-size:24px;font-weight:650;font-variant-numeric:tabular-nums}.kpi span{font-size:12.5px;color:var(--mute)}
-.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--side)}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--side)}
 .d-big{font:700 30px var(--sans);fill:var(--ink)}.d-sub{font:12px var(--sans);fill:var(--mute)}
 .probe8{font-size:13px;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:8px;width:100%;text-align:center}
 ul.legend{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:5px}
@@ -324,18 +334,20 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
     <div class="hero-l">
       <div class="note">Mass AI Atlas · maintainer console (proposed) · data pulled <span id="h-gen"></span></div>
       <h1>Every claim in the Atlas, checked against the organization's own page.</h1>
-      <p class="lead">197 organizations, <b id="h-total"></b> claims: that each is live, where it is, what it offers, its check
-      size and terms, who it works with, its deadlines. For each one, Atlas Receipts finds the sentence on the
-      organization's own website that backs it. You review only what no page supports, or what a page contradicts.</p>
+      <p class="lead">Each claim gets a receipt: the sentence on the organization's own website that backs it. You review only
+      what no page supports, or what a page contradicts.</p>
       <div class="mode-note" id="h-mode"></div>
       <div class="kpis" id="h-kpis"></div>
     </div>
-    <div class="hero-r"><div class="donut-wrap"><svg id="h-donut" viewBox="0 0 200 200" width="210" height="210" role="img"></svg>
-      <div class="probe8" id="h-p8"></div><ul class="legend" id="h-legend"></ul></div></div>
+    <div class="hero-r"><div class="donut-wrap"><svg id="h-donut" viewBox="0 0 200 200" width="190" height="190" role="img"></svg>
+      <div class="probe8" id="h-p8"></div></div></div>
   </div>
 
-  <div class="sec-h"><h2>What's in the data</h2><span class="note">the Atlas as Atlas Receipts reads it</span></div>
-  <div class="data3"><div class="dcard" id="h-orgs"></div><div class="dcard" id="h-claims"></div><div class="dcard rc" id="h-receipt"></div></div>
+  <div class="sec-h"><h2>Your queue</h2><span class="note">what needs a decision, by status</span></div>
+  <div class="statgrid" id="h-legend"></div>
+
+  <div class="sec-h"><h2>Start here</h2><span class="note">the organization's own site disagrees with the Atlas</span></div>
+  <ul class="todo" id="h-start"></ul>
 
   <div class="sec-h"><h2>The probes</h2><span class="note">how the Atlas is measured</span></div>
   <div class="probes" id="h-probes"></div>
@@ -349,8 +361,14 @@ ul.todo li:first-child{border-top:0}ul.todo li.plain{display:block;cursor:defaul
   <div class="sec-h"><h2>Is it working?</h2><span class="note">measured, not assumed</span></div>
   <div class="gauges" id="h-gauges"></div>
 
-  <div class="sec-h"><h2>Start here</h2><span class="note">the organization's own site disagrees with the Atlas</span></div>
-  <ul class="todo" id="h-start"></ul>
+  <details class="about" id="h-about"><summary><h2>What's in the data</h2><span class="note">197 organizations · 1,080 claims · what a receipt is · where claims come from</span></summary>
+  <div class="data3"><div class="dcard" id="h-orgs"></div><div class="dcard" id="h-claims"></div><div class="dcard rc" id="h-receipt"></div></div>
+  <div class="dcard origin"><b>Where the claims come from.</b> Every claim is a value someone typed into the Atlas's data file,
+  <span class="mono">data/entities.yml</span>: the maintainer's own research, or a suggestion through the Atlas's "suggest an
+  organization" issue form (website, address, what it offers…), which a bot drafts into an entry for the maintainer to merge.
+  Facts like check size and links to other organizations are added by hand. None of it records which page it came from, and the
+  only proof today is one "last verified" month per entry. Atlas Receipts goes back to the organization's own site for each value.</div>
+  </details>
   <p class="note" style="margin-top:34px">Data: Mass AI Atlas, The Open Accelerator, CC BY 4.0. Organizations only: no people and no contact details are
   collected or shown. A proposal for the Atlas maintainer; not part of the public Atlas. <a href="atlas.html">Open the public view →</a></p>
 </div></section>
@@ -456,8 +474,11 @@ function donut(){
   const big=mode==='before'?'0':fmt(C.supported),sub=mode==='before'?'claims with a source':'verified by code';
   $('h-donut').innerHTML=arcs+`<text x="100" y="98" text-anchor="middle" class="d-big">${big}</text><text x="100" y="118" text-anchor="middle" class="d-sub">${sub}</text><text x="100" y="134" text-anchor="middle" class="d-sub">of ${fmt(T)}</text>`;
   $('h-p8').innerHTML=tip(TIPS.donut)+` <b>Probe 8</b>, claims with a receipt: 0 → <b>${mode==='before'?0:fmt(C.supported)}</b> of ${fmt(T)}`;
-  $('h-legend').innerHTML=mode==='before'?`<li><i style="background:var(--line)"></i><b>${fmt(T)}</b> no source<span>one "last verified" month per entry</span></li>`
-    :['supported','inferred','contradicted','silent','refused'].map(s=>`<li><i style="background:${SCOL[s]}"></i><b>${fmt(C[s])}</b> ${LABEL[s].split(',')[0].toLowerCase()}<span>${SDESC[s]}</span></li>`).join('');
+  const ACT={supported:['','nothing to do'],inferred:['inferred','confirm or reject Claude\'s reading'],contradicted:['contradicted','decide which value is right'],
+    silent:['silent','look for a source, or mark unsourced'],refused:['','nothing collected']};
+  $('h-legend').innerHTML=mode==='before'?`<div class="sg"><i style="background:var(--line)"></i><b>${fmt(T)}</b><span>no source</span><em>one "last verified" month per entry; no queue</em></div>`
+    :['contradicted','silent','inferred','supported','refused'].map(s=>{const [f,a]=ACT[s];
+      return `<div class="sg ${f?'go-q':''}" ${f?`data-q="${f}"`:''}><i style="background:${SCOL[s]}"></i><b>${fmt(C[s])}</b><span>${LABEL[s].split(',')[0]}</span><em>${SDESC[s]}</em><small>${f?`${a} →`:a}</small></div>`}).join('');
 }
 function gauge(pct,label,val,sub,icon,tone,tipkey){
   const R=52,L=Math.PI*R,f=Math.max(0,Math.min(1,pct));
@@ -480,7 +501,7 @@ const TIPS={
  g3:"Random receipts opened in a real browser: does the quoted sentence appear on the page?",
  g4:"What the model cost to read all 197 organizations once. Code does the verifying, so this stays small."};
 function renderHome(){
-  $('h-gen').textContent=M.atlas_generated;$('h-total').textContent=fmt(T);$('h-mode').innerHTML=modeNote();
+  $('h-gen').textContent=M.atlas_generated;$('h-mode').innerHTML=modeNote();
   const sent=M.all.with_sentence,need=M.all.needs_person;
   $('h-kpis').innerHTML=(mode==='before'
     ?[['1 date','per entry, for every claim in it'],['10–15 min','to re-check one entry by hand'],[fmt(M.june),'entries last checked in June']]
@@ -534,6 +555,7 @@ function renderHome(){
       <div class="ar"><span>status</span><b><span class="pill p-${ex.status}">${LABEL[ex.status]}</span> checked by code</b></div></div>
       <div class="note">Next month the page is read again. If the sentence is still there, nothing to do. If it changed, the claim comes back to you.</div>`}`;
 }
+$('h-legend').onclick=e=>{const g=e.target.closest('[data-q]');if(!g)return;$('q-f').value=g.dataset.q;qn=40;location.hash='queue';renderQueue()};
 $('h-start').onclick=e=>{const p=e.target.closest('[data-open]');if(p)openEntity(p.dataset.open)};
 
 /* ---------- entities grid ---------- */
@@ -664,7 +686,8 @@ window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
 const setTheme=t=>{document.documentElement.dataset.theme=t;$('theme').textContent=t==='dark'?'Light':'Dark';store.set('receipts-theme',t)};
 $('theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 function renderAll(){renderHome();renderGrid();renderQueue();renderRefused();renderDrawer()}
-setTheme(store.get('receipts-theme','light'));saveDec();renderChecks();
+setTheme(store.get('receipts-theme','light'));
+if(!store.get('receipts-seen-about',false)){$('h-about').open=true;store.set('receipts-seen-about',true)}saveDec();renderChecks();
 show(location.hash.slice(1));setMode(mode);
 </script></body></html>
 """

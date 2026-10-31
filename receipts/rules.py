@@ -234,7 +234,9 @@ def rule_place(claim, pages):
         pats = place_patterns(part)
         if not pats:
             continue
-        p, s = find(pages, lambda s, pats=pats: any(pat.search(s.lower()) for pat in pats))
+        # the town must appear outside the org's own name ("Boston Harbor Angels" says nothing about where it is)
+        own = re.compile(re.escape(re.sub(r"\s*\(.*?\)", "", claim["name"]).strip().lower()))
+        p, s = find(pages, lambda s, pats=pats: any(pat.search(own.sub(" ", s.lower())) for pat in pats))
         if p:
             return supported(claim, p, s, f"the page names '{part}' from the Atlas location")
     # a Massachusetts street address in a different town, and the Atlas town nowhere on the site
@@ -406,8 +408,10 @@ def rule_fact(claim, pages):
     return silent(claim, pages, f"'{label}: {val}' is a description, not a number: needs a reading")
 
 
-def name_patterns(entry):
-    """Org name plus parenthetical aliases and short forms (e.g. CSAIL, NERD)."""
+def name_patterns(entry, entries_by_id=None):
+    """Org name plus parenthetical aliases and short forms (e.g. CSAIL, NERD).
+    A short form counts only if no other Atlas organization's name contains it: an alias shared
+    with another org (e.g. "Northeastern", "Boston University") proves nothing about this one."""
     raw = entry["name"]
     full = re.sub(r"\s*\(.*?\)", "", raw).strip()
     names = {full, re.sub(r"\b(Boston|Inc\.?|LLC|Corp\.?|Ltd\.?)\b", "", full, flags=re.I).strip()}
@@ -434,7 +438,9 @@ def name_patterns(entry):
         # multi-word tail: "Manning CICS", "Schwarzman College of Computing"
         if len(toks) >= 3:
             names.add(" ".join(toks[-2:]))
-    return [word(n) for n in names if len(n) > 3]
+    others = [e["name"].lower() for e in (entries_by_id or {}).values() if e["id"] != entry["id"]]
+    keep = [n for n in names if len(n) > 3 and (n == full or not any(n.lower() in o for o in others))]
+    return [word(n) for n in keep]
 
 
 def rule_link(claim, pages, entries_by_id, target_pages=None):
@@ -442,12 +448,12 @@ def rule_link(claim, pages, entries_by_id, target_pages=None):
     target = entries_by_id.get(claim["value"])
     if not target:
         return silent(claim, pages, f"link target id {claim['value']!r} is not in the Atlas")
-    pats = name_patterns(target)
+    pats = name_patterns(target, entries_by_id)
     p, s = find(pages, lambda s: any(x.search(s.lower()) for x in pats))
     if p:
         return supported(claim, p, s, f"the page names {target['name']} ({target['id']})")
     if target_pages:
-        back = name_patterns(entries_by_id[claim["entry_id"]])
+        back = name_patterns(entries_by_id[claim["entry_id"]], entries_by_id)
         p, s = find(target_pages, lambda s: any(x.search(s.lower()) for x in back))
         if p:
             return supported(claim, p, s, f"{target['name']}'s own page names {claim['name']} "

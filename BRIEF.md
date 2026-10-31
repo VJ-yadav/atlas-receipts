@@ -28,26 +28,26 @@ A claim is **verified** only when code finds an exact quote on the organization�
 Probe 8 and every number of the run (generated from `after/metrics.json` by `python -m receipts metrics`; don't edit by hand):
 
 <!-- metrics:start -->
-**Probe 8: claims with a receipt, 0 → 380 of 1,080 verified by code.** 667 carry a sentence from the org's own page (283 of them are Claude's readings, labelled inferred; 4 are sentences that contradict the Atlas).
+**Probe 8: claims with a receipt, 0 → 373 of 1,080 verified by code.** 665 carry a sentence from the org's own page (288 of them are Claude's readings, labelled inferred; 4 are sentences that contradict the Atlas).
 
 ```
-supported 380 · contradicted 4 · silent 398 · inferred 283 · refused 15      (checked 2026-10-31 18:30Z)
+supported 373 · contradicted 4 · silent 400 · inferred 288 · refused 15      (checked 2026-10-31 18:44Z)
 ```
 
 | Number | Value |
 |---|---|
-| Probe 8: claims verified by code | 0 → **380 / 1,080** |
-| Claims carrying a sentence from the org's own page | 667 |
-| Claims that need a person (contradicted, silent, inferred) | 685 |
+| Probe 8: claims verified by code | 0 → **373 / 1,080** |
+| Claims carrying a sentence from the org's own page | 665 |
+| Claims that need a person (contradicted, silent, inferred) | 692 |
 | Real contradictions | 4: salesforce-bos, matrix, accomplice, deltav |
 | Probe 5: the 52 entries last checked in June | 39 confirmed live by their own site; 2 with a contradiction; 92 of 256 claims verified |
-| Links with a receipt | 75 / 170 |
-| A founder's 12-funder shortlist | 0 → 26 / 83 verified (67 with a sentence) |
+| Links with a receipt | 69 / 170 |
+| A founder's 12-funder shortlist | 0 → 25 / 83 verified (70 with a sentence) |
 | Planted errors: caught / missed / false alarms | 6 / 0 / 1 of 6 |
 | Click test, random receipts | 5 / 5 land on their sentence |
-| Pages read from the orgs' own sites | 3,171 |
+| Pages read from the orgs' own sites | 3,185 |
 | Sites that block bots (respected) | 0 |
-| Model (claude-haiku-5-5): cost of reading all 197 | $0.04 over 154 calls |
+| Model (claude-haiku-5-5): cost of reading all 197 | $0.05 over 199 calls |
 | Validator on the Atlas branch | PASSED: data/ is valid. |
 <!-- metrics:end -->
 
