@@ -33,7 +33,8 @@ def main(argv):
         from receipts import review
         from receipts.probes import ROOT
         src = ROOT / "tests" / "fixtures" / "receipts.sample.json" if "--fixture" in args else ROOT / "out" / "receipts.json"
-        out = review.build(json.loads(src.read_text()), ROOT / "out" / "review.html")
+        name = "review-fixture.html" if "--fixture" in args else "review.html"  # never overwrite the real console
+        out = review.build(json.loads(src.read_text()), ROOT / "out" / name)
         print(f"wrote {out} ({src.name})")
     elif cmd == "changes":
         from receipts import changes
