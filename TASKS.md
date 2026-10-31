@@ -121,3 +121,20 @@ Lane A pulls each PR, runs `../.venv/bin/python -m receipts check techstars && �
   Offers are always silent until the model reads them; that's deliberate.
 - **B2:** use the real `check` to score: `receipts.check.run(entries=<planted list>, out=<tests/planted/out.json>)`
   takes any entry list. Planted `.invalid` URLs fail DNS → `contradicted` on live.
+
+## Status 12:58: read this first, pjsk02
+- **Goals:** `python -m receipts goals` → **12 / 14 met**. The two open goals are P3 (review page)
+  and P4 (planted test). See GOALS.md.
+- **Change of plan:** Lane A is building **B1 (review page) now**, because it's on the demo's
+  critical path. **pjsk02: please take B2 (planted-errors test) now**, on branch `pj/planted`.
+  If you already started B1, tell VJ right away so we don't both build it.
+- What B2 must produce for goal P4: `python -m receipts test` writes `out/planted_score.json` =
+  `{"planted": N, "caught": X, "missed": Y, "false_alarms": Z, "rows": [...]}` and prints the table.
+  The target is recall ≥ 0.8 with at most 1 false alarm on the unchanged entries.
+- How to run the real checker on your test copy (no network needed for entries already cached):
+  `from receipts import check; fresh, _ = check.run(entries=planted_entries, out=ROOT/"out"/"planted_receipts.json")`
+  - Planted `https://planted-<id>.invalid` urls fail DNS → `live` comes back `contradicted`.
+  - A wrong Check size → `contradicted` only if the page has a check-like sentence with a different
+    amount; otherwise `silent`. Pick techstars ($220K, cached) for the wrong-number plant.
+  - Duplicates and out-of-scope are not `check` statuses: write `receipts/dedupe.py` as described in B2.
+- Pull `main` first: `git pull origin main`. Real numbers: Probe 8 is 0 → 349 / 1,080 verified, 684 with a sentence.
