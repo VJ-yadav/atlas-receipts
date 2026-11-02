@@ -8,6 +8,10 @@ Team: VJ-yadav, pjsk02.
 
 **Video (2 min):** https://youtu.be/HNGAh-gOVmA
 
+**Status: complete (closed 2 Nov 2026).** Built and demoed at the hackathon on 31 Oct 2026. The
+pipeline runs end to end from a fresh clone (see [How to run](#how-to-run-for-teammates-too)).
+Maintainers who want to adopt it should start at [Picking this up](#picking-this-up).
+
 ## The gap
 
 The [Mass AI Atlas](https://the-open-accelerator.com/ecosystem/) lists 197 Massachusetts AI
@@ -161,7 +165,7 @@ echo "ANTHROPIC_API_KEY=..." > .env       # optional; without it fuzzy claims st
 Built pages for reference: [docs/public-view.html](docs/public-view.html), [docs/maintainer-console.html](docs/maintainer-console.html).
 
 Lanes and tasks are in [TASKS.md](TASKS.md); goals in [GOALS.md](GOALS.md); the one-page concept brief is
-[brief.md](brief.md) (also [BRIEF.md](BRIEF.md)).
+[BRIEF.md](BRIEF.md) (also [docs/BRIEF.pdf](docs/BRIEF.pdf)).
 
 ## Status checklist
 
@@ -187,12 +191,29 @@ review console, planted test, README).
 | ✅ | Cost: Claude Haiku 5.5 with code-chosen sentences; full run ~$0.04 | `cache/_usage.jsonl` |
 | ✅ | Public view for founders (Track B direction) | `docs/public-view.html` |
 | ✅ | Probe 8 | see the generated numbers block above |
-| ✅ | brief.md / BRIEF.md concept one-pager | done |
+| ✅ | BRIEF.md concept one-pager | done |
 | ✅ | `receipts dedupe` command | available |
-| ⬜ | Before screenshots of the live Atlas | VJ |
-| ⬜ | DEMO.md / PREP.md / SELFCHECK log | end of day |
-| ⬜ | 2-minute video, uploaded Public | judging |
-| ⬜ | Judging form (repo, video, brief, Track A, sources, validator, probe line) | VJ |
+| ✅ | Before screenshot of the live Atlas | `before/atlas-live-before.png` |
+| ✅ | 2-minute video, uploaded Public | link at the top |
+| ✅ | Judging form (repo, video, brief, Track A, sources, validator, probe line) | submitted 31 Oct |
+| ✅ | Live demo | 31 Oct |
+
+## Picking this up
+
+Where Probe 8 can grow without loosening "supported" (a code-found exact sentence that matches):
+
+- **More pages per site.** Read `sitemap.xml` where robots.txt allows it; many links, places and
+  deadlines are on pages beyond the 8 read per site today.
+- **JavaScript-only sites.** Render with a headless browser, only where robots.txt allows it and
+  never past a 401/403/429.
+- **Offers stay `inferred` by design.** Their wording is fuzzy, so code never marks them supported.
+  Changing that would change what "verified" means.
+- **The 4 contradictions** in the table above need a maintainer's decision, not more code.
+- **Monthly re-check:** enable the schedule in `.github/workflows/recheck.yml`; `receipts changes`
+  then sends back only the claims whose sentence changed.
+
+The Atlas branch `receipts/2026-10-31` is created locally by `apply` in a clone of the Atlas repo;
+it was not opened as a pull request upstream.
 
 ## Attribution
 
